@@ -1,0 +1,14 @@
+<div class="container">
+  <h1>Welcome to AudibleHero!</h1>
+
+
+  <p>Last update: {{data.updated | date:'medium'}}</p>
+
+  <div class="row">
+    You have <span class="badge primary">{{filter({owned: true}).length}}</span> books in your library.
+    Of these you have downloaded <span class="badge primary">{{filter({downloaded:true}).length}}</span>.
+    That is a total of <span class="badge primary">{{calcListenTime()}}</span> hours downloaded (and probably
+    listened
+    to!).
+  </div>
+</div>

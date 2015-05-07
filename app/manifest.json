@@ -1,0 +1,12 @@
+{
+  "manifest_version": 2,
+  "name": "AudibleHero",
+  "description": "List new books from your favorite authors and series",
+  "version": "1.0",
+  "content_scripts": [
+    {
+      "matches": ["*://www.audible.com/**"],
+      "js": ["app.js"]
+    }
+  ]
+}

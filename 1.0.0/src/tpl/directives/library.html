@@ -1,0 +1,37 @@
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Title</th>
+    <th>Author</th>
+    <th>DatePurchased</th>
+    <th>Length</th>
+    <th>Downloaded</th>
+    <th>Votes</th>
+    <th>Series</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr ng-repeat="book in books">
+    <td>
+      <a href="{{book.url}}">
+        <div class="col-md-4">
+          <img src="{{book.thumbnailUrl}}">
+        </div>
+        <div class="col-md-8">
+          {{book.title}}
+        </div>
+      </a>
+    </td>
+    <td>
+      <a href="{{book.authorUrl}}">
+        {{book.author}}
+      </a>
+    </td>
+    <td>{{book.datePurchased}}</td>
+    <td>{{book.length}}</td>
+    <td>{{book.downloaded}}</td>
+    <td>{{book.votes}}</td>
+    <td><a href="{{book.seriesUrl}}">view series</a></td>
+  </tr>
+  </tbody>
+</table>

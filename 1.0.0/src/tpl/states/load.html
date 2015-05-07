@@ -1,0 +1,78 @@
+<div class="container">
+
+  <div class="panel {{ active === 0 ? 'panel-primary' : 'panel-default'}}">
+    <div class="panel-heading">
+      <h3 class="panel-title">Load your library</h3>
+    </div>
+    <div ng-class="{'bg-success': active > 0}" class="panel-body">
+      <h2 ng-show="active === 0">
+        <i class="fa fa-spin fa-spinner"></i>
+        Loading your library
+        <small>(this may take several minutes)</small>
+        ...
+        <i class="fa fa-chevron-right"></i>
+      </h2>
+      <h2 ng-show="active > 0">
+        Done. Found {{bookCount}} books
+      </h2>
+    </div>
+  </div>
+
+  <h2><i class="fa fa-chevron-down"></i></h2>
+
+  <div class="panel {{ active === 1 ? 'panel-primary' : 'panel-default'}}">
+    <div class="panel-heading">
+      <h3 class="panel-title">Load author books</h3>
+    </div>
+    <div class="panel-body">
+
+      <div ng-show="active === 1">
+        <div class="progress">
+          <div class="progress-bar" ng-style="{width: calcProgress() + '%'}">
+            {{calcProgress()}} %
+          </div>
+        </div>
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Author</th>
+            <th>Book count</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="author in authors">
+            <td>
+              <a href="/search?searchAuthor={{author.name}}">{{author.name}}</a>
+            </td>
+            <td>
+              <div ng-show="author.loading">
+                <i class="fa fa-spin fa-spinner"></i>
+                Loading...
+              </div>
+              <div ng-show="!author.loading">
+                <label>{{author.bookCount}}</label>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <h2 ng-show="active > 1">
+          Done
+        </h2>
+      </div>
+    </div>
+  </div>
+
+  <h2><i class="fa fa-chevron-down"></i></h2>
+
+  <div class="panel {{ active === 2 ? 'panel-primary' : 'panel-default'}}">
+    <div class="panel-heading">
+      <h3 class="panel-title">Map books</h3>
+    </div>
+    <h2 class="panel-body">
+      <h2 ng-show="active === 2">
+        Working...
+      </h2>
+    </h2>
+  </div>
+</div>
