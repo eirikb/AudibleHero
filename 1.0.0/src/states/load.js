@@ -22,7 +22,7 @@ app.config(function ($stateProvider) {
         var aa = $scope.authors;
         if (!_.isArray(aa)) return 0;
         return Math.floor(_.filter(aa, function (a) {
-            return !!a.books;
+            return !!a.bookCount;
           }).length / aa.length * 100);
       };
 

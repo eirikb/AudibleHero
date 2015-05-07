@@ -18,6 +18,9 @@ function loadData() {
 
     book.datePurchased = moment(book.datePurchased, 'MM-DD-YY');
     book.dateReleased = moment(book.dateReleased, 'MM-DD-YY');
+
+    var seriesId = ('' + book.seriesUrl).match(/asin=(.*)/i);
+    if (seriesId && seriesId.length > 1) book.seriesId = seriesId[1];
   });
 
   return data;
@@ -29,7 +32,21 @@ app.config(function ($stateProvider) {
     controller: function ($scope, $state) {
 
       var data = $scope.data = loadData();
-      if (!data) {
+      if (data) {
+        $scope.owned = _.where(data.books, {owned: true});
+
+        $scope.series = _(data.books).groupBy('seriesId').filter(function (series) {
+          return _.any(series, 'owned');
+        }).map(function (series) {
+          return {
+            all: series,
+            owned: _.where(series, {owned: true}),
+            missing: _.where(series, {owned: false})
+          }
+        }).filter(function (serie) {
+          return serie.missing.length > 0;
+        }).value();
+      } else {
         $state.go('load');
       }
 
@@ -38,12 +55,9 @@ app.config(function ($stateProvider) {
       };
 
       $scope.calcListenTime = function () {
-        var sum = 0;
-        _.each(filer({downloaded: true}), function (book) {
-          console.log(book.duration.asHours());
-          sum += book.duration.asHours();
-        });
-        return sum;
+        return Math.floor(_.sum($scope.filter({downloaded: true}), function (book) {
+          return book.duration.asHours();
+        }));
       };
     }
   });

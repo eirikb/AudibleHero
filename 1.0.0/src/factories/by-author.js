@@ -23,7 +23,9 @@ app.factory('getBooksByAuthor', function ($http, $q) {
         url = url.replace(/\/ref=.*$/i, '');
 
         var seriesUrl = item.find('.adbl-series-link a').attr('href');
-        if (seriesUrl) seriesUrl = seriesUrl.trim();
+        if (seriesUrl) {
+          seriesUrl = seriesUrl.trim();
+        }
 
         var length = item.find("span:contains('Length') ~ span").text().trim();
 
@@ -35,7 +37,6 @@ app.factory('getBooksByAuthor', function ($http, $q) {
           url: url,
           thumbnailUrl: item.find("img.adbl-prod-image").attr("src").trim(),
           author: item.find("span.adbl-prod-author > a").text().trim(),
-          authorUrl: item.find("span.adbl-prod-author > a").attr("href").trim(),
           dateReleased: item.find("span:contains('Release Date') ~ span").text().trim(),
           length: length,
           score: rs ? parseFloat(rs[0]) : 0,

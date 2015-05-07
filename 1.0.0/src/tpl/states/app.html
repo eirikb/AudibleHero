@@ -1,14 +1,42 @@
 <div class="container">
   <h1>Welcome to AudibleHero!</h1>
 
+  <div ng-show="data">
 
-  <p>Last update: {{data.updated | date:'medium'}}</p>
+    <p>Last update: {{data.updated | date:'medium'}}</p>
+    <a class="btn btn-primary" ui-sref="load">Update now</a>
 
-  <div class="row">
-    You have <span class="badge primary">{{filter({owned: true}).length}}</span> books in your library.
-    Of these you have downloaded <span class="badge primary">{{filter({downloaded:true}).length}}</span>.
-    That is a total of <span class="badge primary">{{calcListenTime()}}</span> hours downloaded (and probably
-    listened
-    to!).
+    <div class="row">
+      You have <span class="badge primary">{{filter({owned: true}).length}}</span> books in your library.
+      Of these you have downloaded <span class="badge primary">{{filter({downloaded:true}).length}}</span>.
+      That is a total of <span class="badge primary">{{calcListenTime()}}</span> hours downloaded (and probably
+      listened
+      to!).
+    </div>
   </div>
+
+
+  <tabset ng-show="data">
+    <tab heading="Your library">
+      <div booktable books="owned"></div>
+    </tab>
+    <tab heading="Series">
+
+
+      <div class="panel panel-default" ng-repeat="serie in series">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <img src="{{serie.owned[0].thumbnailUrl}}">
+            {{serie.owned[0].title}}
+            {{serie.owned[0].title}}
+          </h3>
+        </div>
+        <div class="panel-body">
+          <img src="{{s.thumbnailUrl}}" ng-repeat="s in serie.missing">
+        </div>
+      </div>
+
+
+    </tab>
+  </tabset>
 </div>
