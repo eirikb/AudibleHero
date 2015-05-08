@@ -11,10 +11,12 @@ function loadData() {
   }
   data.books = _(data.books).map(function (book) {
     var duration = book.length.match(/\d+/g);
-    book.duration = moment.duration({
-      hours: duration.length >= 2 ? duration[0] : 0,
-      minutes: duration.length >= 2 ? duration[1] : duration[0]
-    });
+    if (duration && duration.length > 1) {
+      book.duration = moment.duration({
+        hours: duration.length >= 2 ? duration[0] : 0,
+        minutes: duration.length >= 2 ? duration[1] : duration[0]
+      });
+    }
 
     book.datePurchased = moment(book.datePurchased, 'MM-DD-YY');
     book.dateReleased = moment(book.dateReleased, 'MM-DD-YY');
