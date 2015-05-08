@@ -9,7 +9,7 @@ function loadData() {
   } catch (e) {
     return;
   }
-  _.each(data.books, function (book) {
+  data.books = _(data.books).map(function (book) {
     var duration = book.length.match(/\d+/g);
     book.duration = moment.duration({
       hours: duration.length >= 2 ? duration[0] : 0,
@@ -21,9 +21,28 @@ function loadData() {
 
     var seriesId = ('' + book.seriesUrl).match(/asin=(.*)/i);
     if (seriesId && seriesId.length > 1) book.seriesId = seriesId[1];
-  });
+    return book;
+  }).uniq(function (book) {
+    return book.title;
+  }).value();
 
   return data;
+}
+
+function missing(books, prop) {
+  return _(books).filter(function (book) {
+    return !!book[prop];
+  }).groupBy(prop).map(function (group) {
+    return {
+      all: group,
+      owned: _.where(group, {owned: true}),
+      missing: _.filter(group, function (book) {
+        return !book.owned;
+      })
+    }
+  }).filter(function (group) {
+    return group.owned.length > 0 && group.missing.length > 0;
+  }).value();
 }
 
 app.config(function ($stateProvider) {
@@ -35,17 +54,8 @@ app.config(function ($stateProvider) {
       if (data) {
         $scope.owned = _.where(data.books, {owned: true});
 
-        $scope.series = _(data.books).groupBy('seriesId').filter(function (series) {
-          return _.any(series, 'owned');
-        }).map(function (series) {
-          return {
-            all: series,
-            owned: _.where(series, {owned: true}),
-            missing: _.where(series, {owned: false})
-          }
-        }).filter(function (serie) {
-          return serie.missing.length > 0;
-        }).value();
+        $scope.series = missing(data.books, 'seriesId');
+        $scope.authors = missing(data.books, 'authors');
       } else {
         $state.go('load');
       }

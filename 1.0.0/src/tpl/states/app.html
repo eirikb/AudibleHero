@@ -7,11 +7,12 @@
     <a class="btn btn-primary" ui-sref="load">Update now</a>
 
     <div class="row">
-      You have <span class="badge primary">{{filter({owned: true}).length}}</span> books in your library.
-      Of these you have downloaded <span class="badge primary">{{filter({downloaded:true}).length}}</span>.
-      That is a total of <span class="badge primary">{{calcListenTime()}}</span> hours downloaded (and probably
+      You have <span class="badge">{{filter({owned: true}).length}}</span> books in your library.
+      Of these you have downloaded <span class="badge">{{filter({downloaded:true}).length}}</span>.
+      That is a total of <span class="badge">{{calcListenTime()}}</span> hours downloaded (and probably
       listened
       to!).
+      We found <span class="badge">{{data.books.length}}</span> books based on your authors.
     </div>
   </div>
 
@@ -21,22 +22,10 @@
       <div booktable books="owned"></div>
     </tab>
     <tab heading="Series">
-
-
-      <div class="panel panel-default" ng-repeat="serie in series">
-        <div class="panel-heading">
-          <h3 class="panel-title">
-            <img src="{{serie.owned[0].thumbnailUrl}}">
-            {{serie.owned[0].title}}
-            {{serie.owned[0].title}}
-          </h3>
-        </div>
-        <div class="panel-body">
-          <img src="{{s.thumbnailUrl}}" ng-repeat="s in serie.missing">
-        </div>
-      </div>
-
-
+      <div missinglist books="series"></div>
+    </tab>
+    <tab heading="Authors">
+      <div missinglist books="authors"></div>
     </tab>
   </tabset>
 </div>

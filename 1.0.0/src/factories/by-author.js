@@ -28,15 +28,18 @@ app.factory('getBooksByAuthor', function ($http, $q) {
         }
 
         var length = item.find("span:contains('Length') ~ span").text().trim();
-
         var rs = item.find('.rating_disp').text().match(/\d+\.?\d*/g);
+        var authors = [];
+        item.find('.adbl-prod-author a').each(function () {
+          authors.push($(this).text().trim());
+        });
 
         var book = {
           id: _.last(url.split('/')),
           title: item.find(".adbl-prod-title > a").text().trim(),
           url: url,
           thumbnailUrl: item.find("img.adbl-prod-image").attr("src").trim(),
-          author: item.find("span.adbl-prod-author > a").text().trim(),
+          authors: authors,
           dateReleased: item.find("span:contains('Release Date') ~ span").text().trim(),
           length: length,
           score: rs ? parseFloat(rs[0]) : 0,

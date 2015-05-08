@@ -1,0 +1,17 @@
+<div class="panel panel-default" ng-repeat="group in books">
+  <div class="panel-heading">
+    <h3 class="panel-title">
+      <img src="{{book.owned[0].thumbnailUrl}}">
+      {{group.owned[0].author}} - {{group.owned[0].title}}
+      <button class="btn btn-primary" ng-click="group.showAll = !group.showAll">
+        <i class="fa fa-chevron-{{group.showAll ? 'down' : 'right'}}"></i>
+        See all {{group.missing.length}} books
+      </button>
+    </h3>
+  </div>
+  <div class="panel-body">
+    <div ng-show="group.showAll">
+      <div booktable books="group.missing"></div>
+    </div>
+  </div>
+</div>
