@@ -13,7 +13,7 @@
         <i class="fa fa-chevron-right"></i>
       </h2>
       <h2 ng-show="active > 0">
-        Done. Found {{bookCount}} books
+        Found {{bookCount}} books
       </h2>
     </div>
   </div>
@@ -40,7 +40,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr ng-repeat="author in authors">
+          <tr ng-repeat="author in authors" ng-class="{success: !author.loading}">
             <td>
               <a href="/search?searchAuthor={{author.name}}">{{author.name}}</a>
             </td>
