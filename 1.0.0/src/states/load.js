@@ -1,5 +1,6 @@
 var app = require('../app.js');
 require('lodash');
+var inline = require('inline');
 
 function getAuthors(books) {
   return _(books).map(function (book) {
@@ -16,7 +17,7 @@ function getAuthors(books) {
 app.config(function ($stateProvider) {
   $stateProvider.state('load', {
     template: require('../tpl/states/load.html'),
-    controller: function ($scope, $state, getLibraryBooks, getBooksByAuthor, $q) {
+    controller: function ($scope, $state, getLibraryBooks, getBooksByAuthor, $q, version) {
 
       $scope.calcProgress = function () {
         var aa = $scope.authors;
@@ -51,6 +52,7 @@ app.config(function ($stateProvider) {
           });
 
           localStorage.data = JSON.stringify({
+            version: version,
             updated: new Date(),
             books: allBooks
           });

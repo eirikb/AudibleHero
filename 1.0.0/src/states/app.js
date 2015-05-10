@@ -2,10 +2,11 @@ var app = require('../app.js');
 require('lodash');
 var moment = require('moment');
 
-function loadData() {
+function loadData(version) {
   var data;
   try {
     data = JSON.parse(localStorage.data);
+    if (data.version !== version) return;
   } catch (e) {
     return;
   }
@@ -52,9 +53,9 @@ function missing(books, prop) {
 app.config(function ($stateProvider) {
   $stateProvider.state('app', {
     template: require('../tpl/states/app.html'),
-    controller: function ($scope, $state) {
+    controller: function ($scope, $state, version) {
 
-      var data = $scope.data = loadData();
+      var data = $scope.data = loadData(version);
       if (data) {
         $scope.owned = _.where(data.books, {owned: true});
 
