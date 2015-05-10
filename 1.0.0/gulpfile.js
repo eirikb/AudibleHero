@@ -129,7 +129,7 @@ gulp.task('uglify', function () {
 });
 
 gulp.task('assets', function () {
-  return gulp.src('./assets/img/*.*')
+  return gulp.src('./src/img/*.*')
     .pipe(upload(false, true));
 });
 
