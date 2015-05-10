@@ -22,9 +22,13 @@ app.factory('getBooksByAuthor', function ($http, $q) {
         var url = item.find(".adbl-prod-title > a").attr("href").trim();
         url = url.replace(/\/ref=.*$/i, '');
 
-        var seriesUrl = item.find('.adbl-series-link a').attr('href');
-        if (seriesUrl) {
-          seriesUrl = seriesUrl.trim();
+        var series;
+        var seriesUrl = item.find('.adbl-series-link a');
+        if (seriesUrl.length > 0) {
+          series = {
+            name: seriesUrl.text().trim(),
+            url: seriesUrl.attr('href').trim()
+          };
         }
 
         var length = item.find("span:contains('Length') ~ span").text().trim();
@@ -44,7 +48,7 @@ app.factory('getBooksByAuthor', function ($http, $q) {
           length: length,
           score: rs ? parseFloat(rs[0]) : 0,
           ratings: rs ? parseInt(rs[1], 10) : 0,
-          seriesUrl: seriesUrl
+          series: series
         };
         books.push(book);
       });

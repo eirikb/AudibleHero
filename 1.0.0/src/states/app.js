@@ -21,8 +21,10 @@ function loadData() {
     book.datePurchased = moment(book.datePurchased, 'MM-DD-YY');
     book.dateReleased = moment(book.dateReleased, 'MM-DD-YY');
 
-    var seriesId = ('' + book.seriesUrl).match(/asin=(.*)/i);
-    if (seriesId && seriesId.length > 1) book.seriesId = seriesId[1];
+    if (book.series) {
+      var seriesId = book.series.url.match(/asin=(.*)/i);
+      if (seriesId && seriesId.length > 1) book.seriesId = seriesId[1];
+    }
     return book;
   }).uniq(function (book) {
     return book.title;
