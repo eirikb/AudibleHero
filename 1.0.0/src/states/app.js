@@ -38,7 +38,7 @@ app.config(function ($stateProvider) {
 
       $scope.calcListenTime = function () {
         return Math.floor(_.sum($scope.filter({downloaded: true}), function (book) {
-          return book.duration.asHours();
+          return book.duration ? book.duration.asHours() : 0;
         }));
       };
     }
