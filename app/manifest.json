@@ -13,5 +13,13 @@
       "matches": ["*://www.audible.com/*"],
       "js": ["app.js"]
     }
+  ],
+  "background": {
+    "scripts": ["nocookie.js"]
+  },
+  "permissions": [
+    "webRequest",
+    "webRequestBlocking",
+    "*://*.audible.com/*"
   ]
 }

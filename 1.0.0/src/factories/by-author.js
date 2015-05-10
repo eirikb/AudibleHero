@@ -9,7 +9,8 @@ app.factory('getBooksByAuthor', function ($http, $q) {
       params: {
         searchPage: page,
         searchSize: 50,
-        searchAuthor: author
+        searchAuthor: author,
+        fix: "NOCOOKIE"
       }
     }).then(function (res) {
       var html = $(res.data);
