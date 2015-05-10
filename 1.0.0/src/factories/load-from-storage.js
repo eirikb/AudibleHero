@@ -19,8 +19,12 @@ app.factory('loadFromStorage', function (version) {
         });
       }
 
-      book.datePurchased = moment(book.datePurchased, 'MM-DD-YY');
-      book.dateReleased = moment(book.dateReleased, 'MM-DD-YY');
+      if (book.datePurchased) {
+        book.datePurchased = moment(book.datePurchased, 'MM-DD-YY');
+      }
+      if (book.dateReleased) {
+        book.dateReleased = moment(book.dateReleased, 'MM-DD-YY');
+      }
 
       if (book.series) {
         var seriesId = book.series.url.match(/asin=(.*)/i);
@@ -28,6 +32,9 @@ app.factory('loadFromStorage', function (version) {
       }
       return book;
     }).value();
+
+
+    window.books = data.books;
 
     return data;
   };

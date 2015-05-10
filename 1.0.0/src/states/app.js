@@ -1,20 +1,16 @@
 var app = require('../app.js');
 require('lodash');
 
-function missing(books, prop) {
-  return _(books).filter(function (book) {
-    return !!book[prop];
-  }).groupBy(prop).map(function (group) {
-    return {
-      all: group,
-      owned: _.where(group, {owned: true}),
-      missing: _.filter(group, function (book) {
-        return !book.owned;
-      })
-    }
-  }).filter(function (group) {
-    return group.owned.length > 0 && group.missing.length > 0;
-  }).value();
+function byOwned(group) {
+  return {
+    all: group,
+    owned: _.where(group, {owned: true}),
+    missing: _.reject(group, 'owned')
+  };
+}
+
+function byOwnedAndMissing(group) {
+  return group.owned.length > 0 && group.missing.length > 0;
 }
 
 app.config(function ($stateProvider) {
@@ -26,8 +22,25 @@ app.config(function ($stateProvider) {
       if (data) {
         $scope.owned = _.where(data.books, {owned: true});
 
-        $scope.series = missing(data.books, 'seriesId');
-        $scope.authors = missing(data.books, 'authors');
+        $scope.series = _(books).filter('seriesId').groupBy('seriesId').map(byOwned).filter(byOwnedAndMissing).map(function (group) {
+          var b = group.owned[0];
+          group.key = b.authors.join(',') + ' - ' + b.series.name;
+          return group;
+        }).value();
+
+        $scope.authors = _(books).map(function (book) {
+          return _.map(book.authors, function (author) {
+            return _.assign({
+              author: author
+            }, book);
+          });
+        }).flatten().groupBy('author').map(byOwned).filter(byOwnedAndMissing).map(function (group) {
+          var b = group.owned[0];
+          group.key = b.author;
+          if (b.series) group.key += " - " + b.series.name;
+          return group;
+        }).value();
+
       } else {
         $state.go('load');
       }
