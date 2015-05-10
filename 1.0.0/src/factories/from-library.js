@@ -21,8 +21,9 @@ app.factory('getLibraryBooks', function ($http) {
         books.push({
           id: _.last(url.split('/')),
           title: cell.find("a[name='tdTitle']").text().trim(),
-          author: row.find("a[href*='searchAuthor']").text().trim(),
-          url: url,
+          authors: _.map(row.find("a[href*='searchAuthor']").text().split(','), function (author) {
+            return author.trim();
+          }),
           datePurchased: row.find("td:eq(6)").text().trim(),
           downloaded: row.find("[alt='Downloaded']").length > 0
         });

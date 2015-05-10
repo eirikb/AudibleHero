@@ -27,8 +27,6 @@ app.factory('loadFromStorage', function (version) {
         if (seriesId && seriesId.length > 1) book.seriesId = seriesId[1];
       }
       return book;
-    }).uniq(function (book) {
-      return book.title;
     }).value();
 
     return data;

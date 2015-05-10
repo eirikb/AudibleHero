@@ -1,22 +1,10 @@
 var app = require('../app.js');
 require('lodash');
 
-function getAuthors(books) {
-  return _(books).map(function (book) {
-    return book.author.split(',');
-  }).flatten().uniq().map(function (author) {
-    author = {
-      name: author,
-      loading: true
-    };
-    return author;
-  }).value();
-}
-
 app.config(function ($stateProvider) {
   $stateProvider.state('load', {
     template: require('../tpl/states/load.html'),
-    controller: function ($scope, $state, getLibraryBooks, getBooksByAuthor, $q, version) {
+    controller: function ($scope, $state, getLibraryBooks, getBooksByAuthor, $q, $log, version) {
 
       $scope.calcProgress = function () {
         var aa = $scope.authors;
@@ -27,10 +15,15 @@ app.config(function ($stateProvider) {
       };
 
       $scope.active = 0;
-      getLibraryBooks().then(function (books) {
-        $scope.bookCount = books.length;
+      getLibraryBooks().then(function (libraryBooks) {
+        $scope.bookCount = libraryBooks.length;
         $scope.active = 1;
-        $scope.authors = getAuthors(books);
+        $scope.authors = _(libraryBooks).pluck('authors').flatten().uniq().map(function (author) {
+          return {
+            name: author,
+            loading: true
+          }
+        }).value();
         $q.all(_.map($scope.authors, function (author) {
           return getBooksByAuthor(author.name).then(function (books) {
             author.loading = false;
@@ -40,13 +33,22 @@ app.config(function ($stateProvider) {
         })).then(function (allBooks) {
           $scope.active = 2;
 
-          allBooks = _.flatten(allBooks);
+          allBooks = _(allBooks).flatten().uniq('id').value();
 
-          _.each(allBooks, function (book) {
-            var libraryBook = _.find(books, {id: book.id});
-            if (libraryBook) {
+          window.allBooks = allBooks;
+
+          _.each(libraryBooks, function (libraryBook) {
+            var book = _.find(allBooks, {id: libraryBook.id});
+            if (!book) {
+              $log.warn('Book not found!, trying by title', libraryBook);
+              book = _.find(allBooks, {title: libraryBook.title});
+              if (book) book.notFound = true;
+            }
+            if (book) {
               book.owned = true;
               _.assign(book, libraryBook);
+            } else {
+              $log.warn('Book not found at all! :O', libraryBook);
             }
           });
 
