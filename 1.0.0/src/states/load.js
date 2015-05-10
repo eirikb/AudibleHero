@@ -1,6 +1,5 @@
 var app = require('../app.js');
 require('lodash');
-var inline = require('inline');
 
 function getAuthors(books) {
   return _(books).map(function (book) {

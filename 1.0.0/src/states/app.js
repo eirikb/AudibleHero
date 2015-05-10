@@ -1,38 +1,5 @@
 var app = require('../app.js');
 require('lodash');
-var moment = require('moment');
-
-function loadData(version) {
-  var data;
-  try {
-    data = JSON.parse(localStorage.data);
-    if (data.version !== version) return;
-  } catch (e) {
-    return;
-  }
-  data.books = _(data.books).map(function (book) {
-    var duration = book.length.match(/\d+/g);
-    if (duration && duration.length > 1) {
-      book.duration = moment.duration({
-        hours: duration.length >= 2 ? duration[0] : 0,
-        minutes: duration.length >= 2 ? duration[1] : duration[0]
-      });
-    }
-
-    book.datePurchased = moment(book.datePurchased, 'MM-DD-YY');
-    book.dateReleased = moment(book.dateReleased, 'MM-DD-YY');
-
-    if (book.series) {
-      var seriesId = book.series.url.match(/asin=(.*)/i);
-      if (seriesId && seriesId.length > 1) book.seriesId = seriesId[1];
-    }
-    return book;
-  }).uniq(function (book) {
-    return book.title;
-  }).value();
-
-  return data;
-}
 
 function missing(books, prop) {
   return _(books).filter(function (book) {
@@ -53,9 +20,9 @@ function missing(books, prop) {
 app.config(function ($stateProvider) {
   $stateProvider.state('app', {
     template: require('../tpl/states/app.html'),
-    controller: function ($scope, $state, version) {
+    controller: function ($scope, $state, loadFromStorage) {
 
-      var data = $scope.data = loadData(version);
+      var data = $scope.data = loadFromStorage();
       if (data) {
         $scope.owned = _.where(data.books, {owned: true});
 
