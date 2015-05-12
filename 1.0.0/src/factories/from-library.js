@@ -1,6 +1,6 @@
 var app = require('../app.js');
 
-app.factory('getLibraryBooks', function ($http) {
+app.factory('getLibraryBooks', function ($http, parseHtml) {
   return function () {
     return $http({
       url: '/lib-ajax',
@@ -8,7 +8,7 @@ app.factory('getLibraryBooks', function ($http) {
         progType: 'all', timeFilter: 'all', itemsPerPage: 1000000
       }
     }).then(function (res) {
-      var html = $($.parseHTML(res.data));
+      var html = parseHtml(res.data);
 
       var rows = html.find("table:eq(0) tr:not(.adbl-lib-multipart-child) td[name='titleInfo']");
       var books = [];
