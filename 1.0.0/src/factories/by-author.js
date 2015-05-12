@@ -13,7 +13,7 @@ app.factory('getBooksByAuthor', function ($http, $q) {
         fix: "NOCOOKIE"
       }
     }).then(function (res) {
-      var html = $(res.data);
+      var html = $($.parseHTML(res.data));
 
       var books = [];
 

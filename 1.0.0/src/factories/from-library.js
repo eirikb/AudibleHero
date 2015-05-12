@@ -8,7 +8,7 @@ app.factory('getLibraryBooks', function ($http) {
         progType: 'all', timeFilter: 'all', itemsPerPage: 1000000
       }
     }).then(function (res) {
-      var html = $(res.data);
+      var html = $($.parseHTML(res.data));
 
       var rows = html.find("table:eq(0) tr:not(.adbl-lib-multipart-child) td[name='titleInfo']");
       var books = [];
