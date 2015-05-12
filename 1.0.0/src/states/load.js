@@ -18,7 +18,7 @@ app.config(function ($stateProvider) {
       getLibraryBooks().then(function (libraryBooks) {
         $scope.bookCount = libraryBooks.length;
         $scope.active = 1;
-        $scope.authors = _(libraryBooks).pluck('authors').flatten().uniq().map(function (author) {
+        $scope.authors = _(libraryBooks).pluck('authors').flatten().uniq().compact().map(function (author) {
           return {
             name: author,
             loading: true
