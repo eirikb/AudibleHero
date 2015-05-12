@@ -1,6 +1,6 @@
 var app = require('../app.js');
 
-app.factory('getBooksByAuthor', function ($http, $q) {
+app.factory('getBooksByAuthor', function ($http, $q, parseHtml) {
   function run(author, page) {
     if (!page) page = 1;
 
@@ -13,7 +13,7 @@ app.factory('getBooksByAuthor', function ($http, $q) {
         fix: "NOCOOKIE"
       }
     }).then(function (res) {
-      var html = $($.parseHTML(res.data));
+      var html = parseHtml(res.data);
 
       var books = [];
 
@@ -43,7 +43,7 @@ app.factory('getBooksByAuthor', function ($http, $q) {
           id: _.last(url.split('/')),
           title: item.find(".adbl-prod-title > a").text().trim(),
           url: url,
-          thumbnailUrl: item.find("img.adbl-prod-image").attr("src").trim(),
+          thumbnailUrl: item.find("img.adbl-prod-image").data("src").trim(),
           authors: authors,
           dateReleased: item.find("span:contains('Release Date') ~ span").text().trim(),
           length: length,
