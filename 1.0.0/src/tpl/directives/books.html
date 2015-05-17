@@ -2,10 +2,11 @@
   <div class="col-md-12">
     <div class="col-md-2" ng-repeat="book in books">
       <div class="thumbnail">
+        <h1>{{book.series.number}}</h1>
         <img ng-src="{{book.thumbnailUrl}}">
 
         <div class="caption">
-          <h5><strong>{{book.series.number}}.</strong>{{book.title}}</h5>
+          <h5>{{book.title}}</h5>
         </div>
       </div>
     </div>
