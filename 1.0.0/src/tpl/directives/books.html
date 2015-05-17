@@ -1,11 +1,11 @@
-<div class="row height-hack" ng-repeat="books in books | chunk:6">
+<div class="row height-hack" ng-repeat="books in chunkedBooks">
   <div class="col-md-12">
     <div class="col-md-2" ng-repeat="book in books">
       <div class="thumbnail">
         <img ng-src="{{book.thumbnailUrl}}">
 
         <div class="caption">
-          <h5>{{book.title}}</h5>
+          <h5><strong>{{book.series.number}}.</strong>{{book.title}}</h5>
         </div>
       </div>
     </div>

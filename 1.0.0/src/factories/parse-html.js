@@ -5,6 +5,7 @@ app.factory('parseHtml', function () {
     html = html.replace(/<img[^>]*>/g, function (img) {
       return img.replace(/ src=/i, ' data-src=');
     });
-    return $(html);
+    var parser = new DOMParser();
+    return $(parser.parseFromString(html, "text/html"));
   };
 });

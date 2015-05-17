@@ -5,6 +5,9 @@ app.directive('booktable', function () {
     scope: {
       books: '='
     },
-    template: require('../tpl/directives/books.html')
+    template: require('../tpl/directives/books.html'),
+    controller: function ($scope) {
+      $scope.chunkedBooks = _.chunk($scope.books, 6);
+    }
   }
 });

@@ -24,11 +24,15 @@ app.factory('getBooksByAuthor', function ($http, $q, parseHtml) {
         url = url.replace(/\/ref=.*$/i, '');
 
         var series;
-        var seriesUrl = item.find('.adbl-series-link a');
+        var seriesDiv = item.find('.adbl-series-link');
+        var seriesUrl = seriesDiv.find('a');
         if (seriesUrl.length > 0) {
+          var seriesNumber = seriesDiv.find(".adbl-label").text().match(/\d+/);
+          seriesNumber = seriesNumber && seriesNumber.length > 0 ? seriesNumber[0] : "";
           series = {
             name: seriesUrl.text().trim(),
-            url: seriesUrl.attr('href').trim()
+            url: seriesUrl.attr('href').trim(),
+            number: seriesNumber
           };
         }
 

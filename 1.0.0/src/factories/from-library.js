@@ -8,6 +8,7 @@ app.factory('getLibraryBooks', function ($http, parseHtml) {
         progType: 'all', timeFilter: 'all', itemsPerPage: 1000000
       }
     }).then(function (res) {
+      window.wat = res.data;
       var html = parseHtml(res.data);
 
       var rows = html.find("table:eq(0) tr:not(.adbl-lib-multipart-child) td[name='titleInfo']");

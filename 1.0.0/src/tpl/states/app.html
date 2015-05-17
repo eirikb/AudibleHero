@@ -18,15 +18,19 @@
   </div>
 
 
-  <tabset ng-show="data">
-    <tab heading="Your library">
-      <div booktable books="owned"></div>
-    </tab>
-    <tab heading="Series">
-      <div missinglist books="series"></div>
-    </tab>
-    <tab heading="Authors">
-      <div missinglist books="authors"></div>
-    </tab>
-  </tabset>
+  <div class="row">
+    <div class="col-md-12">
+      <tabset ng-show="data">
+        <tab heading="Your library">
+          <div booktable books="owned"></div>
+        </tab>
+        <tab heading="Missing books by Series">
+          <div missinglist books="series"></div>
+        </tab>
+        <!--<tab heading="Missing books by Authors">
+          <div missinglist books="authors"></div>
+        </tab>-->
+      </tabset>
+    </div>
+  </div>
 </div>
