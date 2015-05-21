@@ -1,0 +1,21 @@
+<label>
+  <input type="checkbox" ng-model="filter.showMissing">
+  Show missing books
+</label>
+<label>
+  <input type="checkbox" ng-model="filter.showOwned">
+  Show purchased books
+</label>
+<label>
+  <input type="checkbox" ng-model="filter.showIgnored">
+  Show ignored books
+</label>
+Order by:
+<select ng-model="filter.predicate">
+  <option value="series.number">Series number</option>
+  <option value="duration">Hours</option>
+</select>
+<label>
+  <input type="checkbox" ng-model="filter.reverse">
+  Reverse
+</label>

@@ -3,11 +3,9 @@ var app = require('../app.js');
 app.directive('booktable', function () {
   return {
     scope: {
-      books: '='
+      books: '=',
+      filter: '='
     },
-    template: require('../tpl/directives/books.html'),
-    controller: function ($scope) {
-      $scope.chunkedBooks = _.chunk($scope.books, 6);
-    }
+    template: require('../tpl/directives/books.html')
   }
 });
