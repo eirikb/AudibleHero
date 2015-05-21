@@ -29,12 +29,11 @@ app.factory('loadFromStorage', function (version) {
       if (book.series) {
         var seriesId = book.series.url.match(/asin=(.*)/i);
         if (seriesId && seriesId.length > 1) book.seriesId = seriesId[1];
+        var number = _.parseInt(book.series.number);
+        if (!_.isNaN(number)) book.series.number = number;
       }
       return book;
     }).value();
-
-
-    window.books = data.books;
 
     return data;
   };
