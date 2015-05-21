@@ -1,6 +1,7 @@
 require('angular');
 require('angular-ui-router');
 require('angular-bootstrap');
+require('angular-filter');
 
 var bulk = require('bulk-require');
 bulk(__dirname, 'src/**/*js');

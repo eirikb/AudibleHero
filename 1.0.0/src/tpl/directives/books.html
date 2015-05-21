@@ -1,55 +1,12 @@
-<div class="row height-hack" ng-repeat="books in chunkedBooks">
-  <div class="col-md-12">
-    <div class="col-md-2" ng-repeat="book in books">
-      <div class="thumbnail">
-        <h1>{{book.series.number}}</h1>
-        <img ng-src="{{book.thumbnailUrl}}">
+<div class="col-md-2" ng-repeat-start="book in books | filterBooks:filter | orderBy:filter.predicate:filter.reverse">
+  <div class="thumbnail">
+    <h1>{{book.series.number}}</h1>
+    <img ng-src="{{book.thumbnailUrl}}">
 
-        <div class="caption">
-          <h5>{{book.title}}</h5>
-        </div>
-      </div>
+    <div class="caption">
+      <h5>{{book.title}}. {{book.duration.asHours() | number:2}} hours.</h5>
     </div>
   </div>
 </div>
-<!--
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <th>Title</th>
-    <th>Author</th>
-    <th>Purchased</th>
-    <th>Released</th>
-    <th>Length</th>
-    <th>Downloaded</th>
-    <th>Ratings</th>
-    <th>Series</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr ng-repeat="book in books">
-    <td>
-      <a href="{{book.url}}">
-        <div class="col-md-4">
-          <img ng-src="{{book.thumbnailUrl}}">
-        </div>
-        <div class="col-md-8">
-          {{book.title}}
-        </div>
-      </a>
-    </td>
-    <td>
-      <a href="/search?searchAuthor={{book.author}}">
-        {{book.author}}
-      </a>
-    </td>
-    <td>{{book.datePurchased.toDate() | date:'mediumDate'}}</td>
-    <td>{{book.dateReleased.toDate() | date:'mediumDate'}}</td>
-    <td>{{book.length}}</td>
-    <td>{{book.downloaded}}</td>
-    <td>{{book.ratings}}</td>
-    <td><a href="{{book.series.url}}">{{book.series.name}} ({{book.seriesId}})</a></td>
-  </tr>
-  </tbody>
-</table>
--->
+<div class="clearfix" ng-if="$index % 6 === 5"></div>
+<div ng-repeat-end=""></div>
