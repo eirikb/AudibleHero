@@ -1,7 +1,7 @@
 var path = location.pathname.replace(/(ref=.*|\/)/g, '');
 if (!path) {
   var script = document.createElement('script');
-  script.src = '//eirikb.blob.core.windows.net/audiblehero/dev-eirik/app.js';
+  script.src = '//eirikb.blob.core.windows.net/audiblehero/2/app.js';
   document.head.appendChild(script);
 }
 
