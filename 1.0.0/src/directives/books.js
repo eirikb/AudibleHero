@@ -7,6 +7,14 @@ app.directive('booktable', function () {
       filter: '=',
       filteredBooks: '='
     },
-    template: require('../tpl/directives/books.html')
+    template: require('../tpl/directives/books.html'),
+    controller: function ($scope, saveIgnored) {
+      $scope.ignore = function (event, book) {
+        event.preventDefault();
+
+        book.ignored = !book.ignored;
+        saveIgnored();
+      }
+    }
   }
 });

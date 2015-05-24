@@ -1,16 +1,8 @@
 var app = require('../app.js');
 
-app.factory('loadIgnored', function (api) {
+app.factory('saveIgnored', function ($rootScope, api) {
   return function () {
-    return api('load', 'sync').then(function (res) {
-      return ((res || {}).ignored) || [];
-    });
-  };
-});
-
-app.factory('saveIgnored', function (api) {
-  return function (books) {
-    var ignored = _(books).where({ignored: true}).map(function (book) {
+    var ignored = _($rootScope.books).where({ignored: true}).map(function (book) {
       return book.id;
     }).value();
     api('clearAndSave', 'sync', {ignored: ignored});

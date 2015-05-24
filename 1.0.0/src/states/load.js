@@ -53,9 +53,11 @@ app.config(function ($stateProvider) {
             });
 
             api('clearAndSave', 'local', {
-              version: version,
-              updated: Date.now(),
-              books: allBooks
+              data: {
+                version: version,
+                updated: Date.now(),
+                books: allBooks
+              }
             }).then(function () {
               $state.go('app');
             });

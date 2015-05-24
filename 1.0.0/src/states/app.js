@@ -30,17 +30,14 @@ function asGroup(group) {
 app.config(function ($stateProvider) {
   $stateProvider.state('app', {
     template: require('../tpl/states/app.html'),
-    controller: function ($scope, $state, loadFromStorage, saveIgnored) {
+    controller: function ($rootScope, $scope, $state, loadFromStorage) {
       $scope.loading = true;
+      $('#modalCloneLocation').hide();
 
       loadFromStorage().then(function (data) {
         if (data) {
           $scope.data = data;
-          $scope.books = data.books;
-
-          $scope.$watch('books', function(books) {
-            saveIgnored(books);
-          }, true);
+          $rootScope.books = $scope.books = data.books;
 
           $scope.bySeries = _(data.books).filter(function (book) {
             return !!book.seriesId;

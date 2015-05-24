@@ -15,8 +15,8 @@ var actions = {
   clear: function (type) {
     chrome.storage[type].clear(api);
   },
-  load: function (type) {
-    chrome.storage[type].get(api);
+  load: function (type, prop) {
+    chrome.storage[type].get(prop, api);
   },
   clearAndSave: function (type, data) {
     chrome.storage[type].clear(function () {

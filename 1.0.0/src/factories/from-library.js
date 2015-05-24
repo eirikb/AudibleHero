@@ -3,7 +3,8 @@ var app = require('../app.js');
 app.factory('getLibraryBooks', function ($http, parseHtml) {
   return function () {
     return $http({
-      url: '/lib-ajax',
+      //url: '/lib-ajax',
+      url: 'http://eirikb.blob.core.windows.net/audiblehero/test1.html',
       params: {
         progType: 'all', timeFilter: 'all', itemsPerPage: 1000000
       }
