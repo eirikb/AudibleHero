@@ -1,21 +1,38 @@
-<label>
-  <input type="checkbox" ng-model="filter.showMissing">
-  Show missing books
-</label>
-<label>
-  <input type="checkbox" ng-model="filter.showOwned">
-  Show purchased books
-</label>
-<label>
-  <input type="checkbox" ng-model="filter.showIgnored">
-  Show ignored books
-</label>
-Order by:
-<select ng-model="filter.predicate">
-  <option value="series.number">Series number</option>
-  <option value="duration">Hours</option>
-</select>
-<label>
-  <input type="checkbox" ng-model="filter.reverse">
-  Reverse
-</label>
+<div class="row">
+  <div class="col-md-12">
+    <label>
+      <input type="checkbox" ng-model="filter.showMissing">
+      Show missing books
+    </label>
+    <label>
+      <input type="checkbox" ng-model="filter.showOwned">
+      Show purchased books
+    </label>
+    <label>
+      <input type="checkbox" ng-model="filter.showIgnored">
+      Show ignored books
+    </label>
+    <label>
+      <input type="checkbox" ng-model="filter.showSeriesNumber">
+      Show series number
+    </label>
+    <label>
+      <input type="checkbox" ng-model="filter.fadeOwned">
+      Fade purchased books
+    </label>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    Order by:
+    <div class="btn-group">
+      <label ng-click="filter.reverse = !filter.reverse" class="btn btn-default btn-sm" ng-model="filter.predicate" btn-radio="'series.number'">Series
+        number</label>
+      <label ng-click="filter.reverse = !filter.reverse" class="btn btn-default btn-sm" ng-model="filter.predicate" btn-radio="'Hours'">Hours</label>
+    </div>
+    <label>
+      <i class="fa" ng-class="{'fa-chevron-up': filter.reverse, 'fa-chevron-down': !filter.reverse}"></i>
+      Sort direction
+    </label>
+  </div>
+</div>

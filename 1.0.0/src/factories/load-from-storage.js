@@ -26,6 +26,8 @@ app.factory('loadFromStorage', function (version) {
         book.dateReleased = moment(book.dateReleased, 'MM-DD-YY');
       }
 
+      book.missing = !book.owned;
+
       if (book.series) {
         var seriesId = book.series.url.match(/asin=(.*)/i);
         if (seriesId && seriesId.length > 1) book.seriesId = seriesId[1];

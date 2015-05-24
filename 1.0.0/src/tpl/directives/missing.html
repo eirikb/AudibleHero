@@ -1,16 +1,5 @@
-<label>
-  <input type="checkbox" ng-model="showMissing" ng-init="showMissing = true">
-  Show mising books
-</label>
-<label>
-  <input type="checkbox" ng-model="showOwned">
-  Show purchased books
-</label>
-<label>
-  <input type="checkbox" ng-model="showIgnored">
-  Show ignored books
-</label>
-<div class="panel panel-default" ng-repeat="key in books">
+<div filter-control filter="filter"></div>
+<div class="panel panel-default" ng-repeat="(key, books) in books | filterBooks:this | groupBy:'seriesId'">
   <div class="panel-heading">
     <h2 class="panel-title">
       <img ng-src="{{group.owned[0].thumbnailUrl}}">
@@ -23,7 +12,7 @@
   </div>
   <div class="panel-body">
     <div ng-show="group.showAll">
-      <div booktable books="value" show-missing="showMissing" show-owned="showOwned"></div>
+      <div booktable books="value" filter="filter"></div>
     </div>
   </div>
 </div>

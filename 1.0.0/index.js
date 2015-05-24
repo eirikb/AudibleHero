@@ -2,6 +2,7 @@ require('angular');
 require('angular-ui-router');
 require('angular-bootstrap');
 require('angular-filter');
+require('lodash');
 
 var bulk = require('bulk-require');
 bulk(__dirname, 'src/**/*js');

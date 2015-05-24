@@ -8,28 +8,61 @@
     <a class="btn btn-primary" ui-sref="load">Update now</a>
 
     <div class="row">
-      You have <span class="badge">{{filter({owned: true}).length}}</span> books in your library.
-      Of these you have downloaded <span class="badge">{{filter({downloaded:true}).length}}</span>.
-      That is a total of <span class="badge">{{calcListenTime()}}</span> hours downloaded (and probably
+      You have <span class="badge">{{(books | where:{owned: true}).length | number:0}}</span> books in your library.
+      Of these you have downloaded <span class="badge">{{ (books | where:{downloaded:true}).length | number:0}}</span>.
+      That is a total of <span class="badge">{{books | where:{downloaded:true} | map:'duration.asHours()' | _sum | number:0}}</span>
+      hours downloaded (and probably
       listened
       to!).
-      Found <span class="badge">{{data.books.length}}</span> books based on your authors.
+      Found <span class="badge">{{data.books.length | number:0}}</span> books based on your authors.
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-md-12">
-      <tabset ng-show="data">
-        <tab heading="All books">
-          <div filter-control filter="filter" ng-init="filter.showOwned = true"></div>
-          <div booktable books="books" filter="filter"></div>
-        </tab>
-        <tab heading="Grouped by series">
-        </tab>
-        <!--<tab heading="Missing books by Authors">
-          <div missinglist books="authors"></div>
-        </tab>-->
-      </tabset>
-    </div>
+  <div class="col-md-12">
+    <tabset ng-show="data">
+      <tab heading="All books">
+        <div filter-control filter="filter" ng-init="filter.showOwned = true"></div>
+        <div booktable books="books" filter="filter"></div>
+      </tab>
+      <tab heading="Grouped by series">
+        <div class="row">
+          <div filter-control filter="seriesFilter"
+               ng-init="seriesFilter.showOwned = true; seriesFilter.showMissing = true; seriesFilter.showSeriesNumber = true; seriesFilter.predicate = 'series.number'; seriesFilter.fadeOwned = true"></div>
+          <label>
+            <input type="checkbox" ng-model="showOwnedAndMissing" ng-init="showOwnedAndMissing = true">
+            Only show series where you own one or more books
+          </label>
+
+          <div class="row"
+               ng-if="!showOwnedAndMissing || (books | ownedAndMissing)"
+               ng-repeat="(key, books) in books | hasProp:'seriesId' | filterBooks:seriesFilter | groupBy:'seriesId'">
+            <div class="col-md-12">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h2 class="panel-title">
+                    <a ng-href="http://www.audible.com/series/?asin={{key}}">
+                      <img ng-src="{{books[0].thumbnailUrl}}">
+                      <strong>{{books[0].series.name}}</strong>
+                    </a>
+                    <button class="btn btn-primary" ng-click="showAll = !showAll">
+                      <i class="fa fa-chevron-{{showAll ? 'down' : 'right'}}"></i>
+                      See all {{books.length}} books
+                    </button>
+                  </h2>
+                </div>
+                <div class="panel-body">
+                  <div ng-show="showAll">
+                    <div booktable books="books" filter="seriesFilter"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </tab>
+      <tab heading="Missing books by Authors">
+        <div missinglist books="authors"></div>
+      </tab>
+    </tabset>
   </div>
 </div>

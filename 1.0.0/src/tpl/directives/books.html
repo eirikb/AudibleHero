@@ -1,12 +1,19 @@
-<div class="col-md-2" ng-repeat-start="book in books | filterBooks:filter | orderBy:filter.predicate:filter.reverse">
-  <div class="thumbnail">
-    <h1>{{book.series.number}}</h1>
-    <img ng-src="{{book.thumbnailUrl}}">
+<div class="col-md-2" ng-repeat-start="book in books | filterBooks:filter | orderBy:filter.predicate:filter.reverse"
+     ng-class="{owned: book.owned}">
+  <a ng-href="{{book.url}}" class="thumbnail">
+    <div ng-show="book.owned && filter.fadeOwned" class="overlay"></div>
+    <i ng-show="book.owned" class="fa fa-2x fa-check check text-success white-border"></i>
+
+    <h1 ng-show="filter.showSeriesNumber">{{book.series.number}}</h1>
+
+    <div class="image">
+      <img ng-src="{{book.thumbnailUrl}}">
+    </div>
 
     <div class="caption">
-      <h5>{{book.title}}. {{book.duration.asHours() | number:2}} hours.</h5>
+      <h5><strong>{{book.title}}</strong>. {{book.duration.asHours() | number:2}} hours.</h5>
     </div>
-  </div>
+  </a>
 </div>
 <div class="clearfix" ng-if="$index % 6 === 5"></div>
 <div ng-repeat-end=""></div>
