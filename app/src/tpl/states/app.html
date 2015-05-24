@@ -23,7 +23,7 @@
   <div class="col-md-12" ng-if="data">
     <tabset>
       <tab heading="All books" ng-if="true">
-        <div filter-control filter="filter" ng-init="filter.showOwned = true"></div>
+        <div filter-control filter="filter" ng-init="filter.predicate = 'title';filter.showOwned = true"></div>
         <div booktable books="books" filtered-books="filteredBooks" filter="filter"></div>
       </tab>
       <tab heading="Grouped by series" select="showBySeries = true" ng-if="true">
