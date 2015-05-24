@@ -18,7 +18,6 @@
     </div>
   </div>
 
-
   <div class="col-md-12">
     <tabset ng-show="data">
       <tab heading="All books" ng-if="true">
@@ -26,43 +25,10 @@
         <div booktable books="books" filtered-books="filteredBooks" filter="filter"></div>
       </tab>
       <tab heading="Grouped by series" ng-if="true">
-        <div filter-control filter="filter"
-             ng-init="filter.showOwned = true; filter.showMissing = true; filter.showSeriesNumber = true; filter.predicate = 'series.number'; filter.fadeOwned = true"></div>
-        <label>
-          <input type="checkbox" ng-model="showOwnedAndMissing" ng-init="showOwnedAndMissing = true">
-          Hide series without any purchased books
-        </label>
-        <label>
-          <input type="checkbox" ng-model="filter.hideDuplicate" ng-init="filter.hideDuplicate = true">
-          Hide books with a series number you already own
-        </label>
-
-        <div ng-repeat="books in bySeries">
-          <div ng-if="books.hasOwnAndMissing || !showOwnedAndMissing" class="col-md-12">
-            <div class="panel panel-default" ng-show="filteredBooks.length > 0">
-              <div class="panel-heading">
-                <h2 class="panel-title">
-                  <a ng-href="http://www.audible.com/series/?asin={{key}}">
-                    <img ng-src="{{books.key.thumbnailUrl}}">
-                    <strong>{{books.key.series.name}}</strong>
-                  </a>
-                  <button class="btn btn-primary" ng-click="showAll = !showAll">
-                    <i class="fa fa-chevron-{{showAll ? 'down' : 'right'}}"></i>
-                    See all {{filteredBooks.length}} books
-                  </button>
-                </h2>
-              </div>
-              <div class="panel-body">
-                <div ng-show="showAll">
-                  <div booktable books="books" filtered-books="filteredBooks" filter="filter"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div grouped="bySeries"></div>
       </tab>
       <tab heading="Missing books by Authors" ng-if="true">
-        <p>Nothing yet</p>
+        <div grouped="byAuthor"></div>
       </tab>
     </tabset>
   </div>
