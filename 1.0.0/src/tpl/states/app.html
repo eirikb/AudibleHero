@@ -1,8 +1,9 @@
 <div class="container">
   <hr>
   <h1>Welcome to AudibleHero!</h1>
+  <label ng-show="loading">Loading...</label>
 
-  <div ng-show="data">
+  <div ng-if="data">
 
     <p>Last update: {{data.updated | date:'medium'}}</p>
     <a class="btn btn-primary" ui-sref="load">Update now</a>
@@ -18,8 +19,8 @@
     </div>
   </div>
 
-  <div class="col-md-12">
-    <tabset ng-show="data">
+  <div class="col-md-12" ng-if="data">
+    <tabset>
       <tab heading="All books" ng-if="true">
         <div filter-control filter="filter" ng-init="filter.showOwned = true"></div>
         <div booktable books="books" filtered-books="filteredBooks" filter="filter"></div>

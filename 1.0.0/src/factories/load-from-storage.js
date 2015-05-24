@@ -1,46 +1,46 @@
 var app = require('../app.js');
 var moment = require('moment');
 
-app.factory('loadFromStorage', function (version, loadIgnored) {
+app.factory('loadFromStorage', function (version, $q, api, loadIgnored) {
   return function () {
-    var data;
-    try {
-      data = JSON.parse(localStorage.data);
-      if (data.version !== version) return;
-    } catch (e) {
-      return;
-    }
-    var ignored = loadIgnored();
+    return $q(function (resolve) {
+      $q.all({
+        data: api('load', 'local'),
+        ignored: loadIgnored
+      }).then(function (res) {
+        var data = res.data;
+        if (data) data.updated = new Date(data.updated);
+        var ignored = res.ignored;
 
-    data.books = _(data.books).map(function (book) {
-      var duration = book.length.match(/\d+/g);
-      if (duration && duration.length > 1) {
-        book.duration = moment.duration({
-          hours: duration.length >= 2 ? duration[0] : 0,
-          minutes: duration.length >= 2 ? duration[1] : duration[0]
-        });
-      }
+        if (!data || !data.books) {
+          resolve();
+          return;
+        }
 
-      if (book.datePurchased) {
-        book.datePurchased = moment(book.datePurchased, 'MM-DD-YY');
-      }
-      if (book.dateReleased) {
-        book.dateReleased = moment(book.dateReleased, 'MM-DD-YY');
-      }
+        data.books = _(data.books).map(function (book) {
+          var duration = book.length.match(/\d+/g);
+          if (duration && duration.length > 1) {
+            book.duration = moment.duration({
+              hours: duration.length >= 2 ? duration[0] : 0,
+              minutes: duration.length >= 2 ? duration[1] : duration[0]
+            });
+          }
 
-      book.missing = !book.owned;
+          book.missing = !book.owned;
 
-      book.ignored = _.contains(ignored, book.id);
+          book.ignored = _.contains(ignored, book.id);
 
-      if (book.series) {
-        var seriesId = book.series.url.match(/asin=(.*)/i);
-        if (seriesId && seriesId.length > 1) book.seriesId = seriesId[1];
-        var number = _.parseInt(book.series.number);
-        if (!_.isNaN(number)) book.series.number = number;
-      }
-      return book;
-    }).value();
+          if (book.series) {
+            var seriesId = book.series.url.match(/asin=(.*)/i);
+            if (seriesId && seriesId.length > 1) book.seriesId = seriesId[1];
+            var number = _.parseInt(book.series.number);
+            if (!_.isNaN(number)) book.series.number = number;
+          }
+          return book;
+        }).value();
 
-    return data;
+        resolve(data);
+      });
+    });
   };
 });

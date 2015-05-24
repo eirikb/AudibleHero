@@ -1,20 +1,18 @@
 var app = require('../app.js');
 
-app.factory('loadIgnored', function () {
+app.factory('loadIgnored', function (api) {
   return function () {
-    try {
-      return JSON.parse(localStorage.ignored);
-    } catch (e) {
-      return [];
-    }
+    return api('load', 'sync').then(function (res) {
+      return ((res || {}).ignored) || [];
+    });
   };
 });
 
-app.factory('saveIgnored', function () {
+app.factory('saveIgnored', function (api) {
   return function (books) {
     var ignored = _(books).where({ignored: true}).map(function (book) {
       return book.id;
     }).value();
-    localStorage.ignored = JSON.stringify(ignored);
+    api('clearAndSave', 'sync', {ignored: ignored});
   };
 });

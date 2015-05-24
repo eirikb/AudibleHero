@@ -14,7 +14,7 @@
 
     <div class="caption">
       <h5><strong>{{book.title}}</strong>. {{book.duration.asHours() | number:2}} hours.</h5>
-      <button type="button" class="btn btn-default" ng-click="ignore($event, book)">
+      <button type="button" class="btn btn-default" ng-click="$event.preventDefault();book.ignored = !book.ignored;">
         <span ng-show="book.ignored">Un-ignore</span>
         <span ng-show="!book.ignored">Ignore</span>
         book

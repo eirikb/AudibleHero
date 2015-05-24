@@ -30,35 +30,42 @@ function asGroup(group) {
 app.config(function ($stateProvider) {
   $stateProvider.state('app', {
     template: require('../tpl/states/app.html'),
-    controller: function ($scope, $state, loadFromStorage) {
+    controller: function ($scope, $state, loadFromStorage, saveIgnored) {
+      $scope.loading = true;
 
-      var data = $scope.data = loadFromStorage();
-      if (data) {
-        $scope.books = data.books;
+      loadFromStorage().then(function (data) {
+        if (data) {
+          $scope.data = data;
+          $scope.books = data.books;
 
-        $scope.bySeries = _(data.books).filter(function (book) {
-          return !!book.seriesId;
-        }).groupBy('seriesId').map(asGroup).map(function (group) {
-          group.title = group.key.series.name;
-          group.url = "http://www.audible.com/series/?asin=" + group.key.seriesId;
-          return group;
-        }).value();
+          $scope.$watch('books', function(books) {
+            saveIgnored(books);
+          }, true);
 
-        $scope.byAuthor = _(data.books).map(function (book) {
-          return _.map(book.authors, function (author) {
-            return _.assign({
-              author: author
-            }, book);
-          });
-        }).flatten().groupBy('author').map(asGroup).map(function (group) {
-          group.title = group.key.author;
-          group.url = "http://www.audible.com/search?searchAuthor=" + group.title;
-          return group;
-        }).value();
+          $scope.bySeries = _(data.books).filter(function (book) {
+            return !!book.seriesId;
+          }).groupBy('seriesId').map(asGroup).map(function (group) {
+            group.title = group.key.series.name;
+            group.url = "http://www.audible.com/series/?asin=" + group.key.seriesId;
+            return group;
+          }).value();
 
-      } else {
-        $state.go('load');
-      }
+          $scope.byAuthor = _(data.books).map(function (book) {
+            return _.map(book.authors, function (author) {
+              return _.assign({
+                author: author
+              }, book);
+            });
+          }).flatten().groupBy('author').map(asGroup).map(function (group) {
+            group.title = group.key.author;
+            group.url = "http://www.audible.com/search?searchAuthor=" + group.title;
+            return group;
+          }).value();
+          $scope.loading = false;
+        } else {
+          $state.go('load');
+        }
+      });
     }
   });
 });

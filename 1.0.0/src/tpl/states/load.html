@@ -1,5 +1,27 @@
 <div class="container">
 
+  <div class="panel {{ active === -1 ? 'panel-primary' : 'panel-default'}}">
+    <div class="panel-heading">
+      <h3 class="panel-title">Start</h3>
+    </div>
+    <div ng-class="{'bg-success': active > -1}" class="panel-body">
+      <button type="button" class="btn btn-lg btn-primary" ng-show="active === -1" ng-click="start()">
+        Click here to start update
+      </button>
+      <!--
+      <div class="clearfix"></div>
+      <button type="button" class="btn btn-sm btn-default" ng-show="active === -1" ng-click="clearStorage()">
+        Clear local database
+      </button>
+      <button type="button" class="btn btn-sm btn-default" ng-show="active === -1" ng-click="clear()">
+        Clear all ignored books (Un-ignore all)
+      </button>
+      -->
+    </div>
+  </div>
+
+  <h2><i class="fa fa-chevron-down"></i></h2>
+
   <div class="panel {{ active === 0 ? 'panel-primary' : 'panel-default'}}">
     <div class="panel-heading">
       <h3 class="panel-title">Load your library</h3>

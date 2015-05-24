@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
-  "name": "AudibleHero",
-  "description": "List new books from your favorite authors and series",
+  "name": "AudibleHero for Audible",
+  "description": "List new books from your favorite authors and series on www.audible.com",
   "version": "2",
   "icons": {
     "16": "logo16.png",
@@ -15,9 +15,12 @@
     }
   ],
   "background": {
-    "scripts": ["nocookie.js"]
+    "scripts": [
+      "nocookie.js"
+    ]
   },
   "permissions": [
+    "storage",
     "webRequest",
     "webRequestBlocking",
     "*://*.audible.com/*"
