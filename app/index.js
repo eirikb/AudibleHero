@@ -13,4 +13,3 @@ $('#mast-member').prepend($(require('./src/tpl/button.html')).one('click', funct
   $('.reg-footer-wide').remove();
   angular.bootstrap(document, ['audiblehero']);
 }));
-
