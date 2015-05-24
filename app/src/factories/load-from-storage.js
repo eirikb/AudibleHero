@@ -22,6 +22,8 @@ app.factory('loadFromStorage', function (version, $q, api) {
                 hours: duration.length >= 2 ? duration[0] : 0,
                 minutes: duration.length >= 2 ? duration[1] : duration[0]
               });
+            } else {
+              book.duration = moment.duration();
             }
 
             book.missing = !book.owned;
