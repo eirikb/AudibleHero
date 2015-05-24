@@ -26,11 +26,11 @@
         <div filter-control filter="filter" ng-init="filter.showOwned = true"></div>
         <div booktable books="books" filtered-books="filteredBooks" filter="filter"></div>
       </tab>
-      <tab heading="Grouped by series" ng-if="true">
-        <div grouped="bySeries"></div>
+      <tab heading="Grouped by series" select="showBySeries = true" ng-if="true">
+        <div ng-if="showBySeries" grouped="bySeries"></div>
       </tab>
-      <tab heading="Missing books by Authors" ng-if="true">
-        <div grouped="byAuthor"></div>
+      <tab heading="Missing books by Authors" select="showByAuthor = true" ng-if="true">
+        <div ng-if="showByAuthor" grouped="byAuthor"></div>
       </tab>
     </tabset>
   </div>
