@@ -5,6 +5,16 @@ app.directive('grouped', function () {
     scope: {
       grouped: '='
     },
-    template: require('../tpl/directives/grouped.html')
+    template: require('../tpl/directives/grouped.html'),
+    controller: function ($scope, saveIgnored, _) {
+      $scope.ignore = function (event, books) {
+        event.preventDefault();
+
+        _.each(books, function (book) {
+          book.ignored = true;
+        });
+        saveIgnored($scope.books);
+      }
+    }
   }
 });

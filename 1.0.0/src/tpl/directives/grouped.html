@@ -22,6 +22,9 @@
             <i class="fa fa-chevron-{{showAll ? 'down' : 'right'}}"></i>
             See all {{filteredBooks.length}} books
           </button>
+          <button type="button" class="btn btn-default" ng-click="ignore($event, filteredBooks)">
+            Ignore all visible books
+          </button>
         </h2>
       </div>
       <div class="panel-body">

@@ -4,6 +4,7 @@ app.filter('filterBooks', function () {
   return function (input, scope) {
     return _.filter(input, function (book) {
       if (scope.hideDuplicate && book.duplicate) return false;
+      if (!scope.showIgnored && book.ignored) return false;
       return book.owned && scope.showOwned || !book.owned && scope.showMissing;
     })
   };
@@ -14,12 +15,6 @@ app.filter('hasProp', function (_) {
     return _.filter(input, function (i) {
       return !!i[prop]
     });
-  };
-});
-
-app.filter('ownedAndMissing', function (_) {
-  return function (input) {
-    return _.some(input, 'owned') && _.some(input, 'missing');
   };
 });
 

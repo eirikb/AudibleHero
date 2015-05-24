@@ -1,7 +1,7 @@
 var app = require('../app.js');
 var moment = require('moment');
 
-app.factory('loadFromStorage', function (version) {
+app.factory('loadFromStorage', function (version, loadIgnored) {
   return function () {
     var data;
     try {
@@ -10,6 +10,8 @@ app.factory('loadFromStorage', function (version) {
     } catch (e) {
       return;
     }
+    var ignored = loadIgnored();
+
     data.books = _(data.books).map(function (book) {
       var duration = book.length.match(/\d+/g);
       if (duration && duration.length > 1) {
@@ -27,6 +29,8 @@ app.factory('loadFromStorage', function (version) {
       }
 
       book.missing = !book.owned;
+
+      book.ignored = _.contains(ignored, book.id);
 
       if (book.series) {
         var seriesId = book.series.url.match(/asin=(.*)/i);
