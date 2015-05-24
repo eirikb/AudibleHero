@@ -1,4 +1,4 @@
-<div class="col-md-2" ng-repeat-start="book in books | filterBooks:filter | orderBy:filter.predicate:filter.reverse"
+<div class="col-md-2" ng-repeat-start="book in books | filterBooks:filter | orderBy:filter.predicate:filter.reverse as filteredBooks"
      ng-class="{owned: book.owned}">
   <a ng-href="{{book.url}}" class="thumbnail">
     <div ng-show="book.owned && filter.fadeOwned" class="overlay"></div>

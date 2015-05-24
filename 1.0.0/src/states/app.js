@@ -3,6 +3,7 @@ var app = require('../app.js');
 app.filter('filterBooks', function () {
   return function (input, scope) {
     return _.filter(input, function (book) {
+      if (scope.hideDuplicate && book.duplicate) return false;
       return book.owned && scope.showOwned || !book.owned && scope.showMissing;
     })
   };
@@ -22,23 +23,6 @@ app.filter('ownedAndMissing', function (_) {
   };
 });
 
-app.filter('duplicateSeriesNumber', function (_) {
-  return function (input, duplicateSeriesNumber) {
-    if (!duplicateSeriesNumber) return input;
-    return _.filter(input, function (book) {
-      if (book.owned) return true;
-
-      return !_.any(input, {
-        owned: true,
-        seriesId: book.seriesId,
-        series: {
-          number: book.series.number
-        }
-      });
-    });
-  }
-});
-
 app.config(function ($stateProvider) {
   $stateProvider.state('app', {
     template: require('../tpl/states/app.html'),
@@ -47,6 +31,16 @@ app.config(function ($stateProvider) {
       var data = $scope.data = loadFromStorage();
       if (data) {
         $scope.books = data.books;
+        $scope.bySeries = _(data.books).filter(function (book) {
+          return !!book.seriesId;
+        }).groupBy('seriesId').map(function (group) {
+          group.key = _.first(group, {owned: true});
+          group.hasOwnAndMissing = _.some(group, 'owned') && _.some(group, 'missing');
+          _.each(group, function (book) {
+            book.duplicate = book.missing && _.some(group, {owned: true, series: {number: book.series.number}});
+          });
+          return group;
+        }).value();
       } else {
         $state.go('load');
       }

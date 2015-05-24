@@ -4,7 +4,8 @@ app.directive('booktable', function () {
   return {
     scope: {
       books: '=',
-      filter: '='
+      filter: '=',
+      filteredBooks: '='
     },
     template: require('../tpl/directives/books.html')
   }
