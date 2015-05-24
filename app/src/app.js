@@ -3,7 +3,7 @@ var version = inline(function (req) {
   return req('./package.json').version;
 });
 
-var app = angular.module('audiblehero', ['ui.router', 'ui.bootstrap', 'angular.filter']);
+var app = angular.module('audiblehero', ['ui.router', 'ui.bootstrap', 'angular.filter', 'smart-table']);
 
 app.constant('version', version);
 app.constant('_', _);

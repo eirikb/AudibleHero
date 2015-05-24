@@ -32,6 +32,10 @@
       <tab heading="Grouped by author" select="showByAuthor = true" ng-if="true">
         <div ng-if="showByAuthor" grouped="byAuthor"></div>
       </tab>
+      <tab heading="Table view" select="showTable = true" ng-if="true">
+        <div ng-if="showTable" tableview books="books">
+        </div>
+      </tab>
     </tabset>
   </div>
 </div>
