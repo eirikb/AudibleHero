@@ -1,5 +1,6 @@
 <div class="row">
   <div class="col-md-12">
+    Filter:
     <label>
       <input type="checkbox" ng-model="filter.showMissing">
       Show missing books
@@ -12,6 +13,11 @@
       <input type="checkbox" ng-model="filter.showIgnored">
       Show ignored books
     </label>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    Visual:
     <label>
       <input type="checkbox" ng-model="filter.showSeriesNumber">
       Show series number
@@ -24,11 +30,13 @@
 </div>
 <div class="row">
   <div class="col-md-12">
-    Order by:
+    Sorting:
     <div class="btn-group">
-      <label ng-click="filter.reverse = !filter.reverse" class="btn btn-default btn-sm" ng-model="filter.predicate" btn-radio="'series.number'">Series
+      <label ng-click="filter.reverse = !filter.reverse" class="btn btn-default btn-sm" ng-model="filter.predicate"
+             btn-radio="'series.number'">Series
         number</label>
-      <label ng-click="filter.reverse = !filter.reverse" class="btn btn-default btn-sm" ng-model="filter.predicate" btn-radio="'duration'">Hours</label>
+      <label ng-click="filter.reverse = !filter.reverse" class="btn btn-default btn-sm" ng-model="filter.predicate"
+             btn-radio="'duration'">Hours</label>
     </div>
     <label>
       <i class="fa" ng-class="{'fa-chevron-up': filter.reverse, 'fa-chevron-down': !filter.reverse}"></i>

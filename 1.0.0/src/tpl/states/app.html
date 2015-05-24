@@ -30,12 +30,16 @@
                ng-init="seriesFilter.showOwned = true; seriesFilter.showMissing = true; seriesFilter.showSeriesNumber = true; seriesFilter.predicate = 'series.number'; seriesFilter.fadeOwned = true"></div>
           <label>
             <input type="checkbox" ng-model="showOwnedAndMissing" ng-init="showOwnedAndMissing = true">
-            Only show series where you own one or more books
+            Hide series without any purchased books
+          </label>
+          <label>
+            <input type="checkbox" ng-model="duplicateSeriesNumber" ng-init="duplicateSeriesNumber = true">
+            Hide books with a series number you already own
           </label>
 
           <div class="row"
                ng-if="!showOwnedAndMissing || (books | ownedAndMissing)"
-               ng-repeat="(key, books) in books | hasProp:'seriesId' | filterBooks:seriesFilter | groupBy:'seriesId'">
+               ng-repeat="(key, books) in books | hasProp:'seriesId' | filterBooks:seriesFilter | duplicateSeriesNumber:duplicateSeriesNumber | groupBy:'seriesId'">
             <div class="col-md-12">
               <div class="panel panel-default">
                 <div class="panel-heading">

@@ -22,6 +22,23 @@ app.filter('ownedAndMissing', function (_) {
   };
 });
 
+app.filter('duplicateSeriesNumber', function (_) {
+  return function (input, duplicateSeriesNumber) {
+    if (!duplicateSeriesNumber) return input;
+    return _.filter(input, function (book) {
+      if (book.owned) return true;
+
+      return !_.any(input, {
+        owned: true,
+        seriesId: book.seriesId,
+        series: {
+          number: book.series.number
+        }
+      });
+    });
+  }
+});
+
 app.config(function ($stateProvider) {
   $stateProvider.state('app', {
     template: require('../tpl/states/app.html'),
