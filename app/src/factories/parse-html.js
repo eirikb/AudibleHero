@@ -1,4 +1,6 @@
 var app = require('../app.js');
+var _ = require('lodash');
+var $ = require('jquery');
 
 app.factory('parseHtml', function () {
   return function (html) {

@@ -1,4 +1,5 @@
 var app = require('../app.js');
+var _ = require('lodash');
 
 app.filter('filterBooks', function () {
   return function (input, scope) {
@@ -32,7 +33,6 @@ app.config(function ($stateProvider) {
     template: require('../tpl/states/app.html'),
     controller: function ($rootScope, $scope, $state, loadFromStorage) {
       $scope.loading = true;
-      $('#modalCloneLocation').hide();
 
       loadFromStorage().then(function (data) {
         if (data) {

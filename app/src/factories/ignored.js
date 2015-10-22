@@ -1,4 +1,5 @@
 var app = require('../app.js');
+var _ = require('lodash');
 
 app.factory('saveIgnored', function ($rootScope, api) {
   return function () {

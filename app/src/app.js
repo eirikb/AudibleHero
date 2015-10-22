@@ -2,6 +2,7 @@ var inline = require('inline');
 var version = inline(function (req) {
   return req('./package.json').version;
 });
+var _ = require('lodash');
 
 var app = angular.module('audiblehero', ['ui.router', 'ui.bootstrap', 'angular.filter', 'smart-table']);
 

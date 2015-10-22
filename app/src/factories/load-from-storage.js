@@ -1,5 +1,6 @@
 var app = require('../app.js');
 var moment = require('moment');
+var _ = require('lodash');
 
 app.factory('loadFromStorage', function (version, $q, api) {
   return function () {

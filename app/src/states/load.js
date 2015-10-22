@@ -1,4 +1,5 @@
 var app = require('../app.js');
+var _ = require('lodash');
 
 app.config(function ($stateProvider) {
   $stateProvider.state('load', {

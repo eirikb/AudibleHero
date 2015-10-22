@@ -1,4 +1,6 @@
 var app = require('../app.js');
+var _ = require('lodash');
+var $ = require('jquery');
 
 app.factory('getBooksByAuthor', function ($http, $q, parseHtml) {
   function run(author, page) {

@@ -1,4 +1,5 @@
 var app = require('../app.js');
+var _ = require('lodash');
 
 app.directive('grouped', function () {
   return {
