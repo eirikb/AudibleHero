@@ -12,3 +12,13 @@ chrome.webRequest.onBeforeSendHeaders.addListener(function (details) {
     urls: ['*://audible.com/*', '*://www.audible.com/*']
   },
   ['blocking', 'requestHeaders']);
+
+chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+  if (tab.url.match(/audible\.com/i)) {
+    chrome.pageAction.show(tabId);
+  }
+});
+
+chrome.pageAction.onClicked.addListener(function (tab) {
+  chrome.tabs.update(tab.id, {url: "http://www.audible.com/audiblehero"});
+});

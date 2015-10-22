@@ -1,8 +1,8 @@
-if (location.pathname.match(/audiblehero/g)) {
-  var script = document.createElement('script');
-  script.src = 'http://localhost:8000/app.js';
-  document.head.appendChild(script);
-}
+document.title = "AudibleHero";
+document.body.innerHTML = "";
+var script = document.createElement('script');
+script.src = 'http://localhost:8000/app.js';
+document.head.appendChild(script);
 
 function api(data) {
   document.dispatchEvent(new CustomEvent('audibleHeroC', {
