@@ -1,7 +1,6 @@
-var path = location.pathname.replace(/(ref=.*|\/)/g, '');
-if (!path) {
+if (location.pathname.match(/audiblehero/g)) {
   var script = document.createElement('script');
-  script.src = '//eirikb.blob.core.windows.net/audiblehero/dev-eirik/app.js';
+  script.src = 'http://localhost:8000/app.js';
   document.head.appendChild(script);
 }
 
