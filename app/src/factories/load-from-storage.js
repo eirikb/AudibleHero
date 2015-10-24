@@ -1,8 +1,4 @@
-var app = require('../app.js');
-var moment = require('moment');
-var _ = require('lodash');
-
-app.factory('loadFromStorage', function (version, $q, api) {
+angular.module('audiblehero').factory('loadFromStorage', function (version, $q, api, moment, _) {
   return function () {
     return $q(function (resolve) {
       api('load', 'local', 'data').then(function (data) {

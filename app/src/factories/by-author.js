@@ -1,8 +1,4 @@
-var app = require('../app.js');
-var _ = require('lodash');
-var $ = require('jquery');
-
-app.factory('getBooksByAuthor', function ($http, $q, parseHtml) {
+angular.module('audiblehero').factory('getBooksByAuthor', function ($http, $q, parseHtml, _, $) {
   function run(incognito, author, page) {
     if (!page) page = 1;
 

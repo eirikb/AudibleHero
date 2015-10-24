@@ -1,6 +1,4 @@
-var app = require('../app.js');
-
-app.filter('filterBooks', function () {
+angular.module('audiblehero').filter('filterBooks', function () {
   return function (input, scope) {
     return _.filter(input, function (book) {
       if (scope.hideDuplicate && book.duplicate) return false;

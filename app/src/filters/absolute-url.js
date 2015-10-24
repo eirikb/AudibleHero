@@ -1,6 +1,4 @@
-var app = require('../app.js');
-
-app.filter('absoluteUrl', function (selfUrl) {
+angular.module('audiblehero').filter('absoluteUrl', function (selfUrl) {
   return function (url) {
     return selfUrl + '/' + url;
   };

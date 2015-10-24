@@ -1,6 +1,4 @@
-var app = require('../../app.js');
-
-app.directive('tableview', function () {
+angular.module('audiblehero').directive('tableview', function () {
   return {
     scope: {
       books: '='

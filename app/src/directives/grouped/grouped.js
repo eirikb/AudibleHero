@@ -1,7 +1,4 @@
-var app = require('../../app.js');
-var _ = require('lodash');
-
-app.directive('grouped', function () {
+angular.module('audiblehero').directive('grouped', function (_) {
   return {
     scope: {
       grouped: '='

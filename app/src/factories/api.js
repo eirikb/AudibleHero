@@ -1,6 +1,4 @@
-var app = require('../app.js');
-
-app.factory('api', function ($q) {
+angular.module('audiblehero').factory('api', function ($q) {
   var resolve;
 
   document.addEventListener('audibleHeroC', function (e) {

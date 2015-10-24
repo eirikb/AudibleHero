@@ -1,7 +1,4 @@
-var app = require('../../app.js');
-var _ = require('lodash');
-
-app.config(function ($stateProvider) {
+angular.module('audiblehero').config(function ($stateProvider, _) {
   $stateProvider.state('load', {
     url: "/load",
     template: require('./load.html'),

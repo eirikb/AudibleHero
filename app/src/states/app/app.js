@@ -1,20 +1,18 @@
-var app = require('../../app.js');
-var _ = require('lodash');
-
-function asGroup(group) {
-  group.key = _.first(group, {owned: true});
-  group.hasOwnAndMissing = _.some(group, 'owned') && _.some(group, 'missing');
-  _.each(group, function (book) {
-    book.duplicate = book.missing && _.some(group, {owned: true, series: {number: (book.series || {}).number}});
-  });
-  return group;
-}
-
-app.config(function ($stateProvider) {
+angular.module('audiblehero').config(function ($stateProvider, _) {
   $stateProvider.state('app', {
     url: "/",
     template: require('./app.html'),
     controller: function ($rootScope, $scope, $state, loadFromStorage) {
+
+      function asGroup(group) {
+        group.key = _.first(group, {owned: true});
+        group.hasOwnAndMissing = _.some(group, 'owned') && _.some(group, 'missing');
+        _.each(group, function (book) {
+          book.duplicate = book.missing && _.some(group, {owned: true, series: {number: (book.series || {}).number}});
+        });
+        return group;
+      }
+
       $scope.loading = true;
 
       loadFromStorage().then(function (data) {

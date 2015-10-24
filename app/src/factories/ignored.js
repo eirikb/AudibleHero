@@ -1,7 +1,4 @@
-var app = require('../app.js');
-var _ = require('lodash');
-
-app.factory('saveIgnored', function ($rootScope, api) {
+angular.module('audiblehero').factory('saveIgnored', function ($rootScope, api, _) {
   return function () {
     var ignored = _($rootScope.books).where({ignored: true}).map(function (book) {
       return book.id;

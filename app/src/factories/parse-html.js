@@ -1,8 +1,4 @@
-var app = require('../app.js');
-var _ = require('lodash');
-var $ = require('jquery');
-
-app.factory('parseHtml', function () {
+angular.module('audiblehero').factory('parseHtml', function (_, $) {
   return function (html) {
     html = html.replace(/<img[^>]*>/g, function (img) {
       return img.replace(/ src=/i, ' data-src=');

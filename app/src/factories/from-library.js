@@ -1,8 +1,4 @@
-var app = require('../app.js');
-var _ = require('lodash');
-var $ = require('jquery');
-
-app.factory('getLibraryBooks', function ($http, parseHtml) {
+angular.module('audiblehero').factory('getLibraryBooks', function ($http, parseHtml, _, $) {
   return function () {
     return $http({
       url: '/lib-ajax',

@@ -1,6 +1,4 @@
-var app = require('../../app.js');
-
-app.directive('booktable', function () {
+angular.module('audiblehero').directive('booktable', function () {
   return {
     scope: {
       books: '=',
