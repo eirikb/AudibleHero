@@ -6,6 +6,10 @@ var _ = require('lodash');
 
 var app = angular.module('audiblehero', ['ui.router', 'ui.bootstrap', 'angular.filter', 'smart-table']);
 
+app.config(function ($urlRouterProvider) {
+  $urlRouterProvider.otherwise('/');
+});
+
 var selfUrl = _.initial(angular.element(document.currentScript).attr('src').split('/')).join('/');
 
 app.constant('version', version);
