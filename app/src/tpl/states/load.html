@@ -7,18 +7,43 @@
     <h3 class="panel-title">Start</h3>
   </div>
   <div ng-class="{'bg-success': active > -1}" class="panel-body">
-    <button type="button" class="btn btn-lg btn-primary" ng-show="active === -1" ng-click="start()">
-      Click here to start update
-    </button>
-    <!--
-    <div class="clearfix"></div>
-    <button type="button" class="btn btn-sm btn-default" ng-show="active === -1" ng-click="clearStorage()">
-      Clear local database
-    </button>
-    <button type="button" class="btn btn-sm btn-default" ng-show="active === -1" ng-click="clear()">
-      Clear all ignored books (Un-ignore all)
-    </button>
-    -->
+    <ul class="list-group">
+      <li class="list-group-item">
+        <button type="button" class="btn btn-lg btn-primary" ng-show="active === -1" ng-click="start()">
+          Click here to start update
+        </button>
+        <small>(this may take several minutes)</small>
+      </li>
+      <li class="list-group-item">
+        <div class="well">
+          <h3><i class="fa fa-info"></i> Note:</h3>
+          AudibleHero will not make any changes to your Audible, it will only read data from the web site
+          and display the results to you.
+          <h4>How it works:</h4>
+          AudibleHero will;
+          <ol>
+            <li>load your library.</li>
+            <li>find all authors you have purchased books from.</li>
+            <li>find all books published by these authors.</li>
+            <li>group books by series.</li>
+            <li>group books by authors.</li>
+            <li>repeat 2.- 5. with incognito mode.</li>
+          </ol>
+          The list of books is stored on your computer, so if you go to another computer you have to run update again.
+          <br>
+          It is nevertheless wise to run update every time you open AudibleHero looking for a new book,
+          or else AudibleHero will not know about them.
+          <h5>Incognito</h5>
+          AudibleHero will run the update twice, once as your user and once as incognito.
+          <br>
+          Reason is that books you can see are regional based. If you do a search in incognito you will see all books.
+          <br>
+          It is possible to buy books cross regionality.
+          <br>
+          In order to determine if a book appeared only when in incognito the update is ran twice.
+        </div>
+      </li>
+    </ul>
   </div>
 </div>
 
@@ -32,10 +57,10 @@
     <h2 ng-show="active === 0">
       <i class="fa fa-spin fa-spinner"></i>
       Loading your library
-      <small>(this may take several minutes)</small>
       ...
       <i class="fa fa-chevron-right"></i>
     </h2>
+
     <h2 ng-show="active > 0">
       Found {{bookCount}} books
     </h2>
