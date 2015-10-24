@@ -1,0 +1,53 @@
+<table st-table="books" class="table table-striped">
+  <thead>
+  <tr>
+    <th></th>
+    <th>Title</th>
+    <th>Authors</th>
+    <th>Ignored</th>
+    <th>Downloaded</th>
+    <th>Purchased</th>
+    <th>Released</th>
+    <th>Length</th>
+    <th>Missing</th>
+    <th>Ratings</th>
+    <th>Score</th>
+    <th>Series</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr ng-repeat="book in books">
+    <td>
+      <a href="{{book.url}}">
+        <img ng-src="{{book.thumbnailUrl}}" class="thumb img-responsive">
+      </a>
+    </td>
+    <td>
+      <a href="{{book.url}}">
+        {{book.title}}
+      </a>
+    </td>
+    <td>
+      <span ng-repeat="author in book.authors track by $index">{{author}}</span>
+    </td>
+    <td>{{book.ignored}}</td>
+    <td>{{book.downloaded}}</td>
+    <td>{{book.datePurchased}}</td>
+    <td>{{book.dateReleased}}</td>
+    <td>{{book.length}}</td>
+    <td>{{book.missing}}</td>
+    <td>{{book.ratings}}</td>
+    <td>{{book.score}}</td>
+    <td>
+      <a ng-if="book.series" href="{{book.series.url}}">{{book.series.name}}</a>
+    </td>
+  </tr>
+  </tbody>
+  <tfoot>
+  <tr>
+    <td colspan="5" class="text-center">
+      <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>
+    </td>
+  </tr>
+  </tfoot>
+</table>
