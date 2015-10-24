@@ -12,7 +12,7 @@ angular.module('audiblehero').directive('booktable', function () {
 
         book.ignored = !book.ignored;
         saveIgnored();
-      }
+      };
     }
-  }
+  };
 });

@@ -4,6 +4,7 @@ var version = inline(function (req) {
 });
 var _ = require('lodash');
 var moment = require('moment');
+var jQuery = require('jquery');
 
 var app = angular.module('audiblehero', ['ui.router', 'ui.bootstrap', 'angular.filter', 'smart-table']);
 
@@ -17,6 +18,7 @@ app.constant('version', version);
 app.constant('_', _);
 app.constant('selfUrl', selfUrl);
 app.constant('moment', moment);
+app.constant('$', jQuery);
 
 _(_).keys().each(function (key) {
   app.filter('_' + key, function () {

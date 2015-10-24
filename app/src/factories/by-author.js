@@ -69,7 +69,7 @@ angular.module('audiblehero').factory('getBooksByAuthor', function ($http, $q, p
       })).then(function (allBooks) {
         books = books.concat(_.flatten(allBooks));
         return books;
-      })
+      });
     });
   }
 

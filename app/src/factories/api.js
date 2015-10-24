@@ -2,7 +2,7 @@ angular.module('audiblehero').factory('api', function ($q) {
   var resolve;
 
   document.addEventListener('audibleHeroC', function (e) {
-    resolve && resolve(e.detail);
+    if (resolve) resolve(e.detail);
   });
 
   return function (name, type, data) {
@@ -16,5 +16,5 @@ angular.module('audiblehero').factory('api', function ($q) {
         }
       }));
     });
-  }
+  };
 });
