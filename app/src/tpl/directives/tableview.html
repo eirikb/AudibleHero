@@ -1,18 +1,21 @@
 <table st-table="books" class="table table-striped">
   <thead>
+  <th colspan="12">
+    <input st-search placeholder="global search" class="input-sm form-control" type="search"/>
+  </th>
   <tr>
     <th></th>
-    <th>Title</th>
-    <th>Authors</th>
-    <th>Ignored</th>
-    <th>Downloaded</th>
-    <th>Purchased</th>
-    <th>Released</th>
-    <th>Length</th>
-    <th>Missing</th>
-    <th>Ratings</th>
-    <th>Score</th>
-    <th>Series</th>
+    <th st-sort="title">Title</th>
+    <th style="width: 15%" st-sort="authors">Authors</th>
+    <th st-sort="ignored">Ignored</th>
+    <th st-sort="downloaded">Downloaded</th>
+    <th st-sort="datePurchased">Purchased</th>
+    <th st-sort="dateReleased">Released</th>
+    <th st-sort="length">Length</th>
+    <th st-sort="missing">Missing</th>
+    <th st-sort="ratings">Ratings</th>
+    <th st-sort="score">Score</th>
+    <th st-sort="series">Series</th>
   </tr>
   </thead>
   <tbody>
