@@ -1,6 +1,6 @@
 <table st-table="books" class="table table-striped">
   <thead>
-  <th colspan="12">
+  <th colspan="13">
     <input st-search placeholder="global search" class="input-sm form-control" type="search"/>
   </th>
   <tr>
@@ -9,6 +9,7 @@
     <th style="width: 15%" st-sort="authors">Authors</th>
     <th st-sort="ignored">Ignored</th>
     <th st-sort="downloaded">Downloaded</th>
+    <th st-sort="incognito">Incognito</th>
     <th st-sort="datePurchased">Purchased</th>
     <th st-sort="dateReleased">Released</th>
     <th st-sort="length">Length</th>
@@ -35,6 +36,7 @@
     </td>
     <td>{{book.ignored}}</td>
     <td>{{book.downloaded}}</td>
+    <td>{{book.incognito}}</td>
     <td>{{book.datePurchased}}</td>
     <td>{{book.dateReleased}}</td>
     <td>{{book.length}}</td>
