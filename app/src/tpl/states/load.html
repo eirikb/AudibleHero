@@ -7,9 +7,9 @@
     <h3 class="panel-title">Start</h3>
   </div>
   <div ng-class="{'bg-success': active > -1}" class="panel-body">
-    <ul class="list-group">
+    <ul class="list-group" ng-show="active === -1">
       <li class="list-group-item">
-        <button type="button" class="btn btn-lg btn-primary" ng-show="active === -1" ng-click="start()">
+        <button type="button" class="btn btn-lg btn-primary" ng-click="start()">
           Click here to start update
         </button>
         <small>(this may take several minutes)</small>
