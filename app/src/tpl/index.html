@@ -1,5 +1,12 @@
-<link rel="stylesheet" href="http://localhost:8000/app.css">
+<link rel="stylesheet" href="{{'app.css' | absoluteUrl}}">
 <div id="audiblehero">
-  <div ui-view></div>
+  <div class="container">
+
+    <a href="/" class="btn btn-default btn-small">
+      <i class="fa fa-arrow-left">Back to audible</i>
+    </a>
+
+    <div ui-view></div>
+  </div>
 </div>
 
