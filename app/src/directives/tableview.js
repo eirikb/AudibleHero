@@ -5,9 +5,6 @@ app.directive('tableview', function () {
     scope: {
       books: '='
     },
-    template: require('../tpl/directives/tableview.html'),
-    controller: function ($scope) {
-      console.log($scope.books);
-    }
+    template: require('../tpl/directives/tableview.html')
   };
 });
