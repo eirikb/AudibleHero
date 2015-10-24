@@ -7,7 +7,7 @@ app.filter('filterBooks', function () {
       if (scope.hideDuplicate && book.duplicate) return false;
       if (!scope.showIgnored && book.ignored) return false;
       return book.owned && scope.showOwned || !book.owned && scope.showMissing;
-    })
+    });
   };
 });
 
@@ -30,6 +30,7 @@ function asGroup(group) {
 
 app.config(function ($stateProvider) {
   $stateProvider.state('app', {
+    url: "",
     template: require('../tpl/states/app.html'),
     controller: function ($rootScope, $scope, $state, loadFromStorage) {
       $scope.loading = true;
@@ -68,5 +69,5 @@ app.config(function ($stateProvider) {
 });
 
 app.run(function ($state) {
-  $state.go('app');
+  //$state.go('app');
 });

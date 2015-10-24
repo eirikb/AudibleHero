@@ -3,6 +3,7 @@ var _ = require('lodash');
 
 app.config(function ($stateProvider) {
   $stateProvider.state('load', {
+    url: "/load",
     template: require('../tpl/states/load.html'),
     controller: function ($scope, $state, getLibraryBooks, getBooksByAuthor, $q, $log, version, api) {
 
