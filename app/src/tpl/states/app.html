@@ -1,38 +1,38 @@
-<h1>Welcome to AudibleHero!</h1>
-<label ng-show="loading">Loading...</label>
-<label ng-show="!loading">Don't listen to them, we <i>read</i> books!</label>
+<div class="col-md-3">
+  <img src="{{'img/superhero.png' | absoluteUrl}}">
+</div>
+<div class="col-md-9">
+  <h1>Welcome to AudibleHero!</h1>
+  <label ng-show="loading">Loading...</label>
+  <label ng-show="!loading">Don't listen to them, we <i>read</i> books!</label>
 
-<div ng-if="data">
+  <div ng-if="data">
+    <p>Last update: {{data.updated | date:'medium'}}</p>
+    <a class="btn btn-primary" ui-sref="load">Update now</a>
 
-  <p>Last update: {{data.updated | date:'medium'}}</p>
-  <a class="btn btn-primary" ui-sref="load">Update now</a>
-
-  <div class="row">
-    You have <span class="badge">{{(books | where:{owned: true}).length | number:0}}</span> books in your library.
-    Of these you have downloaded <span class="badge">{{ (books | where:{downloaded:true}).length | number:0}}</span>.
-    That is a total of <span class="badge">{{books | where:{downloaded:true} | map:'duration.asHours()' | _sum | number:0}}</span>
-    hours downloaded (and probably
-    listened
-    to!).
-    Found <span class="badge">{{data.books.length | number:0}}</span> books based on your authors.
+    <div class="row">
+      <p>
+        You have <span class="badge">{{(books | where:{owned: true}).length | number:0}}</span> books in your library.
+        <br>
+        Of these you have downloaded <span class="badge">{{ (books | where:{downloaded:true}).length | number:0}}</span>.
+        <br>
+        That is a total of <span class="badge">{{books | where:{downloaded:true} | map:'duration.asHours()' | _sum | number:0}}</span>
+        hours downloaded (and probably listened to!).
+        <br>
+        Found <span class="badge">{{data.books.length | number:0}}</span> books based on your authors.
+      </p>
+    </div>
   </div>
 </div>
 
 <div class="col-md-12" ng-if="data">
   <tabset>
-    <tab heading="All books" ng-if="true">
-      <div filter-control filter="filter" ng-init="filter.predicate = 'title';filter.showOwned = true"></div>
-      <div booktable books="books" filtered-books="filteredBooks" filter="filter"></div>
-    </tab>
-    <tab heading="Grouped by series" select="showBySeries = true" ng-if="true">
-      <div ng-if="showBySeries" grouped="bySeries"></div>
-    </tab>
-    <tab heading="Grouped by author" select="showByAuthor = true" ng-if="true">
-      <div ng-if="showByAuthor" grouped="byAuthor"></div>
-    </tab>
-    <tab heading="Table view" select="showTable = true" ng-if="true">
-      <div ng-if="showTable" tableview books="books">
+    <tab heading="All books" select="showTable = true" ng-if="true">
+      <div tableview books="books">
       </div>
+    </tab>
+    <tab heading="New books" select="showBySeries = true" ng-if="true">
+      <div ng-if="showBySeries" grouped="bySeries"></div>
     </tab>
   </tabset>
 </div>

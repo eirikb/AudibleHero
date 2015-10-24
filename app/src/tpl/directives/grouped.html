@@ -1,10 +1,10 @@
-<div filter-control filter="filter"
+<div filter-control filter="filter" ng-show="false"
      ng-init="filter.showMissing = true; filter.showSeriesNumber = true; filter.predicate = 'series.number'; filter.fadeOwned = true"></div>
-<label>
+<label ng-show="false">
   <input type="checkbox" ng-model="showOwnedAndMissing" ng-init="showOwnedAndMissing = true">
   Hide series without any purchased books
 </label>
-<label>
+<label ng-show="false">
   <input type="checkbox" ng-model="filter.hideDuplicate" ng-init="filter.hideDuplicate = true">
   Hide books with a series number you already own
 </label>
