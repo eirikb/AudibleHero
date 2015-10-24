@@ -7,8 +7,8 @@
     <th></th>
     <th st-sort="title">Title</th>
     <th style="width: 15%" st-sort="authors">Authors</th>
-    <th st-sort="ignored">Ignored</th>
     <th st-sort="downloaded">Downloaded</th>
+    <th st-sort="ignored">Ignored</th>
     <th st-sort="incognito">Incognito</th>
     <th st-sort="datePurchased">Purchased</th>
     <th st-sort="dateReleased">Released</th>
@@ -34,8 +34,8 @@
     <td>
       <span ng-repeat="author in book.authors track by $index">{{author}}</span>
     </td>
-    <td>{{book.ignored}}</td>
     <td>{{book.downloaded}}</td>
+    <td>{{book.ignored}}</td>
     <td>{{book.incognito}}</td>
     <td>{{book.datePurchased}}</td>
     <td>{{book.dateReleased}}</td>
