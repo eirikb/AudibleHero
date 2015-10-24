@@ -2,8 +2,20 @@
 <div id="audiblehero">
   <div class="container">
 
-    <a href="/" class="btn btn-default btn-small">
+    <a href="/">
       <i class="fa fa-arrow-left">Back to audible</i>
+    </a>
+
+    <a ui-sref="app" class="btn btn-default btn-small">
+      <i class="fa fa-home">Home</i>
+    </a>
+
+    <a ui-sref="load" class="btn btn-default btn-small">
+      <i class="fa fa-cloud-download">Update book list</i>
+    </a>
+
+    <a ui-sref="about" class="btn btn-default btn-small">
+      <i class="fa fa-info">About / Help / FAQ</i>
     </a>
 
     <div ui-view></div>
