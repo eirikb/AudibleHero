@@ -1,4 +1,4 @@
-var app = require('../app.js');
+var app = require('../../app.js');
 var _ = require('lodash');
 
 app.directive('grouped', function () {
@@ -6,7 +6,7 @@ app.directive('grouped', function () {
     scope: {
       grouped: '='
     },
-    template: require('../tpl/directives/grouped.html'),
+    template: require('./grouped.html'),
     controller: function ($scope, _, saveIgnored) {
       $scope.ignore = function (event, books) {
         event.preventDefault();
@@ -16,7 +16,7 @@ app.directive('grouped', function () {
         });
 
         saveIgnored();
-      }
+      };
     }
-  }
+  };
 });

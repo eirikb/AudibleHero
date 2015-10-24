@@ -1,4 +1,4 @@
-var app = require('../app.js');
+var app = require('../../app.js');
 
 app.directive('booktable', function () {
   return {
@@ -7,7 +7,7 @@ app.directive('booktable', function () {
       filter: '=',
       filteredBooks: '='
     },
-    template: require('../tpl/directives/books.html'),
+    template: require('./books.html'),
     controller: function ($scope, saveIgnored) {
       $scope.ignore = function (event, book) {
         event.preventDefault();

@@ -8,5 +8,5 @@ require('lodash');
 var bulk = require('bulk-require');
 bulk(__dirname, 'src/**/*js');
 
-document.body.innerHTML = require('./src/tpl/index.html');
+document.body.innerHTML = require('./src/index.html');
 angular.bootstrap(document, ['audiblehero']);

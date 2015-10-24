@@ -1,23 +1,5 @@
-var app = require('../app.js');
+var app = require('../../app.js');
 var _ = require('lodash');
-
-app.filter('filterBooks', function () {
-  return function (input, scope) {
-    return _.filter(input, function (book) {
-      if (scope.hideDuplicate && book.duplicate) return false;
-      if (!scope.showIgnored && book.ignored) return false;
-      return book.owned && scope.showOwned || !book.owned && scope.showMissing;
-    });
-  };
-});
-
-app.filter('hasProp', function (_) {
-  return function (input, prop) {
-    return _.filter(input, function (i) {
-      return !!i[prop]
-    });
-  };
-});
 
 function asGroup(group) {
   group.key = _.first(group, {owned: true});
@@ -31,7 +13,7 @@ function asGroup(group) {
 app.config(function ($stateProvider) {
   $stateProvider.state('app', {
     url: "/",
-    template: require('../tpl/states/app.html'),
+    template: require('./app.html'),
     controller: function ($rootScope, $scope, $state, loadFromStorage) {
       $scope.loading = true;
 
@@ -66,8 +48,4 @@ app.config(function ($stateProvider) {
       });
     }
   });
-});
-
-app.run(function ($state) {
-  //$state.go('app');
 });
