@@ -30,7 +30,7 @@ function asGroup(group) {
 
 app.config(function ($stateProvider) {
   $stateProvider.state('app', {
-    url: "",
+    url: "/",
     template: require('../tpl/states/app.html'),
     controller: function ($rootScope, $scope, $state, loadFromStorage) {
       $scope.loading = true;

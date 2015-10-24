@@ -3,7 +3,7 @@ var _ = require('lodash');
 var $ = require('jquery');
 
 app.factory('getBooksByAuthor', function ($http, $q, parseHtml) {
-  function run(author, page) {
+  function run(incognito, author, page) {
     if (!page) page = 1;
 
     return $http({
@@ -12,7 +12,7 @@ app.factory('getBooksByAuthor', function ($http, $q, parseHtml) {
         searchPage: page,
         searchSize: 50,
         searchAuthor: author,
-        fix: "NOCOOKIE"
+        fix: incognito ? "NOCOOKIE" : ""
       }
     }).then(function (res) {
       var html = parseHtml(res.data);
@@ -69,7 +69,7 @@ app.factory('getBooksByAuthor', function ($http, $q, parseHtml) {
       }
 
       return $q.all(_.map(pages, function (page) {
-        return run(author, page);
+        return run(incognito, author, page);
       })).then(function (allBooks) {
         books = books.concat(_.flatten(allBooks));
         return books;

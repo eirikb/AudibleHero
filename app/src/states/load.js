@@ -26,10 +26,17 @@ app.config(function ($stateProvider) {
             return {
               name: author,
               loading: true
-            }
+            };
           }).value();
           $q.all(_.map($scope.authors, function (author) {
-            return getBooksByAuthor(author.name).then(function (books) {
+            return $q.all({
+              normal: getBooksByAuthor(false, author.name),
+              incognito: getBooksByAuthor(true, author.name)
+            }).then(function (res) {
+              var books = res.incognito;
+              _.each(books, function (book) {
+                book.incognito = !_.some(res.normal, {id: book.id});
+              });
               author.loading = false;
               author.bookCount = books.length;
               return books;

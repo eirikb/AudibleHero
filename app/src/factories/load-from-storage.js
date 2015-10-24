@@ -9,9 +9,12 @@ app.factory('loadFromStorage', function (version, $q, api) {
         data = (data || {}).data;
         api('load', 'sync', 'ignored').then(function (ignored) {
           ignored = (ignored || {}).ignored;
-          if (data) data.updated = new Date(data.updated);
+          if (data) {
+            data.updated = new Date(data.updated);
+            data.books = _.filter([].concat(data.books), 'id');
+          }
 
-          if (!data || !data.books) {
+          if (!data || !data.books || data.books.length === 0) {
             resolve();
             return;
           }
