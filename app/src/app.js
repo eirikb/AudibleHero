@@ -9,7 +9,7 @@ var jQuery = require('jquery');
 var app = angular.module('audiblehero', ['ui.router', 'ui.bootstrap', 'angular.filter', 'smart-table']);
 
 app.config(function ($urlRouterProvider) {
-  $urlRouterProvider.otherwise('/');
+  $urlRouterProvider.otherwise('/newbooks');
 });
 
 var selfUrl = _.initial(angular.element(document.currentScript).attr('src').split('/')).join('/');
