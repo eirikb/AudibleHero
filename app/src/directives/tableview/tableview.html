@@ -1,4 +1,4 @@
-<table st-table="books" class="table table-striped">
+<table st-table="displayBooks" st-safe-src="books" st-set-filter="stCustomFilter" class="table table-striped">
   <thead>
   <th colspan="13">
     <input st-search placeholder="global search" class="input-sm form-control" type="search"/>
@@ -7,20 +7,32 @@
     <th></th>
     <th st-sort="title">Title</th>
     <th style="width: 15%" st-sort="authors">Authors</th>
-    <th st-sort="downloaded">Downloaded</th>
-    <th st-sort="ignored">Ignored</th>
-    <th st-sort="incognito">Incognito</th>
+    <th>
+      <span st-sort="downloaded">Downloaded</span>
+      <st-select-boolean predicate="downloaded"></st-select-boolean>
+    </th>
+    <th>
+      <span st-sort="ignored">Ignored</span>
+      <st-select-boolean predicate="ignored"></st-select-boolean>
+    </th>
+    <th>
+      <span st-sort="incognito">Incognito</span>
+      <st-select-boolean predicate="incognito"></st-select-boolean>
+    </th>
+    <th>
+      <span st-sort="missing"> Missing</span>
+      <st-select-boolean predicate="missing"></st-select-boolean>
+    </th>
     <th st-sort="datePurchased">Purchased</th>
     <th st-sort="dateReleased">Released</th>
     <th st-sort="length">Length</th>
-    <th st-sort="missing">Missing</th>
     <th st-sort="ratings">Ratings</th>
     <th st-sort="score">Score</th>
     <th st-sort="series">Series</th>
   </tr>
   </thead>
   <tbody>
-  <tr ng-repeat="book in books">
+  <tr ng-repeat="book in displayBooks">
     <td>
       <a href="{{book.url}}">
         <img ng-src="{{book.thumbnailUrl}}" class="thumb img-responsive">
@@ -37,10 +49,10 @@
     <td>{{book.downloaded}}</td>
     <td>{{book.ignored}}</td>
     <td>{{book.incognito}}</td>
+    <td>{{book.missing}}</td>
     <td>{{book.datePurchased}}</td>
     <td>{{book.dateReleased}}</td>
     <td>{{book.length}}</td>
-    <td>{{book.missing}}</td>
     <td>{{book.ratings}}</td>
     <td>{{book.score}}</td>
     <td>
@@ -51,7 +63,7 @@
   <tfoot>
   <tr>
     <td colspan="5" class="text-center">
-      <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>
+      <div st-pagination="" st-items-by-page="10" st-displayed-pages="7"></div>
     </td>
   </tr>
   </tfoot>

@@ -3,6 +3,9 @@ angular.module('audiblehero').directive('tableview', function () {
     scope: {
       books: '='
     },
-    template: require('./tableview.html')
+    template: require('./tableview.html'),
+    controller: function ($scope) {
+      $scope.displayBooks = [].concat($scope.books);
+    }
   };
 });
