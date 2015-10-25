@@ -2,7 +2,7 @@ angular.module('audiblehero').config(function ($stateProvider, _) {
   $stateProvider.state('app', {
     url: "/",
     template: require('./app.html'),
-    controller: function ($scope, $state, loadFromStorage) {
+    controller: function ($rootScope, $scope, $state, loadFromStorage) {
 
       function asGroup(group) {
         group.key = _.first(group, {owned: true});
@@ -18,7 +18,7 @@ angular.module('audiblehero').config(function ($stateProvider, _) {
       loadFromStorage().then(function (data) {
         if (data) {
           $scope.data = data;
-          $scope.books = data.books;
+          $rootScope.books = $scope.books = data.books;
 
           $scope.bySeries = _(data.books).filter(function (book) {
             return !!book.seriesId;
