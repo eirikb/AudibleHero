@@ -46,10 +46,18 @@
     <td>
       <span ng-repeat="author in book.authors track by $index">{{author}}</span>
     </td>
-    <td>{{book.downloaded}}</td>
-    <td>{{book.ignored}}</td>
-    <td>{{book.incognito}}</td>
-    <td>{{book.missing}}</td>
+    <td>
+      <i ng-show="book.downloaded" class="fa fa-check"></i>
+    </td>
+    <td>
+      <i ng-show="book.ignored" class="fa fa-check"></i>
+    </td>
+    <td>
+      <i ng-show="book.incognito" class="fa fa-check"> </i>
+    </td>
+    <td>
+      <i ng-show="book.missing" class="fa fa-check"></i>
+    </td>
     <td>{{book.datePurchased}}</td>
     <td>{{book.dateReleased}}</td>
     <td>{{book.length}}</td>
