@@ -52,6 +52,10 @@
     </td>
     <td>
       <i ng-show="book.ignored" class="fa fa-check"></i>
+      <button class="btn btn-default btn-sm" ng-click="toggleIgnore(book)">
+        <span ng-show="book.ignored">Un-ignore</span>
+        <span ng-show="!book.ignored">Ignore</span>
+      </button>
     </td>
     <td>
       <i ng-show="book.incognito" class="fa fa-check"> </i>
