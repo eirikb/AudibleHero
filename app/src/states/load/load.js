@@ -65,7 +65,7 @@ angular.module('audiblehero').config(function ($stateProvider, _) {
                 books: allBooks
               }
             }).then(function () {
-              $state.go('app');
+              $state.go('app.newbooks');
             });
           });
         });
