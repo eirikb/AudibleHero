@@ -26,13 +26,19 @@
 </div>
 
 <div class="col-md-12" ng-if="data">
-  <tabset>
-    <tab heading="All books" select="showTable = true" ng-if="true">
-      <div tableview books="books">
-      </div>
-    </tab>
-    <tab heading="New books" select="showBySeries = true" ng-if="true">
-      <div ng-if="showBySeries" grouped="bySeries"></div>
-    </tab>
-  </tabset>
+  <ul class="nav nav-tabs">
+    <li ui-sref-active="active"><a ui-sref="app.newbooks">New Books</a></li>
+    <li ui-sref-active="active"><a ui-sref="app.allbooks">All Books</a></li>
+  </ul>
+  <ui-view></ui-view>
+
+  <!--<tabset>-->
+  <!--<tab heading="All books" select="showTable = true" ng-if="true">-->
+  <!--<div tableview books="books">-->
+  <!--</div>-->
+  <!--</tab>-->
+  <!--<tab heading="New books" select="showBySeries = true" ng-if="true">-->
+  <!--<div ng-if="showBySeries" grouped="bySeries"></div>-->
+  <!--</tab>-->
+  <!--</tabset>-->
 </div>

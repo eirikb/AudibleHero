@@ -1,10 +1,9 @@
-angular.module('audiblehero').directive('grouped', function (_) {
-  return {
-    scope: {
-      grouped: '='
-    },
-    template: require('./grouped.html'),
+angular.module('audiblehero').config(function ($stateProvider) {
+  $stateProvider.state('app.newbooks', {
+    url: "newbooks",
+    template: require('./new-books.html'),
     controller: function ($scope, _, saveIgnored) {
+      $scope.grouped = $scope.bySeries;
       $scope.ignore = function (event, books) {
         event.preventDefault();
 
@@ -15,5 +14,5 @@ angular.module('audiblehero').directive('grouped', function (_) {
         saveIgnored();
       };
     }
-  };
+  });
 });
