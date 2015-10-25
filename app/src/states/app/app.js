@@ -2,7 +2,7 @@ angular.module('audiblehero').config(function ($stateProvider, _) {
   $stateProvider.state('app', {
     url: "/",
     template: require('./app.html'),
-    controller: function ($rootScope, $scope, $state, loadFromStorage) {
+    controller: function ($scope, $state, loadFromStorage) {
 
       function asGroup(group) {
         group.key = _.first(group, {owned: true});
@@ -18,7 +18,7 @@ angular.module('audiblehero').config(function ($stateProvider, _) {
       loadFromStorage().then(function (data) {
         if (data) {
           $scope.data = data;
-          $rootScope.books = $scope.books = data.books;
+          $scope.books = data.books;
 
           $scope.bySeries = _(data.books).filter(function (book) {
             return !!book.seriesId;
@@ -28,17 +28,6 @@ angular.module('audiblehero').config(function ($stateProvider, _) {
             return group;
           }).value();
 
-          $scope.byAuthor = _(data.books).map(function (book) {
-            return _.map(book.authors, function (author) {
-              return _.assign({
-                author: author
-              }, book);
-            });
-          }).flatten().groupBy('author').map(asGroup).map(function (group) {
-            group.title = group.key.author;
-            group.url = "http://www.audible.com/search?searchAuthor=" + group.title;
-            return group;
-          }).value();
           $scope.loading = false;
         } else {
           $state.go('load');
