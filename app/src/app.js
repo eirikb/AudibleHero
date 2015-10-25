@@ -6,7 +6,7 @@ var _ = require('lodash');
 var moment = require('moment');
 var jQuery = require('jquery');
 
-var app = angular.module('audiblehero', ['ui.router', 'ui.bootstrap', 'angular.filter', 'smart-table']);
+var app = angular.module('audiblehero', ['ui.router', 'angular.filter', 'smart-table']);
 
 app.config(function ($urlRouterProvider) {
   $urlRouterProvider.otherwise('/newbooks');

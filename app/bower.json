@@ -6,7 +6,6 @@
     "angular-ui-router": "~0.2.14",
     "bootstrap": "~3.3.4",
     "moment": "~2.10.2",
-    "angular-bootstrap": "~0.13.0",
     "font-awesome": "~4.3.0",
     "angular-filter": "~0.5.4",
     "angular-smart-table": "~2.0.3"

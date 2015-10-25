@@ -1,6 +1,5 @@
 require('angular');
 require('angular-ui-router');
-require('angular-bootstrap');
 require('angular-filter');
 require('angular-smart-table');
 require('lodash');
