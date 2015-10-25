@@ -25,10 +25,11 @@
     </th>
     <th st-sort="datePurchased">Purchased</th>
     <th st-sort="dateReleased">Released</th>
-    <th st-sort="length">Length</th>
+    <th st-sort="duration">Length</th>
     <th st-sort="ratings">Ratings</th>
     <th st-sort="score">Score</th>
     <th st-sort="series">Series</th>
+    <th st-sort="series.number">Series number</th>
   </tr>
   </thead>
   <tbody>
@@ -66,6 +67,7 @@
     <td>
       <a ng-if="book.series" href="{{book.series.url}}">{{book.series.name}}</a>
     </td>
+    <td>{{book.series.number}}</td>
   </tr>
   </tbody>
   <tfoot>
