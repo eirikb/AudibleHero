@@ -61,7 +61,7 @@ function upload(isZip, keepPath, prefix) {
     var manifest = require('../extension/manifest.json');
     var account = require('../../account.json');
     var blobService = azure.createBlobService(account.account, account.key);
-    var dest = '/audiblehero/' + manifest.version + '/' + name;
+    var dest = manifest.version + '/' + name;
 
     var m = mime.lookup(name);
     var metadata = {
@@ -75,7 +75,7 @@ function upload(isZip, keepPath, prefix) {
 
     var bufferStream = new stream.Transform();
     bufferStream.push(file.contents);
-    blobService.createBlockBlobFromStream('eirikb', dest, bufferStream, file.contents.length, metadata, function (err) {
+    blobService.createBlockBlobFromStream('audiblehero', dest, bufferStream, file.contents.length, metadata, function (err) {
       if (err) gutil.log(err);
       else gutil.log('Finished upload ' + gutil.colors.yellow(dest));
       cb(null, file);
@@ -138,10 +138,10 @@ gulp.task('webserver', function () {
   });
 });
 
-gulp.task('prod', function () {
+gulp.task('setProd', function () {
   isLocalhost = false;
 });
 
-gulp.task('usual', ['fonts', 'img', 'js', 'less', 'watch']);
-gulp.task('default', ['usual', 'webserver']);
-gulp.task('prod', ['prod', 'uglify', 'usual']);
+gulp.task('usual', ['fonts', 'img', 'js', 'less']);
+gulp.task('default', ['usual', 'webserver', 'watch']);
+gulp.task('prod', ['setProd', 'uglify', 'usual']);
