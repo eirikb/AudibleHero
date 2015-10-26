@@ -17,6 +17,13 @@
     </th>
   </tr>
   <tr>
+    <th colspan="14">
+      <div ng-if="filteredBooks">
+        Showing a total of <span class="badge">{{filteredBooks.length}}</span> books.
+      </div>
+    </th>
+  </tr>
+  <tr>
     <th></th>
     <th st-sort="title">Title</th>
     <th style="width: 15%" st-sort="authors">Authors</th>
