@@ -4,7 +4,8 @@ angular.module('audiblehero').directive('stSelectBoolean', function (_) {
     require: '^stTable',
     scope: {
       predicate: '@',
-      predicateExpression: '='
+      predicateExpression: '=',
+      ngModel: '='
     },
     template: require('./st-select-boolean.html'),
     link: function (scope, element, attr, table) {
@@ -17,16 +18,18 @@ angular.module('audiblehero').directive('stSelectBoolean', function (_) {
       };
 
       scope.options = [{key: null, value: 'All'}, {key: true, value: 'Yes'}, {key: false, value: 'No'}];
-      scope.selected = _.first(scope.options);
+      scope.ngModel = null;
 
-      scope.optionChanged = function (selected) {
+      scope.$watch('ngModel', function (selected) {
+        if (_.isUndefined(selected)) return;
+
         var predicate = getPredicate();
 
         var query = {
-          boolean: selected.key
+          boolean: selected
         };
         table.search(query, predicate);
-      };
+      });
     }
   };
 });

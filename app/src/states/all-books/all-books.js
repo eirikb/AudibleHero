@@ -9,6 +9,13 @@ angular.module('audiblehero').config(function ($stateProvider) {
         book.ignored = !book.ignored;
         saveIgnored();
       };
+
+      $scope.filterByNewBooks = function () {
+        $scope.downloaded = false;
+        $scope.missing = true;
+        $scope.ignored = false;
+        $scope.incognito = null;
+      };
     }
   });
 });

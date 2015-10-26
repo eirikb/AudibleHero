@@ -1,6 +1,12 @@
 <table st-table="displayBooks" st-safe-src="books" st-set-filter="stCustomFilter" class="table table-striped">
   <thead>
-  <th colspan="13">
+  <th colspan="2">
+    <a class="btn btn-default btn-sm" ng-click="filterByNewBooks()">
+      <i class="fa fa-filter"></i>
+      New books
+    </a>
+  </th>
+  <th colspan="12">
     <input st-search placeholder="global search" class="input-sm form-control" type="search"/>
   </th>
   <tr>
@@ -9,19 +15,19 @@
     <th style="width: 15%" st-sort="authors">Authors</th>
     <th>
       <span st-sort="downloaded">Downloaded</span>
-      <st-select-boolean predicate="downloaded"></st-select-boolean>
+      <st-select-boolean ng-model="downloaded" predicate="downloaded"></st-select-boolean>
     </th>
     <th>
       <span st-sort="ignored">Ignored</span>
-      <st-select-boolean predicate="ignored"></st-select-boolean>
+      <st-select-boolean ng-model="ignored" predicate="ignored"></st-select-boolean>
     </th>
     <th>
       <span st-sort="incognito">Incognito</span>
-      <st-select-boolean predicate="incognito"></st-select-boolean>
+      <st-select-boolean ng-model="incognito" predicate="incognito"></st-select-boolean>
     </th>
     <th>
       <span st-sort="missing"> Missing</span>
-      <st-select-boolean predicate="missing"></st-select-boolean>
+      <st-select-boolean ng-model="missing" predicate="missing"></st-select-boolean>
     </th>
     <th st-sort="datePurchased">Purchased</th>
     <th st-sort="dateReleased">Released</th>
