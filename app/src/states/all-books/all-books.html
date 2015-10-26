@@ -1,19 +1,21 @@
 <table filtered-items="filteredBooks" st-table="displayBooks" st-safe-src="books" st-set-filter="stCustomFilter"
        class="table table-striped">
   <thead>
-  <th colspan="2">
-    <a class="btn btn-default btn-sm" ng-click="filterByNewBooks()">
-      <i class="fa fa-filter"></i>
-      New books
-    </a>
-  </th>
-  <th colspan="9">
-    <input st-search placeholder="global search" class="input-sm form-control" type="search"/>
-  </th>
-  <th colspan="3">
-    <a class="btn btn-default btn-sm" ng-click="ignoreBooks(displayBooks)">Ignore on page</a>
-    <a class="btn btn-default btn-sm" ng-click="ignoreBooks(filteredBooks)">Ignore all</a>
-  </th>
+  <tr>
+    <th colspan="2">
+      <a class="btn btn-default btn-sm" ng-click="filterByNewBooks()">
+        <i class="fa fa-filter"></i>
+        New books
+      </a>
+    </th>
+    <th colspan="9">
+      <input st-search placeholder="global search" class="input-sm form-control" type="search"/>
+    </th>
+    <th colspan="3">
+      <a class="btn btn-default btn-sm" ng-click="ignoreBooks(displayBooks)">Ignore on page</a>
+      <a class="btn btn-default btn-sm" ng-click="ignoreBooks(filteredBooks)">Ignore all</a>
+    </th>
+  </tr>
   <tr>
     <th></th>
     <th st-sort="title">Title</th>
