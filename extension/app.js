@@ -43,6 +43,7 @@ var actions = {
     storage.clear(function () {
       data = JSON.stringify(data);
       var size = Math.floor(storage.QUOTA_BYTES_PER_ITEM / 2);
+      if (isNaN(size)) size = 5000;
       data = chunkString(data, size);
       var o = {
         length: data.length
