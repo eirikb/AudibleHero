@@ -10,16 +10,47 @@ function api(data) {
   }));
 }
 
+function chunkString(str, len) {
+  var size = Math.ceil(str.length / len);
+  var res = new Array(size);
+  var offset;
+
+  for (var i = 0; i < size; i++) {
+    offset = i * len;
+    res[i] = str.substring(offset, offset + len);
+  }
+
+  return res;
+}
+
 var actions = {
-  clear: function (type) {
-    chrome.storage[type].clear(api);
-  },
-  load: function (type, prop) {
-    chrome.storage[type].get(prop, api);
+  load: function (type) {
+    chrome.storage[type].get(function (val) {
+      try {
+        var o = '';
+        for (var i = 0; i < val.length; i++) {
+          o += val['data-' + i];
+        }
+        o = JSON.parse(o);
+        api(o);
+      } catch (e) {
+        api();
+      }
+    });
   },
   clearAndSave: function (type, data) {
-    chrome.storage[type].clear(function () {
-      chrome.storage[type].set(data, api);
+    var storage = chrome.storage[type];
+    storage.clear(function () {
+      data = JSON.stringify(data);
+      var size = Math.floor(storage.QUOTA_BYTES_PER_ITEM / 2);
+      data = chunkString(data, size);
+      var o = {
+        length: data.length
+      };
+      data.forEach(function (part, i) {
+        o['data-' + i] = part;
+      });
+      storage.set(o, api);
     });
   }
 };
