@@ -24,7 +24,7 @@ angular.module('audiblehero').config(function ($stateProvider, _) {
             return !!book.seriesId;
           }).groupBy('seriesId').map(asGroup).map(function (group) {
             group.title = group.key.series.name;
-            group.url = "http://www.audible.com/series/?asin=" + group.key.seriesId;
+            group.url = "/series/?asin=" + group.key.seriesId;
             return group;
           }).value();
 
