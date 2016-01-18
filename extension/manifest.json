@@ -11,7 +11,9 @@
   "content_scripts": [
     {
       "matches": [
-        "*://*.audible.com/audiblehero"
+        "*://*.audible.com/audiblehero",
+        "*://*.audible.com.au/audiblehero",
+        "*://*.audible.co.uk/audiblehero"
       ],
       "js": [
         "app.js"

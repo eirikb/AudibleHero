@@ -20,5 +20,6 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
 });
 
 chrome.pageAction.onClicked.addListener(function (tab) {
-  chrome.tabs.update(tab.id, {url: "http://www.audible.com/audiblehero"});
+  var domain = tab.url.match(/^[\w-]+:\/*\[?([\w\.:-]+)\]?(?::\d+)?/)[1];
+  chrome.tabs.update(tab.id, {url: "http://" + domain + "/audiblehero"});
 });
