@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "AudibleHero for Audible",
   "description": "List new books from your favorite authors and series on www.audible.com",
-  "version": "5",
+  "version": "6",
   "icons": {
     "16": "logo16.png",
     "48": "logo48.png",
@@ -19,6 +19,11 @@
         "app.js"
       ]
     }
+  ],
+  "web_accessible_resources": [
+    "app.css",
+    "fonts/*",
+    "img/*"
   ],
   "page_action": {
     "default_title": "AudibleHero",

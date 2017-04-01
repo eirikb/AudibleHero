@@ -1,8 +1,32 @@
+var inline = require('inline');
+var version = inline(function (req) {
+  return req('./package.json').version;
+});
+var _ = require('lodash');
+var moment = require('moment');
+var jQuery = require('jquery');
+
+var app = angular.module('audiblehero', ['ui.router', 'angular.filter', 'smart-table'], function ($compileProvider) {
+  $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|chrome-extension):/);
+});
+
+app.config(function ($urlRouterProvider) {
+  $urlRouterProvider.otherwise('/newbooks');
+});
+
+app.constant('version', version);
+app.constant('_', _);
+app.constant('moment', moment);
+app.constant('$', jQuery);
+
+_(_).keys().each(function (key) {
+  app.filter('_' + key, function () {
+    return _[key];
+  });
+}).value();
+
 document.title = "AudibleHero";
 document.body.innerHTML = "";
-var script = document.createElement('script');
-script.src = 'http://localhost:8000/app.js';
-document.head.appendChild(script);
 
 function api(data) {
   document.dispatchEvent(new CustomEvent('audibleHeroC', {

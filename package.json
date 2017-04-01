@@ -3,11 +3,10 @@
   "container": "audiblehero",
   "version": "3.0.0",
   "devDependencies": {
-    "azure-storage": "^0.4.2",
     "browserify": "9.0.3",
     "browserify-inline": "^1.0.0-1",
     "browserify-ngannotate": "^0.7.0",
-    "bulkify": "^1.1.1",
+    "bulkify": "1.1.1",
     "debowerify": "^1.2.0",
     "event-stream": "^3.3.2",
     "glob": "^5.0.3",
