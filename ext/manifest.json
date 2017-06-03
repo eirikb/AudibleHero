@@ -15,6 +15,9 @@
         "*://*.audible.com.au/audiblehero",
         "*://*.audible.co.uk/audiblehero"
       ],
+      "css": [
+        "clear.css"
+      ],
       "js": [
         "init.js",
         "app.js"
