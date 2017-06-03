@@ -16,6 +16,7 @@
         "*://*.audible.co.uk/audiblehero"
       ],
       "js": [
+        "init.js",
         "app.js"
       ]
     }
