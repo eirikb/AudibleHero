@@ -1,18 +1,24 @@
-# audible-hero
+#AudibleHero
 
-> Series
+Code for the [Chrome extension](http://audiblehero.com).
 
-## Build Setup
+## How to run locally
 
-``` bash
-# install dependencies
-npm install
+You need: 
+[Chrome / Chromium](https://www.google.com/chrome) and
+[Node.js](https://nodejs.org).
 
-# serve with hot reload at localhost:8080
-npm run dev
+Run like this:
 
-# build for production with minification
-npm run build
+```
+  git clone  git clone https://github.com/eirikb/audiblehero
+  cd audiblehero
+  npm i
+  npm start
 ```
 
-For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
+1. Go to [chrome://extensions](chrome://extensions).
+1. Enable _Developer mode_.
+1. Click _Load unpacked extension..._
+1. Select the _ext_ folder in project.
+1. Go to [Audible](http://audible.com/) and click on the extension (icon in top right).
