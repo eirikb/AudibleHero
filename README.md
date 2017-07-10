@@ -11,7 +11,7 @@ You need:
 Run like this:
 
 ```
-  git clone  git clone https://github.com/eirikb/audiblehero
+  git clone https://github.com/eirikb/audiblehero
   cd audiblehero
   npm i
   npm start
