@@ -4,12 +4,7 @@
       <h6>
         Welcome to AudibleHero!
       </h6>
-    </div>
-
-    <div class="mdl-cell mdl-cell--12-col">
-      <router-link to="/update" class="mdl-button mdl-js-button mdl-button--raised">
-        Update
-      </router-link>
+      {{$store.state.status}}
     </div>
   </div>
 </template>
