@@ -1,16 +1,16 @@
-angular.module('audiblehero').factory('getBooksByAuthor', function ($http, $q, parseHtml, _, $) {
-  function run(incognito, author, page) {
-    if (!page) page = 1;
+const parseHtml = html => {
+  html = html.replace(/<img[^>]*>/g, function (img) {
+    return img.replace(/ src=/i, ' data-src=');
+  });
+  var parser = new DOMParser();
+  return $(parser.parseFromString(html, "text/html"));
+};
 
-    return $http({
-      url: "/search",
-      params: {
-        searchPage: page,
-        searchSize: 50,
-        searchAuthor: author,
-        fix: incognito ? "NOCOOKIE" : ""
-      }
-    }).then(function (res) {
+export const run = (incognito, author, page) => {
+  if (!page) page = 1;
+
+  return fetch(`/search?searchPage=${page}&searchSize=50&searchAuthor=${author}&fix=${incognito ? 'NOCOOKIE' : ''}`)
+    .then(function (res) {
       var html = parseHtml(res.data);
 
       var books = [];
@@ -64,14 +64,11 @@ angular.module('audiblehero').factory('getBooksByAuthor', function ($http, $q, p
         pages.push(i);
       }
 
-      return $q.all(_.map(pages, function (page) {
+      return Promise.all.all(_.map(pages, function (page) {
         return run(incognito, author, page);
       })).then(function (allBooks) {
         books = books.concat(_.flatten(allBooks));
         return books;
       });
     });
-  }
-
-  return run;
-});
+};
