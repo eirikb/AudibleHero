@@ -12,6 +12,7 @@
   "dependencies": {
     "babel-polyfill": "^6.23.0",
     "glob": "^7.1.2",
+    "lodash": "^4.17.4",
     "material-components-web": "^0.14.0",
     "scss-loader": "0.0.1",
     "vue": "^2.2.1",
