@@ -1,32 +1,28 @@
-angular.module('audiblehero').factory('getLibraryBooks', function ($http, parseHtml, _, $) {
-  return function () {
-    return $http({
-      url: '/lib-ajax',
-      params: {
-        progType: 'all', timeFilter: 'all', itemsPerPage: 1000000
-      }
-    }).then(function (res) {
-      var html = parseHtml(res.data);
+export default (limit, page) => fetch(`/lib-ajax?progType=all&timeFilter=all&itemsPerPage=${limit}&page=${page}&sortType=down`, {
+  credentials: 'include'
+}).then(r =>
+  r.text()
+).then(html => {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, 'text/html');
 
-      var rows = html.find("table:eq(0) tr:not(.adbl-lib-multipart-child) td[name='titleInfo']");
-      var books = [];
-      rows.each(function () {
-        var cell = $(this);
-        var row = cell.parent();
+  const rows = Array.from(doc.querySelectorAll('[name=productCover]')).map(e => e.parentNode);
 
-        var url = cell.find("a[name='tdTitle']").attr('href').trim();
+  const books = rows.map(row => {
+    const title = row.querySelector('h3').innerText;
+    const authors = row.querySelector('.adbl-library-item-author').innerText.split(',');
+    const rating = parseInt(row.querySelector('.adbl-rating-num').innerText.match(/\d+/)[0]);
 
-        books.push({
-          id: _.last(url.split('/')),
-          title: cell.find("a[name='tdTitle']").text().trim(),
-          authors: _.map(row.find("a[href*='searchAuthor']").text().split(','), function (author) {
-            return author.trim();
-          }),
-          datePurchased: row.find("td:eq(6)").text().trim(),
-          downloaded: row.find("[alt='Downloaded']").length > 0
-        });
-      });
-      return books;
-    });
-  };
+    return {
+      title, authors, rating
+    };
+  });
+
+  const pageCountElement = doc.querySelector('.adbl-page-index .adbl-continue + .adbl-page-link .adbl-link');
+  let pageCount = 0;
+  if (pageCountElement) {
+    pageCount = parseInt(pageCountElement.href.match(/\d+/)[0]);
+  }
+
+  return {books, pageCount};
 });
