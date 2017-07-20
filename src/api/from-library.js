@@ -1,20 +1,20 @@
+import {parse, getBookId} from './parser';
+
 export default (limit, page) => fetch(`/lib-ajax?progType=all&timeFilter=all&itemsPerPage=${limit}&page=${page}&sortType=down`, {
   credentials: 'include'
 }).then(r =>
   r.text()
 ).then(html => {
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(html, 'text/html');
+  const doc = parse(html);
 
   const rows = Array.from(doc.querySelectorAll('[name=productCover]')).map(e => e.parentNode);
 
   const books = rows.map(row => {
-    const title = row.querySelector('h3').innerText;
+    const id = getBookId(row.querySelector('.adbl-library-item-title a').href);
     const authors = row.querySelector('.adbl-library-item-author').innerText.split(',');
-    const rating = parseInt(row.querySelector('.adbl-rating-num').innerText.match(/\d+/)[0]);
 
     return {
-      title, authors, rating
+      id, authors
     };
   });
 

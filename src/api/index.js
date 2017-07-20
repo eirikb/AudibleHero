@@ -1,6 +1,8 @@
 import fromLibrary from './from-library';
 import {range, some} from 'lodash';
 
+const BOOKS_PR_PAGE = 50;
+
 const loadCache = name => {
   try {
     return JSON.parse(localStorage[name]);
@@ -10,13 +12,18 @@ const loadCache = name => {
 }
 
 const addMissing = (books, page) => {
-  return !page.books.every(book => {
-    const newBook = !some(books, book);
+  let allBooksInCache = true;
+  page.books.forEach(book => {
+    const index = books.findIndex(b => b.id === book.id);
+    const newBook = index < 0;
     if (newBook) {
+      allBooksInCache = false;
       books.push(book);
+    } else {
+      books[index] = book;
     }
-    return newBook;
   });
+  return allBooksInCache;
 }
 
 const loadUntilCache = async (type, api) => {
@@ -26,11 +33,11 @@ const loadUntilCache = async (type, api) => {
     return books;
   }
   const bookCount = first.pageCount + 1;
-  const pageCount = Math.floor(bookCount / 50) + 1;
+  const pageCount = Math.floor(bookCount / BOOKS_PR_PAGE) + 1;
   const pageIndexes = range(1, pageCount + 1);
 
   for (let pageIndex of pageIndexes) {
-    const page = await api(50, pageIndex);
+    const page = await api(BOOKS_PR_PAGE, pageIndex);
     if (addMissing(books, page)) {
       return books;
     }
