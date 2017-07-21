@@ -1,6 +1,6 @@
 import {parse, getPageCount, getBookId} from './parser';
 
-export default (author, limit, page) => fetch(`/search?searchRank=-publication_datesearch&searchSize=${limit}&Page=${page}&searchAuthor=${author}`, {
+export default (author, limit, page) => fetch(`/search?searchRank=-publication_datesearch&searchSize=${limit}&searchPage=${page}&searchAuthor=${author}`, {
   credentials: 'include'
 }).then(r =>
   r.text()
