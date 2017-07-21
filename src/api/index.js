@@ -1,5 +1,6 @@
 import fromLibrary from './from-library';
-import {range, some} from 'lodash';
+import byAuthor from './by-author';
+import {range} from 'lodash';
 
 const BOOKS_PR_PAGE = 50;
 
@@ -53,4 +54,5 @@ const load = async (type, api) => {
 
 export const loadLibrary = () => load('library', fromLibrary);
 
-export const loadAuthor = author => load(`author-${author}`, pageIndex => loadAuthor(author, pageIndex));
+export const loadAuthor = author => load(`author-${author}`, (limit, pageIndex) =>
+  byAuthor(author, limit, pageIndex));

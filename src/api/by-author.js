@@ -1,17 +1,26 @@
-export default (author, page) => fetch(`/search?searchRank=-publication_datesearch&searchSize=50&Page=${page}&searchAuthor=${author}`, {
+import {parse, getPageCount, getBookId} from './parser';
+
+export default (author, limit, page) => fetch(`/search?searchRank=-publication_datesearch&searchSize=${limit}&Page=${page}&searchAuthor=${author}`, {
   credentials: 'include'
 }).then(r =>
   r.text()
 ).then(html => {
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(html, 'text/html');
+  const doc = parse(html);
 
+  const rows = Array.from(doc.querySelectorAll('.adbl-result-item'));
 
-  const rows = doc.querySelectorAll('.adbl-result-item');
-  console.log(rows);
+  const books = rows.map(row => {
+    const id = getBookId(row.querySelector('.adbl-prod-title a').href);
+    const title = row.querySelector('.adbl-prod-title').innerText.trim();
+    // const authors = row.querySelector('.adbl-library-item-author').innerText.split(',');
+    // const rating = parseInt(row.querySelector('.adbl-rating-num').innerText.match(/\d+/)[0]);
 
-  console.log(doc);
-  return 'ok';
+    return {id, title};
+  })
+
+  const pageCount = getPageCount(doc);
+
+  return {books, pageCount};
 
 });
 
