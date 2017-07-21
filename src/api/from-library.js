@@ -1,4 +1,4 @@
-import {parse, getBookId} from './parser';
+import {parse, getPageCount, getBookId} from './parser';
 
 export default (limit, page) => fetch(`/lib-ajax?progType=all&timeFilter=all&itemsPerPage=${limit}&page=${page}&sortType=down`, {
   credentials: 'include'
@@ -18,11 +18,7 @@ export default (limit, page) => fetch(`/lib-ajax?progType=all&timeFilter=all&ite
     };
   });
 
-  const pageCountElement = doc.querySelector('.adbl-page-index .adbl-continue + .adbl-page-link .adbl-link');
-  let pageCount = 0;
-  if (pageCountElement) {
-    pageCount = parseInt(pageCountElement.href.match(/\d+/)[0]);
-  }
+  const pageCount = getPageCount(doc);
 
   return {books, pageCount};
 });
