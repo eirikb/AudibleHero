@@ -12,9 +12,10 @@ export default (limit, page) => fetch(`/lib-ajax?progType=all&timeFilter=all&ite
   const books = rows.map(row => {
     const id = getBookId(row.querySelector('.adbl-library-item-title a').href);
     const authors = row.querySelector('.adbl-library-item-author').innerText.split(',');
+    const downloaded = !!row.querySelector('span[alt=Downloaded]');
 
     return {
-      id, authors
+      id, authors, downloaded
     };
   });
 
