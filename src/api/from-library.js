@@ -11,7 +11,10 @@ export default (limit, page) => fetch(`/lib-ajax?progType=all&timeFilter=all&ite
 
   const books = rows.map(row => {
     const id = getBookId(row.querySelector('.adbl-library-item-title a').href);
-    const authors = row.querySelector('.adbl-library-item-author').innerText.split(',');
+    const authors = row.querySelector('.adbl-library-item-author').innerText
+      .split(',')
+      .map(author => author.trim());
+
     const downloaded = !!row.querySelector('span[alt=Downloaded]');
 
     return {
