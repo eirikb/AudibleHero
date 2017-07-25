@@ -27,32 +27,35 @@ const addMissing = (books, page) => {
   return allBooksInCache;
 }
 
-const loadUntilCache = async (type, api) => {
+const loadUntilCache = async (type, progress, api) => {
   const books = loadCache(type) || [];
   const first = await api(1, 1);
   if (addMissing(books, first)) {
     return books;
   }
-  const bookCount = first.pageCount + 1;
+  const bookCount = first.pageCount;
   const pageCount = Math.floor(bookCount / BOOKS_PR_PAGE) + 1;
   const pageIndexes = range(1, pageCount + 1);
 
+  if (progress) progress(0, bookCount);
   for (let pageIndex of pageIndexes) {
     const page = await api(BOOKS_PR_PAGE, pageIndex);
     if (addMissing(books, page)) {
       return books;
     }
+    if (progress) progress(books.length, bookCount);
   }
   return books;
 };
 
-const load = async (type, api) => {
-  const books = await loadUntilCache(type, api);
+const load = async (type, progress, api) => {
+  const books = await loadUntilCache(type, progress, api);
   localStorage[type] = JSON.stringify(books);
+  if (progress) progress(books.length, books.length);
   return books;
 };
 
-export const loadLibrary = () => load('library', fromLibrary);
+export const loadLibrary = progress => load('library', progress, fromLibrary);
 
-export const loadAuthor = author => load(`author-${author}`, (limit, pageIndex) =>
+export const loadAuthor = (author, progress) => load(`author-${author}`, progress, (limit, pageIndex) =>
   byAuthor(author, limit, pageIndex));
