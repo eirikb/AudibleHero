@@ -22,7 +22,14 @@ export default (author, limit, page) => fetch(`/search?searchRank=-publication_d
     const mins = match ? parseInt(match[1]) : 0;
     const length = mins + hours * 60;
 
-    return {id, title, length};
+    const releaseDateText = Array.from(row.querySelectorAll('li'))
+      .map(node => node.innerText.trim())
+      .find(text => text.match(/^Release Date:/));
+    match = (releaseDateText || '').match(/(\d+)-(\d+)-(\d+)/);
+
+    const releaseDate = match ? new Date('20' + match[3], match[1] - 1, match[2]) : null;
+
+    return {id, title, length, releaseDate};
   })
 
   const pageCount = getPageCount(doc);
