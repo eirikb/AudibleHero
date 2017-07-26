@@ -1,4 +1,5 @@
 import {parse, getPageCount, getBookId} from './parser';
+import {last} from 'lodash';
 
 export default (author, limit, page) => fetch(`/search?searchRank=-publication_datesearch&searchSize=${limit}&searchPage=${page}&searchAuthor=${author}`, {
   credentials: 'include'
@@ -13,23 +14,31 @@ export default (author, limit, page) => fetch(`/search?searchRank=-publication_d
     const id = getBookId(row.querySelector('.adbl-prod-title a').href);
     const title = row.querySelector('.adbl-prod-title').innerText.trim();
 
-    const lengthText = Array.from(row.querySelectorAll('li'))
-      .map(node => node.innerText.trim())
-      .find(text => text.match(/^Length: /));
+    const byRegex = regex => Array.from(row.querySelectorAll('li'))
+      .map(node => ({
+        text: node.innerText.trim(), node
+      })).find(res => res.text.match(regex)) || {};
+
+    const lengthText = byRegex(/^Length:/).text;
     let match = lengthText.match(/(\d+) hr/);
     const hours = match ? parseInt(match[1]) : 0;
     match = lengthText.match(/(\d+) min/);
     const mins = match ? parseInt(match[1]) : 0;
     const length = mins + hours * 60;
 
-    const releaseDateText = Array.from(row.querySelectorAll('li'))
-      .map(node => node.innerText.trim())
-      .find(text => text.match(/^Release Date:/));
+    const releaseDateText = byRegex(/^Release Date:/).text;
     match = (releaseDateText || '').match(/(\d+)-(\d+)-(\d+)/);
-
     const releaseDate = match ? new Date('20' + match[3], match[1] - 1, match[2]) : null;
 
-    return {id, title, length, releaseDate};
+    let seriesBookIndex = 0;
+    let seriesId = null;
+    const seriesNode = byRegex(/^Series:/).node;
+    if (seriesNode) {
+      seriesId = last(seriesNode.querySelector('a').href.split('='));
+      seriesBookIndex = parseInt((seriesNode.innerText.match(/\d+/) || [])[0]) || 1;
+    }
+
+    return {id, title, length, releaseDate, seriesBookIndex, seriesId};
   })
 
   const pageCount = getPageCount(doc);
