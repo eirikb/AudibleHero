@@ -1,16 +1,9 @@
 import fromLibrary from './from-library';
 import byAuthor from './by-author';
 import {range} from 'lodash';
+import {get, set} from './cache';
 
 const BOOKS_PR_PAGE = 50;
-
-const loadCache = name => {
-  try {
-    return JSON.parse(localStorage[name]);
-  } catch (ignored) {
-    return null;
-  }
-}
 
 const addMissing = (books, page) => {
   let allBooksInCache = true;
@@ -28,7 +21,7 @@ const addMissing = (books, page) => {
 }
 
 const loadUntilCache = async (type, progress, api) => {
-  const books = loadCache(type) || [];
+  const books = get(type) || [];
   const first = await api(1, 1);
   if (addMissing(books, first)) {
     return books;
@@ -50,7 +43,7 @@ const loadUntilCache = async (type, progress, api) => {
 
 const load = async (type, progress, api) => {
   const books = await loadUntilCache(type, progress, api);
-  localStorage[type] = JSON.stringify(books);
+  set(type, books);
   if (progress) progress(books.length, books.length);
   return books;
 };
