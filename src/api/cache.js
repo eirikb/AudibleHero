@@ -4,7 +4,7 @@ const version = require('../../package.json').version;
 
 let data = null;
 
-const save = () => {
+export const save = () => {
   if (!data) {
     data = {version, values: {}};
   }
@@ -36,5 +36,4 @@ export const get = key => {
 export const set = (key, value) => {
   const keys = Object.keys(value[0]).sort();
   data.values[key] = [keys, value.map(val => keys.map(key => val[key]))];
-  save();
 };
