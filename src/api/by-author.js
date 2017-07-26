@@ -12,10 +12,17 @@ export default (author, limit, page) => fetch(`/search?searchRank=-publication_d
   const books = rows.map(row => {
     const id = getBookId(row.querySelector('.adbl-prod-title a').href);
     const title = row.querySelector('.adbl-prod-title').innerText.trim();
-    // const authors = row.querySelector('.adbl-library-item-author').innerText.split(',');
-    // const rating = parseInt(row.querySelector('.adbl-rating-num').innerText.match(/\d+/)[0]);
 
-    return {id, title};
+    const lengthText = Array.from(row.querySelectorAll('li'))
+      .map(node => node.innerText.trim())
+      .find(text => text.match(/^Length: /));
+    let match = lengthText.match(/(\d+) hr/);
+    const hours = match ? parseInt(match[1]) : 0;
+    match = lengthText.match(/(\d+) min/);
+    const mins = match ? parseInt(match[1]) : 0;
+    const length = mins + hours * 60;
+
+    return {id, title, length};
   })
 
   const pageCount = getPageCount(doc);
