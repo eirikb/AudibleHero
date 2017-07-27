@@ -1,16 +1,18 @@
 import {parse, getPageCount, getBookId} from './parser';
 import {last} from 'lodash';
 
+const detectLanguage = text => new Promise(resolve => chrome.i18n.detectLanguage(text, resolve));
+
 export default (author, limit, page) => fetch(`/search?searchRank=-publication_datesearch&searchSize=${limit}&searchPage=${page}&searchAuthor=${author}`, {
   credentials: 'include'
 }).then(r =>
   r.text()
-).then(html => {
+).then(async html => {
   const doc = parse(html);
 
   const rows = Array.from(doc.querySelectorAll('.adbl-result-item'));
 
-  const books = rows.map(row => {
+  const books = await Promise.all(rows.map(async row => {
     const id = getBookId(row.querySelector('.adbl-prod-title a').href);
     const title = row.querySelector('.adbl-prod-title').innerText.trim();
 
@@ -40,8 +42,15 @@ export default (author, limit, page) => fetch(`/search?searchRank=-publication_d
 
     const rating = parseInt((((row.querySelector('.adbl-rating-num') || {}).innerText || '').match(/\d+/) || [])[0]) || 0;
 
-    return {id, title, length, releaseDate, seriesBookIndex, seriesId, rating};
-  })
+    const description = (row.querySelector('.socialTile-summary p') || {}).innerText || '';
+
+    const languageRes = await detectLanguage(description);
+
+    let language = languageRes && languageRes.isReliable && (languageRes.languages[0] || {}).language;
+    if (!language) language = 'en';
+
+    return {id, title, length, releaseDate, seriesBookIndex, seriesId, rating, language};
+  }));
 
   const pageCount = getPageCount(doc);
 
