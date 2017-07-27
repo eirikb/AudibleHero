@@ -38,7 +38,9 @@ export default (author, limit, page) => fetch(`/search?searchRank=-publication_d
       seriesBookIndex = parseInt((seriesNode.innerText.match(/\d+/) || [])[0]) || 1;
     }
 
-    return {id, title, length, releaseDate, seriesBookIndex, seriesId};
+    const rating = parseInt((((row.querySelector('.adbl-rating-num') || {}).innerText || '').match(/\d+/) || [])[0]) || 0;
+
+    return {id, title, length, releaseDate, seriesBookIndex, seriesId, rating};
   })
 
   const pageCount = getPageCount(doc);
