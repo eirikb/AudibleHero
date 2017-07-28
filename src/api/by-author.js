@@ -30,7 +30,7 @@ export default (author, limit, page) => fetch(`/search?searchRank=-publication_d
 
     const releaseDateText = byRegex(/^Release Date:/).text;
     match = (releaseDateText || '').match(/(\d+)-(\d+)-(\d+)/);
-    const releaseDate = match ? new Date('20' + match[3], match[1] - 1, match[2]) : null;
+    const releaseDate = match ? `20${match[3]}-${match[1] - 1}-${match[2]}` : null;
 
     let seriesBookIndex = 0;
     let seriesId = null;
