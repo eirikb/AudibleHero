@@ -1,7 +1,7 @@
 import fromLibrary from './from-library';
 import byAuthor from './by-author';
-import {range} from 'lodash';
-import {get, set} from './cache';
+import {range, flatten} from 'lodash';
+import {get, set, getData} from './cache';
 
 const BOOKS_PR_PAGE = 50;
 
@@ -48,7 +48,25 @@ const load = async (type, progress, api) => {
   return books;
 };
 
-export const loadLibrary = progress => load('library', progress, fromLibrary);
+export const getBooks = () => {
+  const data = getData();
+  const library = data.library;
+  if (!library) return null;
 
-export const loadAuthor = (author, progress) => load(`author-${author}`, progress, (limit, pageIndex) =>
+  const authorBooks = flatten(
+    Object.keys(data).filter(key => key.match(/^author-/)).map(key => data[key])
+  );
+
+  const libraryById = library.reduce((res, book) => {
+    book.inLibrary = true;
+    res[book.id] = book;
+    return res;
+  }, {});
+
+  return authorBooks.map(book => Object.assign({}, book, libraryById[book.id]));
+};
+
+export const updateFromLibrary = progress => load('library', progress, fromLibrary);
+
+export const updateByAuthor = (author, progress) => load(`author-${author}`, progress, (limit, pageIndex) =>
   byAuthor(author, limit, pageIndex));

@@ -37,3 +37,8 @@ export const set = (key, value) => {
   const keys = Object.keys(value[0]).sort();
   data.values[key] = [keys, value.map(val => keys.map(key => val[key]))];
 };
+
+export const getData = () => Object.keys(data.values).reduce((res, key) => {
+  res[key] = get(key);
+  return res;
+}, {});
