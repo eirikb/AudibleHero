@@ -13,7 +13,7 @@ export default (author, limit, page) => fetch(`/search?searchRank=-publication_d
   const rows = Array.from(doc.querySelectorAll('.adbl-result-item'));
 
   const books = await Promise.all(rows.map(async row => {
-    const id = getBookId(row.querySelector('.adbl-prod-title a').href);
+    const id = row.querySelector('[name=productAsin]').value;
     const title = row.querySelector('.adbl-prod-title').innerText.trim();
 
     const byRegex = regex => Array.from(row.querySelectorAll('li'))
