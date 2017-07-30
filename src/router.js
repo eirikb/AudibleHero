@@ -8,7 +8,8 @@ export default new VueRouter({
     {
       path: '/', component: {template: '<App></App>'},
       children: [
-        {name: 'Update', path: '', component: {template: '<Update></Update>'}}
+        {name: 'Update', path: '', component: {template: '<Update></Update>'}},
+        {name: 'Books', path: 'books', component: {template: '<Books></Books>'}}
       ]
     }
   ]

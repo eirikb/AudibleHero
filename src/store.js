@@ -1,38 +1,72 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {uniq, flatten} from 'lodash';
-
-import loadLibrary from './api/library';
+import {uniq, flatten, chunk} from 'lodash';
+import {getBooks, updateFromLibrary, updateByAuthor} from './api';
+import {save} from './api/cache';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    libraryLoaded: false,
-    library: [],
-    authors: {}
+    books: [],
+    progressLibrary: 0,
+    progressAuthors: {}
   },
 
   mutations: {
-    setLibrary(state, books) {
-      state.libraryLoaded = true;
-      state.library = books;
-      state.authors = uniq(flatten(books.map(book => book.authors)))
-        .reduce((res, name) => {
-          res[name] = {progress: 0};
-          return res;
-        }, {});
+    setBooks(state, books) {
+      state.books = books;
+    },
+
+    resetProgress(state) {
+      state.progressLibrary = 0;
+      state.progressAuthors = {};
+    },
+
+    progressLibrary(state, progress) {
+      state.progressLibrary = progress;
+    },
+
+    progressAuthor(state, progress) {
+      state.progressAuthors[progress.author] = progress.progress;
+    },
+
+    progressAuthors(state, authors) {
+      state.progressAuthors = authors;
     }
   },
 
   actions: {
-    loadLibrary({commit}) {
-      return loadLibrary().then(books =>
-        commit('setLibrary', books)
-      );
+    getBooks({commit}) {
+      const books = getBooks() || [];
+      commit('setBooks', books);
     },
 
-    loadAuthors({commit}) {
+    update({commit}) {
+      const p = (pos, tot) => Math.floor(pos / tot * 100);
+
+      commit('resetProgress');
+      updateFromLibrary((pos, tot) => commit('progressLibrary', p(pos, tot))).then(async books => {
+        commit('progressLibrary', 100);
+        const authors = uniq(flatten(books.map(book => book.authors)));
+        const chunkSize = authors.length / 10;
+        const authorsChunked = chunk(authors, chunkSize);
+
+        commit('progressAuthors', authors.reduce((res, author) => {
+          res[author] = 0;
+          return res;
+        }, {}));
+
+        await Promise.all(authorsChunked.map(async (authors) => {
+          for (const author of authors) {
+            const books = await updateByAuthor(author, (pos, tot) => commit('progressAuthor', {
+              author,
+              progress: p(pos, tot)
+            }));
+          }
+        }));
+        save();
+      });
     }
   }
 });

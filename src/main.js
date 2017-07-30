@@ -9,18 +9,8 @@ req.keys().map(key => {
   return Vue.component(name, req(key))
 });
 
-console.log('Go!');
-localStorage.clear();
-// import {loadLibrary} from './api';
-// loadLibrary().then(books => console.log('books', books));
-
-import {loadAuthor} from './api';
-loadAuthor('Brandon Sanderson').then(books => console.log('res books', books));
-
-/*
- new Vue({
- el: '#app',
- store,
- router
- });
- */
+new Vue({
+  el: '#app',
+  store,
+  router
+});
