@@ -27,6 +27,7 @@ export default (author, limit, page) => fetch(`/search?searchRank=-publication_d
     match = lengthText.match(/(\d+) min/);
     const mins = match ? parseInt(match[1]) : 0;
     const length = mins + hours * 60;
+    const imageId = last(((row.querySelector('.adbl-prod-image') || {}).src || '').split('/')).split('.')[0];
 
     const releaseDateText = byRegex(/^Release Date:/).text;
     match = (releaseDateText || '').match(/(\d+)-(\d+)-(\d+)/);
@@ -49,7 +50,7 @@ export default (author, limit, page) => fetch(`/search?searchRank=-publication_d
     let language = languageRes && languageRes.isReliable && (languageRes.languages[0] || {}).language;
     if (!language) language = 'en';
 
-    return {id, title, length, releaseDate, seriesBookIndex, seriesId, rating, language};
+    return {id, title, length, releaseDate, seriesBookIndex, seriesId, rating, language, imageId};
   }));
 
   const pageCount = getPageCount(doc);
