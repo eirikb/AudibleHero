@@ -1,4 +1,4 @@
-#AudibleHero
+# AudibleHero
 
 Code for the [Chrome extension](http://audiblehero.com).
 
