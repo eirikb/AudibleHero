@@ -8,10 +8,13 @@
       <Progress :progress="$store.state.progressLibrary"></Progress>
     </p>
 
-    <div v-for="(progress, author) in $store.state.progressAuthors">
-
-      {{author}}: {{progress}}
-      <Progress :progress="progress"></Progress>
+    <div class="mdc-layout-grid">
+      <div class="mdc-layout-grid__inner">
+        <div class="mdc-layout-grid__cell" v-for="(progress, author) in $store.state.progressAuthors">
+          <b>{{author}}</b>
+          <Progress :progress="progress"></Progress>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -25,3 +28,7 @@
     }
   }
 </script>
+
+<style lang="scss">
+  @import '@material/layout-grid/mdc-layout-grid';
+</style>
