@@ -22,8 +22,9 @@
 <script>
   export default {
     methods: {
-      update() {
-        this.$store.dispatch('update');
+      async update() {
+        await this.$store.dispatch('update');
+        this.$router.push('/books');
       }
     }
   }

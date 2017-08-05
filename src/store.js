@@ -46,7 +46,7 @@ export default new Vuex.Store({
       const p = (pos, tot) => Math.floor(pos / tot * 100);
 
       commit('resetProgress');
-      updateFromLibrary((pos, tot) => commit('progressLibrary', p(pos, tot))).then(async books => {
+      return updateFromLibrary((pos, tot) => commit('progressLibrary', p(pos, tot))).then(async books => {
         commit('progressLibrary', 100);
         const authors = uniq(flatten(books.map(book => book.authors)));
         const chunkSize = authors.length / 10;
