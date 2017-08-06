@@ -2,10 +2,8 @@
   <div class="mdc-layout-grid">
     <div class="mdc-layout-grid__inner">
 
-
       <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2"
-           v-for="book in $store.state.books.slice(0, 30)">
-
+           v-for="book in books">
 
         <div class="mdc-card">
           <section class="mdc-card__media">
@@ -28,6 +26,19 @@
     </div>
   </div>
 </template>
+
+<script>
+  import books from '../api/filter-books';
+
+  export default {
+    computed: {
+      books() {
+        return books(this.$store.state.books);
+      }
+    }
+  };
+
+</script>
 
 <style lang="scss">
   @import '@material/card/mdc-card';
