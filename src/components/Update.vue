@@ -10,7 +10,7 @@
 
     <div class="mdc-layout-grid">
       <div class="mdc-layout-grid__inner">
-        <div class="mdc-layout-grid__cell" v-for="(progress, author) in $store.state.progressAuthors">
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2" v-for="(progress, author) in $store.state.progressAuthors">
           <b>{{author}}</b>
           <Progress :progress="progress"></Progress>
         </div>
