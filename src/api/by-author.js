@@ -36,9 +36,11 @@ export default (author, limit, page) => fetch(`/search?searchRank=-publication_d
     let seriesBookIndex = 0;
     let seriesId = null;
     const seriesNode = byRegex(/^Series:/).node;
+    let seriesName = '';
     if (seriesNode) {
       seriesId = last(seriesNode.querySelector('a').href.split('='));
       seriesBookIndex = parseInt((seriesNode.innerText.match(/\d+/) || [])[0]) || 1;
+      seriesName = seriesNode.querySelector('a').innerText;
     }
 
     const rating = parseInt((((row.querySelector('.adbl-rating-num') || {}).innerText || '').match(/\d+/) || [])[0]) || 0;
@@ -50,7 +52,7 @@ export default (author, limit, page) => fetch(`/search?searchRank=-publication_d
     let language = languageRes && languageRes.isReliable && (languageRes.languages[0] || {}).language;
     if (!language) language = 'en';
 
-    return {id, title, length, releaseDate, seriesBookIndex, seriesId, rating, language, imageId};
+    return {id, title, length, releaseDate, seriesBookIndex, seriesId, rating, language, imageId, seriesName};
   }));
 
   const pageCount = getPageCount(doc);
