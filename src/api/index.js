@@ -63,7 +63,16 @@ export const getBooks = () => {
     return res;
   }, {});
 
-  return authorBooks.map(book => Object.assign({}, book, libraryById[book.id]));
+  const books = authorBooks.map(book => Object.assign({}, book, libraryById[book.id]));
+  const booksWithSeries = books.filter(book => book.seriesId);
+  const seriesMaxBookCount = booksWithSeries.reduce((res, book) => {
+    res[book.seriesId] = Math.max(book.seriesBookIndex, res[book.seriesId] || 0);
+    return res;
+  }, {});
+  booksWithSeries.forEach(book =>
+    book.seriesBookMaxIndex = seriesMaxBookCount[book.seriesId]
+  );
+  return books;
 };
 
 export const updateFromLibrary = progress => load('library', progress, fromLibrary);
