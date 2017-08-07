@@ -47,7 +47,7 @@
       clearCache() {
         clear();
         save();
-        this.$tore.dispatch('getBooks');
+        this.$store.dispatch('getBooks');
       }
     }
   }
