@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {uniq, flatten, chunk} from 'lodash';
+import {uniq, flatten, range} from 'lodash';
 import {getBooks, updateFromLibrary, updateByAuthor} from './api';
 import {save} from './api/cache';
 
@@ -49,22 +49,23 @@ export default new Vuex.Store({
       return updateFromLibrary((pos, tot) => commit('progressLibrary', p(pos, tot))).then(async books => {
         commit('progressLibrary', 100);
         const authors = uniq(flatten(books.map(book => book.authors)));
-        const chunkSize = authors.length / 10;
-        const authorsChunked = chunk(authors, chunkSize);
 
         commit('progressAuthors', authors.reduce((res, author) => {
           res[author] = 0;
           return res;
         }, {}));
 
-        await Promise.all(authorsChunked.map(async (authors) => {
-          for (const author of authors) {
-            const books = await updateByAuthor(author, (pos, tot) => commit('progressAuthor', {
-              author,
-              progress: p(pos, tot)
-            }));
-          }
-        }));
+        await Promise.all(
+          range(0, 10).map(async index => {
+            let author;
+            while (author = authors.pop()) {
+              await updateByAuthor(author, (pos, tot) => commit('progressAuthor', {
+                author,
+                progress: p(pos, tot)
+              }));
+            }
+          })
+        );
         save();
       });
     }
