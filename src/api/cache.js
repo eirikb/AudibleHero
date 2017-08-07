@@ -4,20 +4,22 @@ const version = require('../../package.json').version;
 
 let data = null;
 
-export const save = () => {
-  if (!data) {
-    data = {version, values: {}};
-  }
-  localStorage.audibleherocache = compress(JSON.stringify(data));
-};
+export const clear = () => data = {version, values: {}};
 
 try {
   data = JSON.parse(decompress(localStorage.audibleherocache)) || {};
   if (data && data.version !== version) {
-    data = null;
+    clear();
   }
 } catch (ignored) {
 }
+
+export const save = () => {
+  if (!data) {
+    clear();
+  }
+  localStorage.audibleherocache = compress(JSON.stringify(data));
+};
 
 save();
 
@@ -42,3 +44,4 @@ export const getData = () => Object.keys(data.values).reduce((res, key) => {
   res[key] = get(key);
   return res;
 }, {});
+
