@@ -3,6 +3,15 @@ import {last} from 'lodash';
 
 const detectLanguage = text => new Promise(resolve => chrome.i18n.detectLanguage(text, resolve));
 
+const padZero = part => ('0' + part).slice(-2);
+
+const toDate = match => {
+  const year = (match[0] > 50 ? '19' : '20') + match[0];
+  const month = padZero(match[1]);
+  const day = padZero(match[2]);
+  return [year, month, day].join('-');
+};
+
 export default (author, limit, page) => fetch(`/search?searchRank=-publication_datesearch&searchSize=${limit}&searchPage=${page}&searchAuthor=${author}`, {
   credentials: 'include'
 }).then(r =>
@@ -29,9 +38,9 @@ export default (author, limit, page) => fetch(`/search?searchRank=-publication_d
     const length = mins + hours * 60;
     const imageId = last(((row.querySelector('.adbl-prod-image') || {}).src || '').split('/')).split('.')[0];
 
-    const releaseDateText = byRegex(/^Release Date:/).text;
+    const releaseDateText = byRegex(/Release Date:/).text;
     match = (releaseDateText || '').match(/(\d+)-(\d+)-(\d+)/);
-    const releaseDate = match ? `20${match[3]}-${match[1] - 1}-${match[2]}` : null;
+    const releaseDate = match ? toDate(match.slice(1)) : null;
 
     let seriesBookIndex = 0;
     let seriesId = null;
