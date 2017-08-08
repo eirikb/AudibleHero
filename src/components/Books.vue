@@ -45,7 +45,8 @@
           limit: 20,
           inLibrary: false,
           inSeries: true,
-          orderBy: 'releaseDate'
+          orderBy: 'releaseDate',
+          desc: true
         });
       }
     }

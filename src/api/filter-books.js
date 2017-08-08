@@ -7,5 +7,6 @@ export default (books, filter = {}) => {
     .filter(book => filter.inLibrary && filter.inLibrary === book.inLibrary || true)
     .sort((a, b) => (a[orderBy] || '').localeCompare(b[orderBy] || ''));
 
-  return filter.desc ? books.reverse() : books;
+  books = filter.desc ? books.reverse() : books;
+  return books.slice(0, limit);
 };
