@@ -72,6 +72,8 @@ export const getBooks = () => {
   booksWithSeries.forEach(book =>
     book.seriesBookMaxIndex = seriesMaxBookCount[book.seriesId]
   );
+  const today = new Date().toISOString().split('T')[0];
+  books.forEach(book => book.released = today >= book.releaseDate);
   return books;
 };
 
