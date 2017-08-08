@@ -15,12 +15,24 @@
 
             </section>
             <section class="mdc-card__primary">
-              <h1 class="mdc-card__title mdc-card__title--large">{{book.title}}</h1>
+              <h1 class="mdc-card__title mdc-card__title--large">
+                <a target="_blank" :href="`https://www.audible.com/pd/${book.id}`">
+                  {{book.title}}
+                </a>
+              </h1>
               <h2 class="mdc-card__subtitle">
+                <span v-if="book.seriesBookIndex">
+                {{book.seriesName}}<br>
                 {{book.seriesBookIndex}} /
                 {{book.seriesBookMaxIndex}}<br>
-                {{book.authors}}<br>
-                {{book.releaseDate}}
+                Series in library: {{book.seriesInLibrary}}<br>
+                </span>
+                Authors: {{book.authors}}<br>
+                Released: {{book.releaseDate}}<br>
+                Is released: {{book.released}}<br>
+                Language: {{book.language}}<br>
+                Rating: {{book.rating}}<br>
+                Length: {{book.length}}<br>
               </h2>
             </section>
             <section class="mdc-card__actions">
@@ -44,7 +56,7 @@
         return books(this.$store.state.books, {
           limit: 20,
           inLibrary: false,
-          inSeries: true,
+          seriesInLibrary: true,
           orderBy: 'releaseDate',
           desc: true
         });
