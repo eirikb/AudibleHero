@@ -1,6 +1,6 @@
 import fromLibrary from './from-library';
 import byAuthor from './by-author';
-import {range, flatten} from 'lodash';
+import {range, flatten, maxBy} from 'lodash';
 import {get, set, getData} from './cache';
 
 const BOOKS_PR_PAGE = 50;
@@ -64,19 +64,26 @@ export const getBooks = () => {
   }, {});
 
   const books = authorBooks.map(book => Object.assign({}, book, libraryById[book.id]));
-  const booksWithSeries = books.filter(book => book.seriesId);
-  const seriesMaxBookCount = booksWithSeries.reduce((res, book) => {
-    res[book.seriesId] = Math.max(book.seriesBookIndex, res[book.seriesId] || 0);
+  const series = books.filter(book => book.seriesId).reduce((res, book) => {
+    const books = res[book.seriesId] || [];
+    books.push(book);
+    res[book.seriesId] = books;
     return res;
   }, {});
-  booksWithSeries.forEach(book =>
-    book.seriesBookMaxIndex = seriesMaxBookCount[book.seriesId]
-  );
+
+  Object.values(series).forEach(books => {
+    const maxBookIndex = maxBy(books, 'seriesBookIndex').seriesBookIndex;
+    const inLibrary = books.some(book => book.inLibrary);
+    books.forEach(book => {
+      book.inSeries = true;
+      book.seriesBookMaxIndex = maxBookIndex;
+      book.seriesInLibrary = inLibrary;
+    });
+  });
+
   const today = new Date().toISOString().split('T')[0];
   books.forEach(book => {
     book.released = today >= book.releaseDate;
-    book.seriesInLibrary = !!seriesMaxBookCount[book.seriesId];
-    book.inSeries = book.seriesBookIndex > 0;
   });
   return books;
 };
