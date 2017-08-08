@@ -6,9 +6,9 @@ const detectLanguage = text => new Promise(resolve => chrome.i18n.detectLanguage
 const padZero = part => ('0' + part).slice(-2);
 
 const toDate = match => {
-  const year = (match[0] > 50 ? '19' : '20') + match[0];
-  const month = padZero(match[1]);
-  const day = padZero(match[2]);
+  const year = (match[2] > 50 ? '19' : '20') + match[2];
+  const month = padZero(match[0]);
+  const day = padZero(match[1]);
   return [year, month, day].join('-');
 };
 
