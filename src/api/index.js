@@ -84,6 +84,8 @@ export const getBooks = () => {
   const today = new Date().toISOString().split('T')[0];
   books.forEach(book => {
     book.released = today >= book.releaseDate;
+    book.inLibrary = !!book.inLibrary;
+    book.seriesInLibrary = !!book.seriesInLibrary;
   });
   return books;
 };
