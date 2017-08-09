@@ -1,6 +1,6 @@
 import fromLibrary from './from-library';
 import byAuthor from './by-author';
-import {range, flatten, maxBy} from 'lodash';
+import {range, flatten, maxBy, uniqBy} from 'lodash';
 import {get, set, getData} from './cache';
 
 const BOOKS_PR_PAGE = 50;
@@ -63,7 +63,7 @@ export const getBooks = () => {
     return res;
   }, {});
 
-  const books = authorBooks.map(book => Object.assign({}, book, libraryById[book.id]));
+  const books = uniqBy(authorBooks.map(book => Object.assign({}, book, libraryById[book.id])), 'id');
   const series = books.filter(book => book.seriesId).reduce((res, book) => {
     const books = res[book.seriesId] || [];
     books.push(book);
