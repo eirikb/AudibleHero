@@ -55,10 +55,12 @@
       books() {
         return books(this.$store.state.books, {
           limit: 20,
-          inLibrary: false,
-          seriesInLibrary: true,
           orderBy: 'releaseDate',
-          desc: true
+          desc: true,
+          filter: {
+            inLibrary: false,
+            seriesInLibrary: true,
+          }
         });
       }
     }

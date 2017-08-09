@@ -1,12 +1,16 @@
-export default (books, filter = {}) => {
+export default (books, config = {}) => {
 
-  const limit = filter.limit || 10;
-  const orderBy = filter.orderBy || 'title';
+  const limit = config.limit || 10;
+  const orderBy = config.orderBy || 'title';
 
   books = books
-    .filter(book => filter.inLibrary && filter.inLibrary === book.inLibrary || true)
+    .filter(book =>
+      Object.entries(config.filter || {}).every(([prop, val]) =>
+        book[prop] === val
+      )
+    )
     .sort((a, b) => (a[orderBy] || '').localeCompare(b[orderBy] || ''));
 
-  books = filter.desc ? books.reverse() : books;
+  books = config.desc ? books.reverse() : books;
   return books.slice(0, limit);
 };
