@@ -42,13 +42,13 @@ export default (author, limit, page) => fetch(`/search?searchRank=-publication_d
     match = (releaseDateText || '').match(/(\d+)-(\d+)-(\d+)/);
     const releaseDate = match ? toDate(match.slice(1)) : null;
 
-    let seriesBookIndex = 0;
+    let seriesBookIndex = '';
     let seriesId = null;
     const seriesNode = byRegex(/^Series:/).node;
     let seriesName = '';
     if (seriesNode) {
       seriesId = last(seriesNode.querySelector('a').href.split('='));
-      seriesBookIndex = parseInt((seriesNode.innerText.match(/\d+/) || [])[0]) || 1;
+      seriesBookIndex = seriesNode.innerText.split(', Book ')[1];
       seriesName = seriesNode.querySelector('a').innerText;
     }
 
