@@ -1,6 +1,6 @@
 import fromLibrary from './from-library';
 import byAuthor from './by-author';
-import {range, flatten, maxBy, uniqBy} from 'lodash';
+import {range, flatten, max, uniqBy} from 'lodash';
 import {get, set, getData} from './cache';
 
 const BOOKS_PR_PAGE = 50;
@@ -72,7 +72,7 @@ export const getBooks = () => {
   }, {});
 
   Object.values(series).forEach(books => {
-    const maxBookIndex = maxBy(books, 'seriesBookIndex').seriesBookIndex;
+    const maxBookIndex = max(books.map(book => parseInt(book.seriesBookIndex)));
     const inLibrary = books.some(book => book.inLibrary);
     books.forEach(book => {
       book.inSeries = true;
