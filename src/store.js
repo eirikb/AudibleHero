@@ -9,7 +9,9 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     books: [],
+    progress: false,
     progressLibrary: 0,
+    progressAllAuthors: 0,
     progressAuthors: {}
   },
 
@@ -20,7 +22,9 @@ export default new Vuex.Store({
 
     resetProgress(state) {
       state.progressLibrary = 0;
+      state.progressAllAuthors = 0;
       state.progressAuthors = {};
+      state.progress = false;
     },
 
     progressLibrary(state, progress) {
@@ -31,8 +35,16 @@ export default new Vuex.Store({
       state.progressAuthors[progress.author] = progress.progress;
     },
 
+    progressAllAuthors(state, progress) {
+      state.progressAllAuthors = progress;
+    },
+
     progressAuthors(state, authors) {
       state.progressAuthors = authors;
+    },
+
+    startProgress(state) {
+      state.progress = true;
     }
   },
 
@@ -46,6 +58,7 @@ export default new Vuex.Store({
       const p = (pos, tot) => Math.floor(pos / tot * 100);
 
       commit('resetProgress');
+      commit('startProgress');
       return updateFromLibrary((pos, tot) => commit('progressLibrary', p(pos, tot))).then(async books => {
         commit('progressLibrary', 100);
         const authors = uniq(flatten(books.map(book => book.authors)));
@@ -55,6 +68,8 @@ export default new Vuex.Store({
           return res;
         }, {}));
 
+        let authorsDone = 0;
+        const authorsCount = authors.length;
         await Promise.all(
           range(0, 10).map(async index => {
             let author;
@@ -63,6 +78,8 @@ export default new Vuex.Store({
                 author,
                 progress: p(pos, tot)
               }));
+              authorsDone++;
+              commit('progressAllAuthors', Math.floor(authorsDone / authorsCount * 100));
             }
           })
         );
