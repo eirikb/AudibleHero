@@ -13,7 +13,8 @@ export default (limit, page) => fetch(`/lib-ajax?progType=all&timeFilter=all&ite
     const id = row.querySelector('[name=asin]').value;
     const authors = row.querySelector('.adbl-library-item-author').innerText
       .split(',')
-      .map(author => author.trim());
+      .map(author => author.trim())
+      .filter(author => author);
 
     const downloaded = !!row.querySelector('span[alt=Downloaded]');
 
