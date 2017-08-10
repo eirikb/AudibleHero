@@ -30,6 +30,7 @@ export default (author, limit, page) => fetch(`/search?searchRank=-publication_d
         text: node.innerText.trim(), node
       })).find(res => res.text.match(regex)) || {};
 
+    const authors = Array.from(row.querySelectorAll('.adbl-prod-author a')).map(e => e.innerText);
     const lengthText = byRegex(/^Length:/).text;
     let match = lengthText.match(/(\d+) hr/);
     const hours = match ? parseInt(match[1]) : 0;
@@ -61,7 +62,7 @@ export default (author, limit, page) => fetch(`/search?searchRank=-publication_d
     let language = languageRes && languageRes.isReliable && (languageRes.languages[0] || {}).language;
     if (!language) language = 'en';
 
-    return {id, title, length, releaseDate, seriesBookIndex, seriesId, rating, language, imageId, seriesName};
+    return {id, title, length, releaseDate, seriesBookIndex, seriesId, rating, language, imageId, seriesName, authors};
   }));
 
   const pageCount = getPageCount(doc);
