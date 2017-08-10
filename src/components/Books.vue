@@ -15,10 +15,11 @@
 
             </section>
             <section class="mdc-card__primary">
+              <h1 class="mdc-card__title mdc-card__title--large" v-if="book.seriesBookIndex">
+                {{book.seriesName}}
+              </h1>
               <h1 class="mdc-card__title mdc-card__title--large">
-                <a target="_blank" :href="`https://www.audible.com/pd/${book.id}`">
-                  {{book.title}}
-                </a>
+                {{book.title}}
               </h1>
               <h2 class="mdc-card__subtitle">
                 <span v-if="book.seriesBookIndex">
@@ -27,7 +28,7 @@
                 {{book.seriesBookMaxIndex}}<br>
                 Series in library: {{book.seriesInLibrary}}<br>
                 </span>
-                Authors: {{book.authors}}<br>
+                Authors: {{book.authors.join(',')}}<br>
                 Released: {{book.releaseDate}}<br>
                 Is released: {{book.released}}<br>
                 Language: {{book.language}}<br>
@@ -36,8 +37,14 @@
               </h2>
             </section>
             <section class="mdc-card__actions">
-              <button class="mdc-button mdc-button--compact mdc-card__action">Action 1</button>
-              <button class="mdc-button mdc-button--compact mdc-card__action">Action 2</button>
+              <a class="mdc-button mdc-button--compact mdc-card__action" target="_blank"
+                 :href="`https://www.audible.com/pd/${book.id}`">
+                Book
+              </a>
+              <a class="mdc-button mdc-button--compact mdc-card__action" target="_blank"
+                 :href="`http://www.audible.com/series?asin=${book.seriesId}`">
+                Series
+              </a>
             </section>
           </div>
 
