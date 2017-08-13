@@ -10,7 +10,7 @@
           <div class="mdc-card">
             <section class="mdc-card__media">
 
-              <img class="mdc-card__media-item mdc-card__media-item--2x"
+              <img v-lazy class="mdc-card__media-item mdc-card__media-item--2x"
                    :src="`https://images-na.ssl-images-amazon.com/images/I/${book.imageId}._SL160_.jpg`">
 
             </section>
@@ -61,7 +61,6 @@
     computed: {
       books() {
         return books(this.$store.state.books, {
-          limit: 20,
           orderBy: 'releaseDate',
           desc: true,
           filter: {

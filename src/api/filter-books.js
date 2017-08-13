@@ -1,6 +1,5 @@
 export default (books, config = {}) => {
 
-  const limit = config.limit || 10;
   const orderBy = config.orderBy || 'title';
 
   books = books
@@ -11,6 +10,5 @@ export default (books, config = {}) => {
     )
     .sort((a, b) => (a[orderBy] || '').localeCompare(b[orderBy] || ''));
 
-  books = config.desc ? books.reverse() : books;
-  return books.slice(0, limit);
+  return config.desc ? books.reverse() : books;
 };
