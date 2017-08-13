@@ -23,10 +23,10 @@
               </h1>
               <h2 class="mdc-card__subtitle">
                 <span v-if="book.seriesBookIndex">
-                {{book.seriesName}}<br>
                 {{book.seriesBookIndex}} /
                 {{book.seriesBookMaxIndex}}<br>
-                Series in library: {{book.seriesInLibrary}}<br>
+                Series is in library: {{book.seriesInLibrary}}<br>
+                Series books in library: {{book.seriesInLibraryCount}}<br>
                 </span>
                 Authors: {{book.authors.join(',')}}<br>
                 Released: {{book.releaseDate}}<br>
@@ -34,6 +34,7 @@
                 Language: {{book.language}}<br>
                 Rating: {{book.rating}}<br>
                 Length: {{book.length}}<br>
+                In library: {{book.inLibrary}}<br>
               </h2>
             </section>
             <section class="mdc-card__actions">
@@ -65,6 +66,7 @@
           desc: true,
           filter: {
             inLibrary: false,
+            released: true,
             seriesInLibrary: true,
           }
         });

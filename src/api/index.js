@@ -73,11 +73,12 @@ export const getBooks = () => {
 
   Object.values(series).forEach(books => {
     const maxBookIndex = max(books.map(book => parseInt(book.seriesBookIndex)));
-    const inLibrary = books.some(book => book.inLibrary);
+    const inLibraryCount = books.filter(book => book.inLibrary).length;
     books.forEach(book => {
       book.inSeries = true;
       book.seriesBookMaxIndex = maxBookIndex;
-      book.seriesInLibrary = inLibrary;
+      book.seriesInLibrary = inLibraryCount > 0;
+      book.seriesInLibraryCount = inLibraryCount;
     });
   });
 
