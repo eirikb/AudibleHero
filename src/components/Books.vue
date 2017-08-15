@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-link to="/">Update</router-link>
+    <router-link to="/" class="mdc-button">Update</router-link>
 
     <div class="mdc-layout-grid">
       <div class="mdc-layout-grid__inner">

@@ -1,12 +1,12 @@
 <template>
   <div>
     <div v-if="!$store.state.progress">
-      <button @click="update">Update</button>
-      <router-link to="books" :disabled="$store.state.progress || $store.state.books.length === 0">Skip</router-link>
+      <button class="mdc-button mdc-button--raised" @click="update">Update</button>
+      <router-link to="books" class="mdc-button" :disabled="$store.state.progress || $store.state.books.length === 0">Skip</router-link>
 
       <div v-if="$store.state.books.length > 0">
         {{$store.state.books.length}} books in cache<br>
-        <button @click="clearCache">Clear cache</button>
+        <button class="mdc-button mdc-button--raised" @click="clearCache">Clear cache</button>
       </div>
     </div>
 
@@ -64,4 +64,5 @@
 
 <style lang="scss">
   @import '@material/layout-grid/mdc-layout-grid';
+  @import '@material/button/mdc-button';
 </style>
