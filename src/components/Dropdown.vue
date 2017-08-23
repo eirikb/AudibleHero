@@ -3,7 +3,7 @@
     <span class="mdc-select__selected-text">{{text}}</span>
     <div class="mdc-simple-menu mdc-select__menu">
       <ul class="mdc-list mdc-simple-menu__items">
-        <li class="mdc-list-item" role="option" aria-disabled="true">
+        <li class="mdc-list-item" role="option">
           {{text}}
         </li>
         <li class="mdc-list-item" role="option" v-for="item in items">
@@ -24,7 +24,7 @@
       const select = new MDCSelect(this.$refs.select);
       select.selectedIndex = this.items.findIndex(item => item.value === this.value) + 1;
       select.listen('MDCSelect:change', () =>
-        this.$emit('input', this.items[select.selectedIndex - 1].value)
+        this.$emit('input', (this.items[select.selectedIndex - 1] || {}).value)
       );
     }
   }
