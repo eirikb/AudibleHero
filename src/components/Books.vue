@@ -4,13 +4,49 @@
     <div class="mdc-layout-grid">
       <div class="mdc-layout-grid__inner">
         <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2">
-          <Dropdown v-model="inLibrary" text="In library"
-                    :items="[{label:'In library',value:true},{label:'Not in library',value:false}]"></Dropdown>
+          <Dropdown v-model="inLibrary" text="Book located in library"
+                    :items="[
+                    {label:'In library',value:true},
+                    {label:'Not in library',value:false}]"></Dropdown>
         </div>
 
         <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2">
-          <Dropdown v-model="released" text="Is released"
-                    :items="[{label:'Is released',value:true},{label:'Not yet released',value:false}]"></Dropdown>
+          <Dropdown v-model="released" text="Released status"
+                    :items="[
+                    {label:'Is released',value:true},
+                    {label:'Not yet released',value:false}]"></Dropdown>
+        </div>
+
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2">
+          <Dropdown v-model="seriesInLibrary" text="Series located in library"
+                    :items="[
+                    {label:'Series is in library',value:true},
+                    {label:'Series is not in library',value:false}]"></Dropdown>
+        </div>
+
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2">
+          <Dropdown v-model="language" text="Language"
+                    :items="[
+                    {label:'English',value:'en'}]"></Dropdown>
+        </div>
+      </div>
+    </div>
+
+    <div class="mdc-layout-grid">
+      <div class="mdc-layout-grid__inner">
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2">
+          <Dropdown v-model="orderBy" text="Series in library"
+                    :items="[
+                      {label:'Order by release date',value:'releaseDate'},
+                      {label:'Order by length',value:'length'},
+                      {label:'Order by rating',value:'rating'}]"></Dropdown>
+        </div>
+
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2">
+          <Dropdown v-model="desc" text="Series in library"
+                    :items="[
+                      {label:'Descending order',value:true},
+                      {label:'Ascending order',value:false}]"></Dropdown>
         </div>
       </div>
     </div>
@@ -75,21 +111,26 @@
     data() {
       return {
         inLibrary: false,
-        released: true
+        released: true,
+        seriesInLibrary: true,
+        language: 'en',
+        orderBy: 'releaseDate',
+        desc: true
       };
     },
 
     computed: {
       books() {
         return books(this.$store.state.books, {
-          orderBy: 'releaseDate',
-          desc: true,
+          orderBy: this.orderBy,
+          desc: this.desc,
           filter: {
             inLibrary: this.inLibrary,
             released: this.released,
-            seriesInLibrary: true,
+            seriesInLibrary: this.seriesInLibrary,
+            language: this.language
           }
-        });
+        }).slice(0, 500);
       }
     }
   };
