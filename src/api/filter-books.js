@@ -5,10 +5,16 @@ export default (books, config = {}) => {
   books = books
     .filter(book =>
       Object.entries(config.filter || {}).every(([prop, val]) =>
-        book[prop] === val
+        typeof val === 'undefined' || book[prop] === val
       )
     )
-    .sort((a, b) => (a[orderBy] || '').localeCompare(b[orderBy] || ''));
+    .sort((a, b) => {
+      a = a[orderBy] || '';
+      b = b[orderBy] || '';
+
+      if (isNaN(a) || isNaN(b)) return a.localeCompare(b);
+      return a - b;
+    });
 
   return config.desc ? books.reverse() : books;
 };
