@@ -2,9 +2,16 @@
   <div>
     <router-link to="/" class="mdc-button">Update</router-link>
     <div class="mdc-layout-grid">
-      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2">
-        <Dropdown v-model="inLibrary" text="In library"
-                  :items="[{label:'In library',value:true},{label:'Not in library',value:false}]"></Dropdown>
+      <div class="mdc-layout-grid__inner">
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2">
+          <Dropdown v-model="inLibrary" text="In library"
+                    :items="[{label:'In library',value:true},{label:'Not in library',value:false}]"></Dropdown>
+        </div>
+
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2">
+          <Dropdown v-model="released" text="Is released"
+                    :items="[{label:'Is released',value:true},{label:'Not yet released',value:false}]"></Dropdown>
+        </div>
       </div>
     </div>
 
@@ -17,7 +24,7 @@
             <section class="mdc-card__media">
 
               <img v-lazy class="mdc-card__media-item mdc-card__media-item--2x"
-                   :src="`https://images-na.ssl-images-amazon.com/images/I/${book.imageId}._SL160_.jpg`">
+                   :data-src="`https://images-na.ssl-images-amazon.com/images/I/${book.imageId}._SL160_.jpg`">
 
             </section>
             <section class="mdc-card__primary">
@@ -67,7 +74,8 @@
   export default {
     data() {
       return {
-        inLibrary: false
+        inLibrary: false,
+        released: true
       };
     },
 
@@ -78,7 +86,7 @@
           desc: true,
           filter: {
             inLibrary: this.inLibrary,
-            released: true,
+            released: this.released,
             seriesInLibrary: true,
           }
         });
