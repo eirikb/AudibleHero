@@ -1,6 +1,12 @@
 <template>
   <div>
     <router-link to="/" class="mdc-button">Update</router-link>
+    <div class="mdc-layout-grid">
+      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2">
+        <Dropdown v-model="inLibrary" text="In library"
+                  :items="[{label:'In library',value:true},{label:'Not in library',value:false}]"></Dropdown>
+      </div>
+    </div>
 
     <div class="mdc-layout-grid">
       <div class="mdc-layout-grid__inner">
@@ -59,13 +65,19 @@
   import books from '../api/filter-books';
 
   export default {
+    data() {
+      return {
+        inLibrary: false
+      };
+    },
+
     computed: {
       books() {
         return books(this.$store.state.books, {
           orderBy: 'releaseDate',
           desc: true,
           filter: {
-            inLibrary: false,
+            inLibrary: this.inLibrary,
             released: true,
             seriesInLibrary: true,
           }
