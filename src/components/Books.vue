@@ -67,7 +67,7 @@
         </div>
 
         <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2">
-          <Dropdown v-model="orderBy" text="Series in library"
+          <Dropdown v-model="orderBy" text="Order by"
                     :items="[
                       {label:'Order by release date',value:'releaseDate'},
                       {label:'Order by length',value:'length'},
@@ -75,7 +75,7 @@
         </div>
 
         <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2">
-          <Dropdown v-model="desc" text="Series in library"
+          <Dropdown v-model="desc" text="Order"
                     :items="[
                       {label:'Descending order',value:true},
                       {label:'Ascending order',value:false}]"></Dropdown>
