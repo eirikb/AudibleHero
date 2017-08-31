@@ -2,7 +2,7 @@
   <div>
     <div v-if="!$store.state.progress">
       <button class="mdc-button mdc-button--raised" @click="update">Update</button>
-      <router-link to="books" class="mdc-button" :disabled="$store.state.progress || $store.state.books.length === 0">Skip</router-link>
+      <router-link to="books" class="mdc-button" v-if="!($store.state.progress || $store.state.books.length === 0)">Skip</router-link>
 
       <div v-if="$store.state.books.length > 0">
         {{$store.state.books.length}} books in cache<br>
