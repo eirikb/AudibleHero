@@ -7,7 +7,25 @@
           <router-link to="/" class="mdc-button">Update</router-link>
         </div>
 
-        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-10"></div>
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2">
+          <button class="mdc-button" @click="clearFilter">
+            Clear filter
+          </button>
+        </div>
+
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2">
+          <button class="mdc-button" @click="defaultFilter">
+            Default filter
+          </button>
+        </div>
+
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2">
+          <button class="mdc-button" @click="libraryFilter">
+            Library filter
+          </button>
+        </div>
+
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4"></div>
 
         <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2">
           <Dropdown v-model="inLibrary" text="Book located in library"
@@ -109,16 +127,18 @@
 <script>
   import books from '../api/filter-books';
 
+  const defaultFilter = {
+    inLibrary: false,
+    released: true,
+    seriesInLibrary: true,
+    language: 'en',
+    orderBy: 'releaseDate',
+    desc: true
+  };
+
   export default {
     data() {
-      return {
-        inLibrary: false,
-        released: true,
-        seriesInLibrary: true,
-        language: 'en',
-        orderBy: 'releaseDate',
-        desc: true
-      };
+      return Object.assign({}, defaultFilter);
     },
 
     computed: {
@@ -133,6 +153,26 @@
             language: this.language
           }
         }).slice(0, 500);
+      }
+    },
+
+    methods: {
+      clearFilter() {
+        this.inLibrary = undefined;
+        this.released = undefined;
+        this.seriesInLibrary = undefined;
+        this.language = undefined;
+        this.orderBy = 'releaseDate';
+        this.desc = true;
+      },
+
+      defaultFilter() {
+        Object.assign(this, defaultFilter);
+      },
+
+      libraryFilter() {
+        this.clearFilter();
+        this.inLibrary = true;
       }
     }
   };
