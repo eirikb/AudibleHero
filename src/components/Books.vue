@@ -71,7 +71,18 @@
                       {label:'Ascending order',value:false}]"></Dropdown>
         </div>
 
-        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-8"></div>
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2">
+          <Dropdown v-model="limit" text="Limit"
+                    :items="[
+                      {label:'Show 10',value:10},
+                      {label:'Show 50',value:50},
+                      {label:'Show 100',value:100},
+                      {label:'Show 200',value:200},
+                      {label:'Show 500',value:500},
+                      {label:'Show 1000',value:1000}]"></Dropdown>
+        </div>
+
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6"></div>
 
         <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2"
              v-for="book in books">
@@ -138,7 +149,9 @@
 
   export default {
     data() {
-      return Object.assign({}, defaultFilter);
+      return Object.assign({
+        limit: 100
+      }, defaultFilter);
     },
 
     computed: {
@@ -152,7 +165,7 @@
             seriesInLibrary: this.seriesInLibrary,
             language: this.language
           }
-        }).slice(0, 500);
+        }).slice(0, this.limit);
       }
     },
 
