@@ -3,6 +3,7 @@ import Vue from 'vue';
 import store from './store';
 import router from './router';
 import './lazy';
+import './analytics'
 
 const req = require.context('./components/', true, /\.(js|vue)$/i);
 req.keys().map(key => {
