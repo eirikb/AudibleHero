@@ -1,8 +1,14 @@
 <template>
   <div>
-    <router-link to="/" class="mdc-button">Update</router-link>
     <div class="mdc-layout-grid">
       <div class="mdc-layout-grid__inner">
+
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2">
+          <router-link to="/" class="mdc-button">Update</router-link>
+        </div>
+
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-10"></div>
+
         <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2">
           <Dropdown v-model="inLibrary" text="Book located in library"
                     :items="[
@@ -29,11 +35,9 @@
                     :items="[
                     {label:'English',value:'en'}]"></Dropdown>
         </div>
-      </div>
-    </div>
 
-    <div class="mdc-layout-grid">
-      <div class="mdc-layout-grid__inner">
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4"></div>
+
         <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2">
           <Dropdown v-model="orderBy" text="Series in library"
                     :items="[
@@ -48,11 +52,9 @@
                       {label:'Descending order',value:true},
                       {label:'Ascending order',value:false}]"></Dropdown>
         </div>
-      </div>
-    </div>
 
-    <div class="mdc-layout-grid">
-      <div class="mdc-layout-grid__inner">
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-8"></div>
+
         <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2"
              v-for="book in books">
 
