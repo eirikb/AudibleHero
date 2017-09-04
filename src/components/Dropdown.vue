@@ -24,7 +24,7 @@
       this.select = new MDCSelect(this.$refs.select);
       this.selectByValue();
       this.select.listen('MDCSelect:change', () =>
-        this.$emit('input', (this.items[select.selectedIndex - 1] || {}).value)
+        this.$emit('input', (this.items[this.select.selectedIndex - 1] || {}).value)
       );
     },
 
