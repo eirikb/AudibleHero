@@ -21,11 +21,23 @@
     props: ['value', 'text', 'items'],
 
     mounted() {
-      const select = new MDCSelect(this.$refs.select);
-      select.selectedIndex = this.items.findIndex(item => item.value === this.value) + 1;
-      select.listen('MDCSelect:change', () =>
+      this.select = new MDCSelect(this.$refs.select);
+      this.selectByValue();
+      this.select.listen('MDCSelect:change', () =>
         this.$emit('input', (this.items[select.selectedIndex - 1] || {}).value)
       );
+    },
+
+    methods: {
+      selectByValue() {
+        this.select.selectedIndex = this.items.findIndex(item => item.value === this.value) + 1;
+      }
+    },
+
+    watch: {
+      value() {
+        this.selectByValue();
+      }
     }
   }
 </script>
