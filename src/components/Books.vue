@@ -109,18 +109,22 @@
               </h1>
               <h2 class="mdc-card__subtitle">
                 <span v-if="book.seriesBookIndex">
-                {{book.seriesBookIndex}} /
-                {{book.seriesBookMaxIndex}}<br>
-                Series is in library: {{book.seriesInLibrary}}<br>
-                Series books in library: {{book.seriesInLibraryCount}}<br>
+                  <span title="Series books index (could be decimal-based)">{{book.seriesBookIndex}}</span> /
+                  <span title="Series max book index (highest number, not amount)">{{book.seriesBookMaxIndex}}</span>
+                  <span title="How many books in this series you have in your library">({{book.seriesInLibraryCount || 0}})</span>
+                  <br>
+                  <span v-if="!book.seriesInLibrary">
+                    You don't have this series in your library<br>
+                  </span>
                 </span>
+                <span v-if="book.inLibrary">Book is in your library<br></span>
                 Authors: {{book.authors.join(',')}}<br>
-                Released: {{book.releaseDate}}<br>
-                Is released: {{book.released}}<br>
+                Release: {{book.releaseDate}}
+                <span v-if="!book.released"> (not yet released)</span>
+                <br>
                 Language: {{book.language}}<br>
                 Rating: {{book.rating}}<br>
                 Length: {{book.length}}<br>
-                In library: {{book.inLibrary}}<br>
               </h2>
             </section>
             <section class="mdc-card__actions">
