@@ -82,7 +82,13 @@
                       {label:'Show 1000',value:1000}]"></Dropdown>
         </div>
 
-        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6"></div>
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2">
+          <div class="mdc-textfield">
+            <input v-model="text" type="text" class="mdc-textfield__input" placeholder="Search">
+          </div>
+        </div>
+
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4"></div>
 
         <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2"
              v-for="book in books">
@@ -144,6 +150,7 @@
     seriesInLibrary: true,
     language: 'en',
     orderBy: 'releaseDate',
+    text: '',
     desc: true
   };
 
@@ -163,8 +170,9 @@
             inLibrary: this.inLibrary,
             released: this.released,
             seriesInLibrary: this.seriesInLibrary,
-            language: this.language
-          }
+            language: this.language,
+          },
+          textFilter: this.text
         }).slice(0, this.limit);
       }
     },
@@ -196,4 +204,5 @@
   @import '@material/card/mdc-card';
   @import '@material/layout-grid/mdc-layout-grid';
   @import '@material/button/mdc-button';
+  @import '@material/textfield/mdc-textfield';
 </style>
