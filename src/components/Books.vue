@@ -90,8 +90,11 @@
 
         <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4"></div>
 
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+          Showing total of {{books.slice(0, limit).length}} of total {{books.length}} books
+        </div>
         <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2"
-             v-for="book in books">
+             v-for="book in books.slice(0, limit)">
 
           <div class="mdc-card">
             <section class="mdc-card__media">
@@ -161,7 +164,8 @@
   export default {
     data() {
       return Object.assign({
-        limit: 100
+        limit: 100,
+        total: 0
       }, defaultFilter);
     },
 
@@ -177,7 +181,7 @@
             language: this.language,
           },
           textFilter: this.text
-        }).slice(0, this.limit);
+        });
       }
     },
 
