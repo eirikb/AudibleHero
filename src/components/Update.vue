@@ -11,6 +11,7 @@
     </div>
 
     <div v-if="$store.state.progress">
+      <p>Note: Subsequent updates are incremental, i.e., much faster.</p>
       <div v-if="$store.state.progressLibrary < 100">
         <b>Loading library</b>
         <Progress :progress="$store.state.progressLibrary"></Progress>
