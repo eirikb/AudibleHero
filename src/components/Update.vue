@@ -1,12 +1,24 @@
 <template>
   <div>
     <div v-if="!$store.state.progress">
-      <button class="mdc-button mdc-button--raised" @click="update">Update</button>
-      <router-link to="books" class="mdc-button" v-if="!($store.state.progress || $store.state.books.length === 0)">Skip</router-link>
 
-      <div v-if="$store.state.books.length > 0">
-        {{$store.state.books.length}} books in cache<br>
-        <button class="mdc-button mdc-button--raised" @click="clearCache">Clear cache</button>
+      <div class="mdc-layout-grid">
+        <div class="mdc-layout-grid__inner">
+
+          <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4">
+            <button class="mdc-button mdc-button--raised" @click="update">Update</button>
+            <router-link to="books" class="mdc-button"
+                         v-if="!($store.state.progress || $store.state.books.length === 0)">Skip
+            </router-link>
+          </div>
+
+          <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-8"></div>
+
+          <div v-if="$store.state.books.length > 0" class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4">
+            <button class="mdc-button mdc-button--raised" @click="clearCache">Clear cache</button>
+            {{$store.state.books.length}} books in cache
+          </div>
+        </div>
       </div>
     </div>
 
