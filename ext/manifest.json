@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "AudibleHero for Audible",
-  "description": "List new books from your favorite authors and series on www.audible.com",
+  "description": "Find missing books from your series on www.audible.com",
   "version": "7",
   "icons": {
     "16": "logo16.png",
