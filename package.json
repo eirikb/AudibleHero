@@ -7,7 +7,9 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack-dev-server --hot",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
-    "ext": "shx mkdir -p dist && shx cp -r ext/* dist/"
+    "ext": "shx mkdir -p dist && shx cp -r ext/* dist/",
+    "zip": "cd dist; zip ../audiblehero.zip *",
+    "prod": "npm-run-all ext build zip"
   },
   "dependencies": {
     "babel-polyfill": "^6.23.0",
@@ -15,6 +17,7 @@
     "lodash": "^4.17.4",
     "lz-string": "^1.4.4",
     "material-components-web": "^0.14.0",
+    "npm-run-all": "^4.1.1",
     "scss-loader": "0.0.1",
     "vue": "^2.2.1",
     "vue-analytics": "^4.4.0",
