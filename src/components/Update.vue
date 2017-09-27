@@ -34,14 +34,19 @@
             <Progress :progress="$store.state.progressAllAuthors"></Progress>
           </div>
           <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2" v-for="author in authors">
-            <b>{{author.name}}</b>
+            {{author.name}}
             <Progress :progress="author.progress"></Progress>
           </div>
         </div>
       </div>
     </div>
     <div v-else class="mdc-layout-grid">
+      <hr>
       <div class="mdc-layout-grid__inner">
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+          <h3>2017-09-27</h3>
+          <p>Had some issues with http/https, had to change the URL to <i>/legal-terms</i>.</p>
+        </div>
         <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
           <h3>2017-09-08</h3>
           <p>A new and worse AudibleHero!</p>

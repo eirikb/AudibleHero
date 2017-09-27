@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "AudibleHero for Audible",
   "description": "Find missing books from your series on www.audible.com",
-  "version": "7",
+  "version": "9",
   "icons": {
     "16": "logo16.png",
     "48": "logo48.png",
@@ -11,9 +11,9 @@
   "content_scripts": [
     {
       "matches": [
-        "*://*.audible.com/audiblehero",
-        "*://*.audible.com.au/audiblehero",
-        "*://*.audible.co.uk/audiblehero"
+        "*://*.audible.com/legal-terms?audible=hero",
+        "*://*.audible.com.au/legal-terms?audible=hero",
+        "*://*.audible.co.uk/legal-terms?audible=hero"
       ],
       "css": [
         "clear.css"

@@ -136,7 +136,7 @@
                 Book
               </a>
               <a class="mdc-button mdc-button--compact mdc-card__action" target="_blank"
-                 :href="`http://www.audible.com/series?asin=${book.seriesId}`">
+                 :href="`https://www.audible.com/series?asin=${book.seriesId}`">
                 Series
               </a>
             </section>

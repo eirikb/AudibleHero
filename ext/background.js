@@ -20,5 +20,5 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 
 chrome.pageAction.onClicked.addListener(tab => {
   const domain = tab.url.match(/^[\w-]+:\/*\[?([\w\.:-]+)\]?(?::\d+)?/)[1];
-  chrome.tabs.update(tab.id, {url: `http://${domain}/audiblehero`});
+  chrome.tabs.update(tab.id, {url: `http://${domain}/legal-terms?audible=hero`});
 });

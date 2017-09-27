@@ -1,5 +1,7 @@
 <template>
-  <router-view></router-view>
+  <div class="mdc-typography">
+    <router-view></router-view>
+  </div>
 </template>
 
 
@@ -10,3 +12,7 @@
     }
   }
 </script>
+
+<style lang="scss">
+  @import '~@material/typography/mdc-typography';
+</style>

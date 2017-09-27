@@ -5,9 +5,9 @@
   "author": "Eirik Brandtzæg <eirikb@eirikb.no>",
   "private": true,
   "scripts": {
-    "start": "cross-env NODE_ENV=development webpack-dev-server --hot",
+    "start": "cross-env NODE_ENV=development webpack-dev-server --hot --https",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
-    "ext": "shx mkdir -p dist && shx cp -r ext/* dist/",
+    "ext": "shx rm -rf dist audiblehero.zip && shx mkdir -p dist && shx cp -r ext/* dist/",
     "zip": "cd dist; zip ../audiblehero.zip *",
     "prod": "npm-run-all ext build zip"
   },
