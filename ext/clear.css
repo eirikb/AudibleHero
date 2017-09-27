@@ -1,3 +1,15 @@
-#wrapper {
+#wrapper, body {
     display: none;
+}
+
+body.show {
+    display: block;
+}
+
+html:after {
+    content: 'Loading...';
+}
+
+html.show:after {
+    content: '';
 }
