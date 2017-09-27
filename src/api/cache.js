@@ -36,7 +36,7 @@ export const get = key => {
 }
 
 export const set = (key, value) => {
-  const keys = Object.keys(value[0]).sort();
+  const keys = value.length > 0 ? Object.keys(value[0]).sort() : [];
   data.values[key] = [keys, value.map(val => keys.map(key => val[key]))];
 };
 
