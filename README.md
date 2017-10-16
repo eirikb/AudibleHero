@@ -2,6 +2,8 @@
 
 Code for the [Chrome extension](http://audiblehero.com).
 
+[![Build Status](https://travis-ci.org/eirikb/AudibleHero.svg?branch=master)](https://travis-ci.org/eirikb/AudibleHero)
+
 ## How to run locally
 
 You need: 
