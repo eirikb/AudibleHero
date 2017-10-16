@@ -44,9 +44,18 @@
       <hr>
       <div class="mdc-layout-grid__inner">
         <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+          <h3>2017-10-16</h3>
+          <p>
+            Fixes for uk and au sites by
+            <a href="https://github.com/MizardX">MizardX</a>.
+          </p>
+        </div>
+
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
           <h3>2017-09-27</h3>
           <p>Had some issues with http/https, had to change the URL to <i>/legal-terms</i>.</p>
         </div>
+
         <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
           <h3>2017-09-08</h3>
           <p>A new and worse AudibleHero!</p>
