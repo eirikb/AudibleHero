@@ -49,7 +49,7 @@ export default (author, limit, page) => fetch(`/search?searchRank=-publication_d
     let seriesName = '';
     if (seriesNode) {
       seriesId = last(seriesNode.querySelector('a').href.split('='));
-      seriesBookIndex = seriesNode.innerText.split(', Book ')[1];
+      seriesBookIndex = seriesNode.innerText.trim().split(', Book ')[1];
       seriesName = seriesNode.querySelector('a').innerText;
     }
 
