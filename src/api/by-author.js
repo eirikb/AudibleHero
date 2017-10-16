@@ -6,10 +6,19 @@ const detectLanguage = text => new Promise(resolve => chrome.i18n.detectLanguage
 const padZero = part => ('0' + part).slice(-2);
 
 const toDate = match => {
-  const year = (match[2] > 50 ? '19' : '20') + match[2];
-  const month = padZero(match[0]);
-  const day = padZero(match[1]);
-  return [year, month, day].join('-');
+  if (/\.co.uk$|\.com\.au$/i.test(window.location.host)) {
+    // dd/mm/yyyy
+    const year = match[2];
+    const month = padZero(match[1]);
+    const day = padZero(match[0]);
+    return [year, month, day].join('-');
+  } else  {
+    // mm-dd-yy
+    const year = (+match[2] > 50 ? '19' : '20') + match[2];
+    const month = padZero(match[0]);
+    const day = padZero(match[1]);
+    return [year, month, day].join('-');
+  }
 };
 
 export default (author, limit, page) => fetch(`/search?searchRank=-publication_datesearch&searchSize=${limit}&searchPage=${page}&searchAuthor=${author}`, {
@@ -40,7 +49,7 @@ export default (author, limit, page) => fetch(`/search?searchRank=-publication_d
     const imageId = last(((row.querySelector('.adbl-prod-image') || {}).src || '').split('/')).split('.')[0];
 
     const releaseDateText = byRegex(/Release Date:/).text;
-    match = (releaseDateText || '').match(/(\d+)-(\d+)-(\d+)/);
+    match = (releaseDateText || '').match(/(\d+)[-\/](\d+)[-\/](\d+)/);
     const releaseDate = match ? toDate(match.slice(1)) : null;
 
     let seriesBookIndex = '';
@@ -49,7 +58,7 @@ export default (author, limit, page) => fetch(`/search?searchRank=-publication_d
     let seriesName = '';
     if (seriesNode) {
       seriesId = last(seriesNode.querySelector('a').href.split('='));
-      seriesBookIndex = seriesNode.innerText.split(', Book ')[1];
+      seriesBookIndex = seriesNode.innerText.trim().split(', Book ')[1];
       seriesName = seriesNode.querySelector('a').innerText;
     }
 
