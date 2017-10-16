@@ -5,11 +5,12 @@
   "author": "Eirik Brandtzæg <eirikb@eirikb.no>",
   "private": true,
   "scripts": {
-    "start": "cross-env NODE_ENV=development webpack-dev-server --hot --https",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --hot --https",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
     "ext": "shx rm -rf dist audiblehero.zip && shx mkdir -p dist && shx cp -r ext/* dist/",
     "zip": "cd dist; zip ../audiblehero.zip *",
-    "prod": "npm-run-all ext build zip"
+    "prod": "npm-run-all ext build zip",
+    "start": "npm-run-all ext dev"
   },
   "dependencies": {
     "babel-polyfill": "^6.23.0",
