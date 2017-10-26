@@ -127,7 +127,7 @@
                 <br>
                 Language: {{book.language}}<br>
                 Rating: {{book.rating}}<br>
-                Length: {{book.length}}<br>
+                Length: {{length(book.length)}}<br>
               </h2>
             </section>
             <section class="mdc-card__actions">
@@ -202,6 +202,12 @@
       libraryFilter() {
         this.clearFilter();
         this.inLibrary = true;
+      },
+
+      length(length) {
+        const hours = Math.floor(length / 60);
+        const minutes = length - 60 * hours;
+        return `${hours}h ${minutes}m`;
       }
     }
   };

@@ -23,7 +23,9 @@
     </div>
 
     <div v-if="$store.state.progress">
-      <p>Note: Subsequent updates are incremental, i.e., much faster.</p>
+      <p>Note: Subsequent updates are incremental, i.e., much faster. <br>
+        Also note: It's good to sometimes clear the cache and do a full update. This is the only way to update ratings.
+      </p>
       <div v-if="$store.state.progressLibrary < 100">
         <b>Loading library</b>
         <Progress :progress="$store.state.progressLibrary"></Progress>
