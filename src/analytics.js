@@ -1,11 +1,13 @@
-import Vue from 'vue'
-import VueAnalytics from 'vue-analytics'
-import router from './router';
+const ga = document.createElement('script');
+ga.async = true;
+ga.src = 'https://www.googletagmanager.com/gtag/js?id=UA-69263799-2';
+const ga2 = document.createElement('script');
+ga2.innerHTML = `
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-Vue.use(VueAnalytics, {
-  id: 'UA-69263799-2',
-  router,
-  autoTracking: {
-    exception: true
-  }
-});
+  gtag('config', 'UA-69263799-2');
+`;
+document.head.appendChild(ga);
+document.head.appendChild(ga2);

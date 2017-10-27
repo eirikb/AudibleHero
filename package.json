@@ -21,7 +21,6 @@
     "npm-run-all": "4.1.1",
     "scss-loader": "0.0.1",
     "vue": "2.5.2",
-    "vue-analytics": "5.1.1",
     "vue-router": "3.0.1",
     "vuex": "3.0.0"
   },
