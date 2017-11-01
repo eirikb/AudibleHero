@@ -8,17 +8,18 @@ chrome.webRequest.onBeforeSendHeaders.addListener(details => {
     }
     return {requestHeaders: details.requestHeaders};
   }, {
-    urls: ['*://audible.com/*', '*://www.audible.com/*']
+    urls: ['*://www.audible.com/*', '*://www.audible.co.uk/*', '*://www.audible.com.au/*']
   },
   ['blocking', 'requestHeaders']);
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-  if (tab.url.match(/audible\.com/i)) {
+  const url = new URL(tab.url);
+  if (['www.audible.com', 'www.audible.co.uk', 'www.audible.com.au'].includes(url.host)) {
     chrome.pageAction.show(tabId);
   }
 });
 
 chrome.pageAction.onClicked.addListener(tab => {
-  const domain = tab.url.match(/^[\w-]+:\/*\[?([\w\.:-]+)\]?(?::\d+)?/)[1];
-  chrome.tabs.update(tab.id, {url: `http://${domain}/legal-terms?audible=hero`});
+  const url = new URL(tab.url);
+  chrome.tabs.update(tab.id, {url: `${url.origin}/legal-terms?audible=hero`});
 });

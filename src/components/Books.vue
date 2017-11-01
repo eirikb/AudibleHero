@@ -132,11 +132,11 @@
             </section>
             <section class="mdc-card__actions">
               <a class="mdc-button mdc-button--compact mdc-card__action" target="_blank"
-                 :href="`https://www.audible.com/pd/${book.id}`">
+                 :href="`/pd/${book.id}`">
                 Book
               </a>
               <a class="mdc-button mdc-button--compact mdc-card__action" target="_blank"
-                 :href="`https://www.audible.com/series?asin=${book.seriesId}`">
+                 :href="`/series?asin=${book.seriesId}`">
                 Series
               </a>
             </section>
