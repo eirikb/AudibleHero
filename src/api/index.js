@@ -22,21 +22,19 @@ const addMissing = (books, page) => {
 
 const loadUntilCache = async (type, progress, api) => {
   const books = get(type) || [];
-  const first = await api(1, 1);
+  const first = await api(BOOKS_PR_PAGE, 1);
   if (addMissing(books, first)) {
     return books;
   }
-  const bookCount = first.pageCount;
-  const pageCount = Math.floor(bookCount / BOOKS_PR_PAGE) + 1;
-  const pageIndexes = range(1, pageCount + 1);
+  const pageCount = first.pageCount;
 
-  if (progress) progress(0, bookCount);
-  for (let pageIndex of pageIndexes) {
+  if (progress) progress(1, pageCount);
+  for (let pageIndex = 2; pageIndex <= pageCount; pageIndex++) {
     const page = await api(BOOKS_PR_PAGE, pageIndex);
     if (addMissing(books, page)) {
       return books;
     }
-    if (progress) progress(books.length, bookCount);
+    if (progress) progress(pageIndex, pageCount);
   }
   return books;
 };
