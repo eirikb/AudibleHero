@@ -59,9 +59,12 @@ export default (author, limit, page) => fetch(`/search?keywords=${author}&sort=p
     const seriesNode = byRegex(/^Series:/).node;
     let seriesName = '';
     if (seriesNode) {
-      seriesId = seriesNode.querySelector('a').href.match(/asin=(\w*)/)[1];
-      seriesBookIndex = seriesNode.innerText.trim().split(', Book ')[1];
-      seriesName = seriesNode.querySelector('a').innerText;
+      const seriesLink = seriesNode.querySelector('a');
+      if (seriesLink) {
+        seriesId = seriesLink.href.match(/asin=(\w*)/)[1];
+        seriesBookIndex = seriesNode.innerText.trim().split(', Book ')[1];
+        seriesName = seriesLink.innerText;
+      }
     }
 
     const rating = parseInt((((row.querySelector('.ratingsLabel') || {}).innerText || '').match(/\d+/g) || []).join('')) || 0;
