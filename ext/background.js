@@ -21,5 +21,5 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 
 chrome.pageAction.onClicked.addListener(tab => {
   const url = new URL(tab.url);
-  chrome.tabs.update(tab.id, {url: `${url.origin}/legal-terms?audible=hero`});
+  chrome.tabs.update(tab.id, {url: `${url.origin}/legal/conditions-of-use?audible=hero`});
 });

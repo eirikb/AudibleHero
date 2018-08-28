@@ -11,9 +11,9 @@
   "content_scripts": [
     {
       "matches": [
-        "*://*.audible.com/legal-terms?audible=hero",
-        "*://*.audible.com.au/legal-terms?audible=hero",
-        "*://*.audible.co.uk/legal-terms?audible=hero"
+        "*://*.audible.com/legal/conditions-of-use?audible=hero",
+        "*://*.audible.com.au/legal/conditions-of-use?audible=hero",
+        "*://*.audible.co.uk/legal/conditions-of-use?audible=hero"
       ],
       "css": [
         "clear.css"
