@@ -30,8 +30,9 @@ export default (author, limit, page) => fetch(`/search?keywords=${author}&sort=p
 
   const rows = Array.from(doc.querySelectorAll('.productListItem'));
 
-  const books = await Promise.all(rows.map(async row => {
+  const books = (await Promise.all(rows.map(async row => {
     const heading = row.querySelector('.bc-heading a');
+    if (!heading) return null;
     const id = heading.href.match(/(\w+)\?/)[1];
 
     const title = heading.innerText.trim();
@@ -77,10 +78,9 @@ export default (author, limit, page) => fetch(`/search?keywords=${author}&sort=p
     if (!language) language = 'en';
 
     return {id, title, length, releaseDate, seriesBookIndex, seriesId, rating, language, imageId, seriesName, authors};
-  }));
+  }))).filter(book => book);
 
   const pageCount = getPageCount(doc);
 
   return {books, pageCount};
-
 });

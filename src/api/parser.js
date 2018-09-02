@@ -3,7 +3,8 @@ export const parse = html => {
   return parser.parseFromString(html, 'text/html');
 };
 
-export const getPageCount = doc => {
-  const pageElement = Array.from(doc.querySelectorAll('.adbl-page-link')).pop();
-  return pageElement ? parseInt(pageElement.innerText) : 1;
-};
+export const
+  getPageCount = doc => {
+    const pageElement = Array.from(doc.querySelectorAll('.pageNumberElement')).pop();
+    return pageElement ? parseInt(pageElement.innerText) : 1;
+  };
