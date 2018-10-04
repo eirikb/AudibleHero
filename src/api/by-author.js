@@ -63,7 +63,7 @@ export default (author, limit, page) => fetch(`/search?keywords=${author}&sort=p
       const seriesLink = seriesNode.querySelector('a');
       if (seriesLink) {
         seriesId = seriesLink.href.match(/asin=(\w*)/)[1];
-        seriesBookIndex = seriesNode.innerText.trim().split(', Book ')[1];
+        seriesBookIndex = (seriesNode.innerText.match(/book (\d+)/i) || [])[1];
         seriesName = seriesLink.innerText;
       }
     }
