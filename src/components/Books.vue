@@ -112,8 +112,6 @@
             <section class="mdc-card__primary">
               <h1 class="mdc-card__title mdc-card__title--large" v-if="book.seriesBookIndex">
                 {{book.seriesName}}
-                eh
-                {{book.seriesBookIndexInLibrary }}
               </h1>
               <h1 class="mdc-card__title mdc-card__title--large">
                 {{book.title}}
