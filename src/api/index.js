@@ -77,6 +77,7 @@ export const getBooks = () => {
       book.seriesBookMaxIndex = maxBookIndex;
       book.seriesInLibrary = inLibraryCount > 0;
       book.seriesInLibraryCount = inLibraryCount;
+      book.seriesBookIndexInLibrary = books.some(b => b.inLibrary && b.seriesBookIndex === book.seriesBookIndex);
     });
   });
 

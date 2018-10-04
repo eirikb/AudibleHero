@@ -54,7 +54,13 @@
                     {label:'English',value:'en'}]"></Dropdown>
         </div>
 
-        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4"></div>
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2">
+          <Dropdown v-model="seriesBookIndexInLibrary" text="Show with same series number"
+                    :items="[
+                    {label:'Hide with same series number',value:false}]"></Dropdown>
+        </div>
+
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2"></div>
 
         <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2">
           <Dropdown v-model="orderBy" text="Series in library"
@@ -106,6 +112,8 @@
             <section class="mdc-card__primary">
               <h1 class="mdc-card__title mdc-card__title--large" v-if="book.seriesBookIndex">
                 {{book.seriesName}}
+                eh
+                {{book.seriesBookIndexInLibrary }}
               </h1>
               <h1 class="mdc-card__title mdc-card__title--large">
                 {{book.title}}
@@ -157,6 +165,7 @@
     seriesInLibrary: true,
     language: 'en',
     orderBy: 'releaseDate',
+    seriesBookIndexInLibrary: false,
     text: '',
     desc: true
   };
@@ -179,6 +188,7 @@
             released: this.released,
             seriesInLibrary: this.seriesInLibrary,
             language: this.language,
+            seriesBookIndexInLibrary: this.seriesBookIndexInLibrary
           },
           textFilter: this.text
         });
@@ -193,6 +203,7 @@
         this.language = undefined;
         this.orderBy = 'releaseDate';
         this.desc = true;
+        this.seriesBookIndexInLibrary = false;
       },
 
       defaultFilter() {
