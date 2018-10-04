@@ -60,7 +60,11 @@
                     {label:'Hide with same series number',value:false}]"></Dropdown>
         </div>
 
-        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2"></div>
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2">
+          <Dropdown v-model="ignore" text="Show ignored books"
+                    :items="[
+                    {label:'Hide ignored books',value:false}]"></Dropdown>
+        </div>
 
         <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2">
           <Dropdown v-model="orderBy" text="Series in library"
@@ -112,6 +116,8 @@
             <section class="mdc-card__primary">
               <h1 class="mdc-card__title mdc-card__title--large" v-if="book.seriesBookIndex">
                 {{book.seriesName}}
+                <br>
+                {{book.ignore}}
               </h1>
               <h1 class="mdc-card__title mdc-card__title--large">
                 {{book.title}}
@@ -146,6 +152,11 @@
                 Series
               </a>
             </section>
+            <section class="mdc-card__actions">
+              <a class="mdc-button mdc-button--compact mdc-card__action" @click="ignoreBook(book)">
+                Ignore
+              </a>
+            </section>
           </div>
 
         </div>
@@ -164,6 +175,7 @@
     language: 'en',
     orderBy: 'releaseDate',
     seriesBookIndexInLibrary: false,
+    ignore: false,
     text: '',
     desc: true
   };
@@ -186,7 +198,8 @@
             released: this.released,
             seriesInLibrary: this.seriesInLibrary,
             language: this.language,
-            seriesBookIndexInLibrary: this.seriesBookIndexInLibrary
+            seriesBookIndexInLibrary: this.seriesBookIndexInLibrary,
+            ignore: this.ignore
           },
           textFilter: this.text
         });
@@ -202,6 +215,7 @@
         this.orderBy = 'releaseDate';
         this.desc = true;
         this.seriesBookIndexInLibrary = false;
+        this.ignore = false;
       },
 
       defaultFilter() {
@@ -217,6 +231,10 @@
         const hours = Math.floor(length / 60);
         const minutes = length - 60 * hours;
         return `${hours}h ${minutes}m`;
+      },
+
+      ignoreBook(book) {
+        this.$store.commit('ignoreBook', book);
       }
     }
   };

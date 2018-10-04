@@ -45,6 +45,14 @@ export default new Vuex.Store({
 
     startProgress(state) {
       state.progress = true;
+    },
+
+    ignoreBook(state, book) {
+      Vue.set(book, 'ignore', !book.ignore);
+      localStorage.audibleherocacheignored = JSON.stringify(state.books.reduce((res, book) => {
+        res[book.id] = book.ignore;
+        return res;
+      }, {}));
     }
   },
 

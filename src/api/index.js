@@ -46,6 +46,13 @@ const load = async (type, progress, api) => {
   return books;
 };
 
+function getIgnored() {
+  try{
+    return JSON.parse(localStorage.audibleherocacheignored);
+  } catch (e) {}
+  return {};
+}
+
 export const getBooks = () => {
   const data = getData();
   const library = data.library;
@@ -87,6 +94,11 @@ export const getBooks = () => {
     book.inLibrary = !!book.inLibrary;
     book.seriesInLibrary = !!book.seriesInLibrary;
   });
+
+  const ignore = getIgnored();
+  for (let book of books) {
+    book.ignore = !!ignore[book.id];
+  }
   return books;
 };
 
