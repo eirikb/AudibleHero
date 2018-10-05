@@ -146,7 +146,8 @@
                 Book
               </a>
               <a class="mdc-button mdc-button--compact mdc-card__action" target="_blank"
-                 :href="`/series?asin=${book.seriesId}`">
+                 :href="`/series?asin=${book.seriesId}`"
+                 v-if="book.seriesId">
                 Series
               </a>
             </section>
