@@ -6,8 +6,14 @@ const detectLanguage = text => new Promise(resolve => chrome.i18n.detectLanguage
 const padZero = part => ('0' + part).slice(-2);
 
 const toDate = match => {
-  if (/\.co.uk$|\.com\.au$/i.test(window.location.host)) {
-    // dd/mm/yyyy
+  if (/\.co\.uk$/i.test(window.location.host)) {
+    // dd-mm-yy
+    const year = (+match[2] > 50 ? '19' : '20') + match[2];
+    const month = padZero(match[1]);
+    const day = padZero(match[0]);
+    return [year, month, day].join('-');
+  } else if (/\.com\.au$/i.test(window.location.host)) {
+    // dd-mm-yyyy
     const year = match[2];
     const month = padZero(match[1]);
     const day = padZero(match[0]);
@@ -21,7 +27,7 @@ const toDate = match => {
   }
 };
 
-export default (author, limit, page) => fetch(`/search?keywords=${author}&sort=pubdate-desc-rank&pageSize=${limit}&page=${page}`, {
+export default (author, limit, page) => fetch(`/search?searchAuthor=${author}&sort=pubdate-desc-rank&pageSize=${limit}&page=${page}`, {
   credentials: 'include'
 }).then(r =>
   r.text()
@@ -68,9 +74,9 @@ export default (author, limit, page) => fetch(`/search?keywords=${author}&sort=p
       }
     }
 
-    const rating = parseInt((((row.querySelector('.ratingsLabel') || {}).innerText || '').match(/\d+/g) || []).join('')) || 0;
+    const rating = parseFloat((((row.querySelector('.ratingsLabel') || {}).innerText || '').match(/\d+(?:,\d+)*(?:\.\d+)?/g) || [])[0]) || 0;
 
-    const description = (row.querySelector(`#product-list-flyout-${id} p`) || {}).innerText || '';
+    const description = Array.from(row.querySelectorAll(`#product-list-flyout-${id} p`)).map(e => e.innerText.trim()).join(' ').trim();
 
     const languageRes = await detectLanguage(description);
 

@@ -1,5 +1,5 @@
+document.documentElement.innerHTML = '';
 document.title = 'AudibleHero!';
-document.querySelector('style').innerText = '';
 document.body.innerHTML = '<div id="app"><router-view></router-view></div>';
 document.body.className = 'show';
-document.querySelector('html').className = 'show';
+document.documentElement.className = 'show';
