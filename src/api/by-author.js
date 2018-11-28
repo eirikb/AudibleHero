@@ -55,7 +55,7 @@ export default (author, limit, page) => fetch(`/search?searchAuthor=${author}&so
     match = lengthText.match(/(\d+) min/);
     const mins = match ? parseInt(match[1]) : 0;
     const length = mins + hours * 60;
-    const imageId = last(((row.querySelector('.bc-lazy-load') || {}).src || '').split('/')).split('.')[0];
+    const imageId = last(((row.querySelector('a.bc-link img') || {}).src || '').split('/')).split('.')[0];
 
     const releaseDateText = byRegex(/Release date:/).text;
     match = (releaseDateText || '').match(/(\d+)[-\/](\d+)[-\/](\d+)/);
