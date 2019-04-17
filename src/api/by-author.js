@@ -68,7 +68,7 @@ export default (author, limit, page) => fetch(`/search?searchAuthor=${author}&so
     if (seriesNode) {
       const seriesLink = seriesNode.querySelector('a');
       if (seriesLink) {
-        seriesId = seriesLink.href.match(/asin=(\w*)/)[1];
+        seriesId = seriesLink.href.split(/\//).slice(-1)[0].split('?')[0];
         seriesBookIndex = (seriesNode.innerText.match(/book (\d+)/i) || [])[1];
         seriesName = seriesLink.innerText;
       }

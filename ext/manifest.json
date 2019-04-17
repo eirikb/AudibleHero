@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "AudibleHero for Audible",
   "description": "Find missing books from your series on www.audible.com",
-  "version": "22",
+  "version": "23",
   "icons": {
     "16": "logo16.png",
     "48": "logo48.png",
