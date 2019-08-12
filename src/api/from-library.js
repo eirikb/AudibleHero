@@ -1,4 +1,4 @@
-import {parse, getPageCount} from './parser';
+import { parse, getPageCount } from './parser';
 
 export default (limit, page) => fetch(`/lib?programFilter=all&purchaseDateFilter=all&pageSize=${limit}&page=${page}&sortBy=PURCHASE_DATE.dsc`, {
   credentials: 'include'
@@ -24,5 +24,7 @@ export default (limit, page) => fetch(`/lib?programFilter=all&purchaseDateFilter
 
   const pageCount = getPageCount(doc);
 
-  return {books, pageCount};
+  return { books, pageCount };
+}).catch(() => {
+  window.location.href = 'https://www.audible.com/lib';
 });
