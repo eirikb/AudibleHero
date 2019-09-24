@@ -35,6 +35,6 @@ npm run build
 ```
 
 And that's it, now the _dist_ folder can be zipped and shipped.  
-This works because [ext/app.js](https://github.com/eirikb/AudibleHero/blob/master/ext/app.js) is made for development, 
-which will load the app from webpack-dev-server, but when running `npm run build` this file is simply replaced with the
+This works because [ext/app.js](https://github.com/eirikb/AudibleHero/blob/master/ext/app.js) is made for development
+, but when running `npm run build` this file is simply replaced with the
 production-ready file.
