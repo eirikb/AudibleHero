@@ -1,6 +1,6 @@
-const script = document.createElement('script');
-script.src = 'https://localhost:8080/main.js';
-document.body.appendChild(script);
+fetch(`https://localhost:8080/main.js?${Date.now()}`)
+  .then(res => res.text())
+  .then(js => eval(js));
 
 const css = document.createElement('link');
 css.rel = 'stylesheet';

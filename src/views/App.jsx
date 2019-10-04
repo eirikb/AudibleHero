@@ -1,8 +1,9 @@
-import Button from '../components/Button';
+import Books from './Books';
+import Update from './Update';
 
-export default () => <div>
-  This is it, this is the app
-  <Button>
-    Hello
-  </Button>
+export default ({ when }) => <div>
+  {when('route', [
+    'books', () => <Books/>,
+    'update', () => <Update/>
+  ])}
 </div>
