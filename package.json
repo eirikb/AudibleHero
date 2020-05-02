@@ -15,7 +15,7 @@
   "dependencies": {
     "babel-polyfill": "6.26.0",
     "glob": "7.1.2",
-    "lodash": "4.17.4",
+    "lodash": "4.17.13",
     "lz-string": "1.4.4",
     "material-components-web": "0.22.0",
     "npm-run-all": "4.1.1",
