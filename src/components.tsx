@@ -1,6 +1,7 @@
 import { MDCRipple } from '@material/ripple';
+import { Domponent } from "@eirikb/domdom";
 
-export const Button = ({ children, onClick }) => {
+export const Button: Domponent = ({ children, onClick }) => {
   const button = <button className="mdc-button" onClick={onClick}>
     <span className="mdc-button__label">{children}</span>
   </button>;
@@ -9,14 +10,14 @@ export const Button = ({ children, onClick }) => {
   return button
 };
 
-export const Grid = ({ children }) =>
+export const Grid: Domponent = ({ children }) =>
   <div className="mdc-layout-grid">
     <div className="mdc-layout-grid__inner">
       {children}
     </div>
   </div>;
 
-export const Cell = ({ children, span }) =>
+export const Cell: Domponent = ({ children, span }) =>
   <div className={`mdc-layout-grid__cell mdc-layout-grid__cell--span-${span}`}>
     {children}
   </div>;

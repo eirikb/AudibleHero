@@ -16,7 +16,6 @@ export default ({ on, set }) => {
   const p = (pos, tot) => Math.floor(pos / tot * 100);
 
   on('= update', () => {
-    console.log('update');
     set('status', 'resetProgress');
     set('status', 'startProgress');
     return updateFromLibrary((pos, tot) => set('progressLibrary', p(pos, tot))).then(async books => {

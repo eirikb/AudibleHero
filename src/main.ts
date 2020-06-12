@@ -1,8 +1,7 @@
 import domdom from '@eirikb/domdom';
-import App from './views/App.jsx';
+import App from './views/App';
 import data from './data';
 import './main.scss';
 
-const dd = domdom();
+const dd = domdom(document.body, App);
 data(dd);
-dd.append(document.body, App);
