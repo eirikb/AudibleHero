@@ -1,12 +1,18 @@
+import { React, on } from '../domdom';
 import Books from './Books';
 import Update from './Update';
-import { Domponent } from "@eirikb/domdom";
 
-const app: Domponent = ({ when }) => <div>
-  {when('route', [
-    'books', () => <Books/>,
-    'update', () => <Update/>
-  ])}
-</div>
-
-export default app;
+export default (
+  <div>
+    {on('route', route => {
+      switch (route) {
+        case 'books':
+          return <Books />;
+        case 'update':
+          return <Update />;
+        default:
+          return '?';
+      }
+    })}
+  </div>
+);

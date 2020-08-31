@@ -1,74 +1,72 @@
-import { Button, Grid, Cell, Card } from '../components';
-import { Domponent } from "@eirikb/domdom";
+import { React, on, set } from '../domdom';
+import { Button, Grid, Cell } from '../components';
 
-const books: Domponent = ({ on, get, set, unset }) => {
+console.log(1);
+on('!+* books.*', b => {
+  console.log(b);
+});
+
+function clearFilter() {
   console.log(1);
-  on('!+* books.*', b => {
-    console.log(b);
-  });
-  function clearFilter() {
-    console.log(1);
-  }
+}
 
-  function defaultFilter() {
-    console.log(2);
-  }
+function defaultFilter() {
+  console.log(2);
+}
 
-  function libraryFilter() {
-    console.log(3);
-  }
+function libraryFilter() {
+  console.log(3);
+}
 
-  setVisibleBooks();
+setVisibleBooks();
 
-  function setVisibleBooks(filter = '') {
-    // const r = new RegExp(filter, 'i');
-    // const books = get('books').filter(b => b.title.match(r)).slice(0, 100);
-    // set('b', books);
-  }
+function setVisibleBooks(filter = '') {
+  console.log('filter', filter);
+  // const r = new RegExp(filter, 'i');
+  // const books = get('books').filter(b => b.title.match(r)).slice(0, 100);
+  // set('b', books);
+}
 
-  function setFilter(event) {
-    const { value } = event.target;
-    setVisibleBooks(value);
-  }
+function setFilter(event) {
+  const { value } = event.target;
+  setVisibleBooks(value);
+}
 
-  function length(length) {
-    const hours = Math.floor(length / 60);
-    const minutes = length - 60 * hours;
-    return `${hours}h ${minutes}m`;
-  }
+// function length(length) {
+//   const hours = Math.floor(length / 60);
+//   const minutes = length - 60 * hours;
+//   return `${hours}h ${minutes}m`;
+// }
 
-  return <Grid>
+export default (
+  <Grid>
     <Cell span={2}>
       <Button onClick={() => set('route', 'update')}>Update</Button>
     </Cell>
 
     <Cell span="2">
-      <Button onClick={clearFilter}>
-        Clear filter
-      </Button>
+      <Button onClick={clearFilter}>Clear filter</Button>
     </Cell>
 
     <Cell span="2">
-      <Button onClick={defaultFilter}>
-        Default filter
-      </Button>
+      <Button onClick={defaultFilter}>Default filter</Button>
     </Cell>
 
     <Cell span="2">
-      <Button onClick={libraryFilter}>
-        Library filter
-      </Button>
+      <Button onClick={libraryFilter}>Library filter</Button>
     </Cell>
 
-    <Cell span="4"/>
+    <Cell span="4" />
 
     <Cell span="2">
       <div class="mdc-textfield">
-        <input onInput={setFilter} type="text" class="mdc-textfield__input" placeholder="Search"/>
+        <input
+          onInput={setFilter}
+          type="text"
+          class="mdc-textfield__input"
+          placeholder="Search"
+        />
       </div>
     </Cell>
-
-  </Grid>;
-};
-
-  export default books;
+  </Grid>
+);

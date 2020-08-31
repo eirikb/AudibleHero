@@ -1,11 +1,15 @@
-import {parse, getPageCount, getBookId} from './parser';
-import {last} from 'lodash';
+import { parse, getPageCount } from './parser';
+import { last } from 'lodash';
+import { Book } from 'types';
 
-const detectLanguage = text => new Promise(resolve => chrome.i18n.detectLanguage(text, resolve));
+const detectLanguage = (
+  text: string
+): Promise<chrome.i18n.LanguageDetectionResult> =>
+  new Promise(resolve => chrome.i18n.detectLanguage(text, resolve));
 
-const padZero = part => ('0' + part).slice(-2);
+const padZero = (part: string) => ('0' + part).slice(-2);
 
-const toDate = match => {
+const toDate = (match: RegExpMatchArray) => {
   if (/\.co\.uk$/i.test(window.location.host)) {
     // dd-mm-yy
     const year = (+match[2] > 50 ? '19' : '20') + match[2];
@@ -27,66 +31,121 @@ const toDate = match => {
   }
 };
 
-export default (author, limit, page) => fetch(`/search?searchAuthor=${author}&sort=pubdate-desc-rank&pageSize=${limit}&page=${page}`, {
-  credentials: 'include'
-}).then(r =>
-  r.text()
-).then(async html => {
-  const doc = parse(html);
-
-  const rows = Array.from(doc.querySelectorAll('.productListItem'));
-
-  const books = (await Promise.all(rows.map(async row => {
-    const heading = row.querySelector('.bc-heading a');
-    if (!heading) return null;
-    const id = heading.href.match(/(\w+)\?/)[1];
-
-    const title = heading.innerText.trim();
-
-    const byRegex = regex => Array.from(row.querySelectorAll('li'))
-      .map(node => ({
-        text: node.innerText.trim(), node
-      })).find(res => res.text.match(regex)) || {};
-
-    const authors = Array.from(row.querySelectorAll('.authorLabel a')).map(e => e.innerText);
-    const lengthText = byRegex(/^Length:/).text;
-    let match = lengthText.match(/(\d+) hr/);
-    const hours = match ? parseInt(match[1]) : 0;
-    match = lengthText.match(/(\d+) min/);
-    const mins = match ? parseInt(match[1]) : 0;
-    const length = mins + hours * 60;
-    const imageId = last(((row.querySelector('a.bc-link img') || {}).src || '').split('/')).split('.')[0];
-
-    const releaseDateText = byRegex(/Release date:/).text;
-    match = (releaseDateText || '').match(/(\d+)[-\/](\d+)[-\/](\d+)/);
-    const releaseDate = match ? toDate(match.slice(1)) : null;
-
-    let seriesBookIndex = '';
-    let seriesId = null;
-    const seriesNode = byRegex(/^Series:/).node;
-    let seriesName = '';
-    if (seriesNode) {
-      const seriesLink = seriesNode.querySelector('a');
-      if (seriesLink) {
-        seriesId = seriesLink.href.split(/\//).slice(-1)[0].split('?')[0];
-        seriesBookIndex = (seriesNode.innerText.match(/book (\d+)/i) || [])[1];
-        seriesName = seriesLink.innerText;
-      }
+export default (
+  author: string,
+  page: number
+): Promise<{ pageCount: number; books: Book[] }> =>
+  fetch(
+    `/search?searchAuthor=${author}&sort=pubdate-desc-rank&pageSize=50&page=${page}`,
+    {
+      credentials: 'include',
     }
+  )
+    .then(r => r.text())
+    .then(async html => {
+      const doc = parse(html);
 
-    const rating = parseFloat((((row.querySelector('.ratingsLabel') || {}).innerText || '').match(/\d+(?:,\d+)*(?:\.\d+)?/g) || [])[0]) || 0;
+      const rows = Array.from(doc.querySelectorAll('.productListItem'));
 
-    const description = Array.from(row.querySelectorAll(`#product-list-flyout-${id} p`)).map(e => e.innerText.trim()).join(' ').trim();
+      const books = (
+        await Promise.all(
+          rows.map(async row => {
+            const heading = row.querySelector(
+              '.bc-heading a'
+            ) as HTMLLinkElement;
+            if (!heading) return null;
+            const id = (heading.href.match(/(\w+)\?/) || [])[1] || '';
 
-    const languageRes = await detectLanguage(description);
+            const title = heading.innerText.trim();
 
-    let language = languageRes && languageRes.isReliable && (languageRes.languages[0] || {}).language;
-    if (!language) language = 'en';
+            const byRegex = (
+              regex: RegExp
+            ): { text: string; node: HTMLElement } | undefined =>
+              Array.from(row.querySelectorAll('li'))
+                .map(node => ({
+                  text: node.innerText.trim(),
+                  node,
+                }))
+                .find(res => res.text.match(regex));
 
-    return {id, title, length, releaseDate, seriesBookIndex, seriesId, rating, language, imageId, seriesName, authors};
-  }))).filter(book => book);
+            const authors = Array.from(
+              row.querySelectorAll('.authorLabel a')
+            ).map(e => e.textContent);
+            const lengthText = byRegex(/^Length:/)?.text || '';
+            let match = lengthText.match(/(\d+) hr/);
+            const hours = match ? parseInt(match[1]) : 0;
+            match = lengthText.match(/(\d+) min/);
+            const mins = match ? parseInt(match[1]) : 0;
+            const length = mins + hours * 60;
+            const imageId = (
+              last(
+                (row.querySelector(
+                  'a.bc-link img'
+                ) as HTMLImageElement).src.split('/')
+              ) || ''
+            ).split('.')[0];
 
-  const pageCount = getPageCount(doc);
+            const releaseDateText = byRegex(/Release date:/)?.text;
+            match = (releaseDateText || '').match(/(\d+)[-\/](\d+)[-\/](\d+)/);
+            const releaseDate = match ? toDate(match.slice(1)) : null;
 
-  return {books, pageCount};
-});
+            let seriesBookIndex = '';
+            let seriesId = null;
+            const seriesNode = byRegex(/^Series:/)?.node;
+            let seriesName = '';
+            if (seriesNode) {
+              const seriesLink = seriesNode.querySelector('a');
+              if (seriesLink) {
+                seriesId = seriesLink.href
+                  .split(/\//)
+                  .slice(-1)[0]
+                  .split('?')[0];
+                seriesBookIndex = (seriesNode.innerText.match(/book (\d+)/i) ||
+                  [])[1];
+                seriesName = seriesLink.innerText;
+              }
+            }
+
+            const rating =
+              parseFloat(
+                ((
+                  (row.querySelector('.ratingsLabel') || {}).textContent || ''
+                ).match(/\d+(?:,\d+)*(?:\.\d+)?/g) || [])[0]
+              ) || 0;
+
+            const description = Array.from(
+              row.querySelectorAll(`#product-list-flyout-${id} p`)
+            )
+              .map(e => e.textContent?.trim())
+              .join(' ')
+              .trim();
+
+            const languageRes = await detectLanguage(description);
+
+            let language =
+              languageRes &&
+              languageRes.isReliable &&
+              (languageRes.languages[0] || {}).language;
+            if (!language) language = 'en';
+
+            return {
+              id,
+              title,
+              length,
+              releaseDate,
+              seriesBookIndex,
+              seriesId,
+              rating,
+              language,
+              imageId,
+              seriesName,
+              authors,
+            } as Book;
+          })
+        )
+      ).filter((book): book is Book => book !== null);
+
+      const pageCount = getPageCount(doc);
+
+      return { books, pageCount };
+    });
