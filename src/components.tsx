@@ -1,5 +1,5 @@
-import { React } from "./domdom";
-import { MDCRipple } from "@material/ripple";
+import { React } from './domdom';
+import { MDCRipple } from '@material/ripple';
 
 export const Button = ({ onClick }, { children }) => {
   const button = (
@@ -34,7 +34,7 @@ export const Card = ({ media, title, subtitle, actions }) => (
         />
       </section>
     ) : (
-      ""
+      ''
     )}
     <section class="mdc-card__primary">
       <h1 className="mdc-card__title mdc-card__title--large">{title}</h1>

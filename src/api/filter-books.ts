@@ -1,4 +1,4 @@
-import { Book, FilterConfig } from "types";
+import { Book, FilterConfig } from 'types';
 
 export default (
   books: Book[],
@@ -12,25 +12,25 @@ export default (
 ) => {
   const orderBy = config.orderBy;
   const textFilter = config.textFilter
-    ? new RegExp(config.textFilter, "i")
+    ? new RegExp(config.textFilter, 'i')
     : null;
 
   books = books
     .filter(book =>
       Object.entries(config.filter || {}).every(
         ([prop, val]) =>
-          typeof val === "undefined" || (book as any)[prop] === val
+          typeof val === 'undefined' || (book as any)[prop] === val
       )
     )
     .sort((a, b) => {
-      const fieldA: string | number = (a as any)[orderBy] || "";
-      const fieldB: string | number = (b as any)[orderBy] || "";
+      const fieldA: string | number = (a as any)[orderBy] || '';
+      const fieldB: string | number = (b as any)[orderBy] || '';
 
-      if (typeof fieldA === "string" && typeof fieldB === "string") {
+      if (typeof fieldA === 'string' && typeof fieldB === 'string') {
         return fieldA.localeCompare(fieldB);
       }
 
-      if (typeof fieldA === "number" && typeof fieldB === "number") {
+      if (typeof fieldA === 'number' && typeof fieldB === 'number') {
         return fieldA - fieldB;
       }
 
