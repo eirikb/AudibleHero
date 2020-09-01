@@ -1,4 +1,4 @@
-import { Book, FilterConfig } from 'types';
+import { Book, FilterConfig } from 'types.d.ts';
 
 export default (
   books: Book[],
