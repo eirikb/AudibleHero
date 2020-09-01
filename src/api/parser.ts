@@ -1,10 +1,11 @@
-export const parse = html => {
+export const parse = (html: string) => {
   const parser = new DOMParser();
-  return parser.parseFromString(html, 'text/html');
+  return parser.parseFromString(html, "text/html");
 };
 
-export const
-  getPageCount = doc => {
-    const pageElement = Array.from(doc.querySelectorAll('.pageNumberElement')).pop();
-    return pageElement ? parseInt(pageElement.innerText) : 1;
-  };
+export const getPageCount = (doc: Document) => {
+  const pageElement = Array.from(
+    doc.querySelectorAll(".pageNumberElement")
+  ).pop();
+  return pageElement ? parseInt(pageElement.textContent || "") : 1;
+};
