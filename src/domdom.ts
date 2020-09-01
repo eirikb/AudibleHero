@@ -1,5 +1,13 @@
 import domdom from '@eirikb/domdom';
 
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      [tagName: string]: any;
+    }
+  }
+}
+
 const dd = domdom();
 export const React = dd.React;
 export const init = dd.init;
