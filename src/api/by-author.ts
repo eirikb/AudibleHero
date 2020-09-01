@@ -1,7 +1,7 @@
 import {parse, getPageCount, getBookId} from './parser';
 import {last} from 'lodash';
 
-const detectLanguage = text => new Promise(resolve => chrome.i18n.detectLanguage(text, resolve));
+const detectLanguage = (text:string) => new Promise(resolve => chrome.i18n.detectLanguage(text, resolve));
 
 const padZero = part => ('0' + part).slice(-2);
 
