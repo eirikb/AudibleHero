@@ -1,10 +1,17 @@
 import { parse, getPageCount } from './parser';
 import { last } from 'lodash';
+import { Book } from 'types';
 
-const detectLanguage = (
-  text: string
-): Promise<chrome.i18n.LanguageDetectionResult> =>
-  new Promise(resolve => chrome.i18n.detectLanguage(text, resolve));
+const detectLanguage = (text: string): Promise<string> =>
+  new Promise(resolve => {
+    if (typeof chrome === 'undefined') {
+      resolve('en');
+    }
+    chrome.i18n.detectLanguage(text, res => {
+      if (res.isReliable) resolve(res.languages[0].language);
+      resolve('en');
+    });
+  });
 
 const padZero = (part: string) => ('0' + part).slice(-2);
 
@@ -113,13 +120,7 @@ export default (author: string, page: number) =>
               .join(' ')
               .trim();
 
-            const languageRes = await detectLanguage(description);
-
-            let language =
-              languageRes &&
-              languageRes.isReliable &&
-              (languageRes.languages[0] || {}).language;
-            if (!language) language = 'en';
+            const language = await detectLanguage(description);
 
             return {
               id,
@@ -133,10 +134,10 @@ export default (author: string, page: number) =>
               imageId,
               seriesName,
               authors,
-            };
+            } as Book;
           })
         )
-      ).filter(book => book);
+      ).filter((book): book is Book => book !== null);
 
       const pageCount = getPageCount(doc);
 
