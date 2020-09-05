@@ -33,3 +33,9 @@ interface FilterConfig {
   filter: string;
   desc: string;
 }
+
+interface Author {
+  id: number;
+  name: string;
+  progress: number;
+}
