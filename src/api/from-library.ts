@@ -1,5 +1,5 @@
 import { parse, getPageCount } from './parser';
-import { LibraryBook } from 'types';
+import { LibraryBook } from '../types';
 
 export default (page: number) =>
   fetch(

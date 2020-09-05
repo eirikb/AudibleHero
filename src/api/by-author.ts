@@ -1,6 +1,6 @@
 import { parse, getPageCount } from './parser';
 import { last } from 'lodash';
-import { Book } from 'types';
+import { Book } from '../types';
 
 const detectLanguage = (text: string): Promise<string> =>
   new Promise(resolve => {
