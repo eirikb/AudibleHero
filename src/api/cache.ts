@@ -1,5 +1,5 @@
 import { compress, decompress } from 'lz-string';
-import { Book } from 'types.d.ts';
+import { Book } from '../types';
 
 const version = require('../../package.json').version;
 
