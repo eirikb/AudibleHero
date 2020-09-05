@@ -1,5 +1,6 @@
 import { React, on, set } from '../domdom';
 import { Button, Grid, Cell } from '../components';
+import { Book } from '../types';
 
 console.log(1);
 on('!+* books.*', b => {
@@ -68,5 +69,9 @@ export default () => (
         />
       </div>
     </Cell>
+
+    {on<Book>('books').map(book => (
+      <Cell span={2}>{book.title}</Cell>
+    ))}
   </Grid>
 );
