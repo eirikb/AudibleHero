@@ -1,4 +1,5 @@
 import { parse, getPageCount } from './parser';
+import { LibraryBook } from 'types';
 
 export default (page: number) =>
   fetch(
@@ -31,13 +32,14 @@ export default (page: number) =>
           id,
           authors,
           downloaded,
-        };
+        } as LibraryBook;
       });
 
       const pageCount = getPageCount(doc);
 
       return { books, pageCount };
     })
-    .catch(() => {
+    .catch(e => {
       window.location.href = '/library/titles';
+      throw e;
     });
