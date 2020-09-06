@@ -1,11 +1,7 @@
-import { React, on, set } from '../domdom';
+import { React, on, get, set } from '../domdom';
 import { Button, Grid, Cell } from '../components';
 import { Book } from '../types';
-
-console.log(1);
-on('!+* books.*', b => {
-  console.log(b);
-});
+import { load } from '../api/cache';
 
 function clearFilter() {
   console.log(1);
@@ -19,13 +15,19 @@ function libraryFilter() {
   console.log(3);
 }
 
+set('books', load());
 setVisibleBooks();
 
 function setVisibleBooks(filter = '') {
-  console.log('filter', filter);
-  // const r = new RegExp(filter, 'i');
-  // const books = get('books').filter(b => b.title.match(r)).slice(0, 100);
-  // set('b', books);
+  const r = new RegExp(filter, 'i');
+  if (!get('books')) {
+    console.log('no books');
+    return;
+  }
+  const books = Object.values(get<{ [key: string]: Book }>('books'))
+    .filter(b => b.title.match(r))
+    .slice(0, 100);
+  set('books2', books, 'id');
 }
 
 function setFilter(event: Event) {
@@ -70,7 +72,7 @@ export default () => (
       </div>
     </Cell>
 
-    {on<Book>('books').map(book => (
+    {on<Book>('books2').map(book => (
       <Cell span={2}>{book.title}</Cell>
     ))}
   </Grid>

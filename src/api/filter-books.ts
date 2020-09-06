@@ -1,15 +1,6 @@
-import { Book, FilterConfig } from 'types.d.ts';
+import { Book, FilterConfig } from '../types';
 
-export default (
-  books: Book[],
-  config: FilterConfig
-  // = {
-  //   desc: '',
-  //   filter: '',
-  //   orderBy: 'title',
-  //   textFilter: '',
-  // }
-) => {
+export default (books: Book[], config: FilterConfig) => {
   const orderBy = config.orderBy;
   const textFilter = config.textFilter
     ? new RegExp(config.textFilter, 'i')
