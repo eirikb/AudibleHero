@@ -2,6 +2,7 @@ import { React, on, get, set } from '../domdom';
 import { Button, Grid, Cell } from '../components';
 import { Book } from '../types';
 import { load } from '../api/cache';
+import filterBooks from '../api/filter-books';
 
 function clearFilter() {
   console.log(1);
@@ -19,14 +20,17 @@ set('books', load());
 setVisibleBooks();
 
 function setVisibleBooks(filter = '') {
-  const r = new RegExp(filter, 'i');
-  if (!get('books')) {
-    console.log('no books');
-    return;
-  }
-  const books = Object.values(get<{ [key: string]: Book }>('books'))
-    .filter(b => b.title.match(r))
-    .slice(0, 100);
+  if (!get('books')) return;
+
+  const books = filterBooks(
+    Object.values(get<{ [key: string]: Book }>('books')),
+    {
+      orderBy: 'title',
+      filter: {},
+      desc: false,
+      textFilter: filter,
+    }
+  ).slice(0, 100);
   set('books2', books, 'id');
 }
 

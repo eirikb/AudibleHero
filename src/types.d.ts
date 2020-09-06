@@ -30,8 +30,8 @@ type BookMap = { [id: string]: Book };
 interface FilterConfig {
   orderBy: string;
   textFilter: string;
-  filter: string;
-  desc: string;
+  filter: { [key: string]: any };
+  desc: boolean;
 }
 
 interface Author {
