@@ -97,6 +97,7 @@ export default () => (
       <Cell span={2}>
         <Card
           title={book.title}
+          linkUrl={`/pd/${book.id}`}
           subTitle={book.seriesName}
           actions={[
             <ButtonLink title="Book" target="_blank" url={`/pd/${book.id}`} />,

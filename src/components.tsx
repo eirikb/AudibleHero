@@ -82,27 +82,20 @@ export const Card: (
     subTitle: string;
     actions: Domode[];
     imageUrl?: string;
+    linkUrl: string;
   },
   __: { children: OptChildren }
-) => void = ({ title, subTitle, actions, imageUrl }, { children }) => (
+) => void = ({ title, subTitle, actions, imageUrl, linkUrl }, { children }) => (
   <div class="mdc-card">
-    <div class="mdc-card__primary-action" tabindex="0">
+    <a class="mdc-card__primary-action" href={linkUrl} target="_blank">
       <div
         class="mdc-card__media mdc-card__media--square"
         style={`background-image: url("${imageUrl}")`}
       />
-      <div class="demo-card__primary">
-        <h2 class="demo-card__title mdc-typography mdc-typography--headline6">
-          {title}
-        </h2>
-        <h3 class="demo-card__subtitle mdc-typography mdc-typography--subtitle2">
-          {subTitle}
-        </h3>
-      </div>
-      <div class="demo-card__secondary mdc-typography mdc-typography--body2">
-        {children}
-      </div>
-    </div>
+      <h2 class="mdc-typography mdc-typography--headline6">{title}</h2>
+      <h3 class="mdc-typography mdc-typography--subtitle2">{subTitle}</h3>
+    </a>
+    <div class="mdc-typography mdc-typography--body2">{children}</div>
     <div class="mdc-card__actions">
       <div class="mdc-card__action-buttons">{actions}</div>
     </div>
