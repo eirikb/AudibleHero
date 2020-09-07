@@ -109,33 +109,47 @@ export default () => (
           ]}
           imageUrl={`https://images-na.ssl-images-amazon.com/images/I/${book.imageId}._SL160_.jpg`}
         >
-          <span v-if="book.seriesBookIndex">
-            <span title="Series books index (could be decimal-based)">
-              {book.seriesBookIndex}
-            </span>{' '}
-            /
-            {/*<span title="Series max book index (highest number, not amount)">{book.seriesBookMaxIndex}</span>*/}
-            {/*<span title="How many books in this series you have in your library">({book.seriesInLibraryCount || 0})</span>*/}
-            <br />
-            <span v-if="!book.seriesInLibrary">
+          {book.seriesBookIndex ? (
+            <span>
+              <span title="Series books index (could be decimal-based)">
+                {book.seriesBookIndex}
+              </span>{' '}
+              /
+              <span title="Series max book index (highest number, not amount)">
+                {book.seriesBookMaxIndex}
+              </span>
+              <span title="How many books in this series you have in your library">
+                {book.seriesInLibraryCount || 0}
+              </span>
+              <br />
+            </span>
+          ) : null}
+          {!book.seriesInLibraryCount ? (
+            <span>
               You don't have this series in your library
               <br />
             </span>
-            <span v-if="book.inLibrary">
-              Book is in your library
+          ) : null}
+          {book.inLibrary ? (
+            <span>
+              Book is in your library <br />
+            </span>
+          ) : null}
+          Authors: {Object.values(book.authors).join(',')}
+          <br />
+          Release: {book.releaseDate}
+          {book.released ? (
+            <span>
+              {' '}
+              (not yet released)
               <br />
             </span>
-            Authors: {Object.values(book.authors).join(',')}
-            <br />
-            Release: {book.releaseDate}
-            <span v-if="!book.released"> (not yet released)</span>
-            <br />
-            Language: {book.language}
-            <br />
-            Rating: {book.rating}
-            <br />
-            Length: {length(book.length)}
-          </span>
+          ) : null}
+          Language: {book.language}
+          <br />
+          Rating: {book.rating}
+          <br />
+          Length: {length(book.length)}
         </Card>
       </Cell>
     ))}

@@ -8,12 +8,17 @@ interface Book {
   title: string;
   length: number;
   releaseDate: string;
-  seriesBookIndex: string;
+  released: boolean;
+  seriesBookIndex?: string;
+  seriesBookMaxIndex?: string;
+  seriesInLibraryCount?: string;
   seriesId: string;
   rating: number;
   language: string;
   imageId: string;
   seriesName: string;
+  inLibrary: boolean;
+  downloaded: boolean;
   // domdom doesn't support arrays - yet. Crazy, I know
   authors: { [key: string]: string };
 }

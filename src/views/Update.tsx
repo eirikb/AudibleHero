@@ -2,7 +2,7 @@ import { React, get, set, on } from '../domdom';
 import { Button, Cell, Grid, Progress } from '../components';
 import fetchLibrary from '../api/from-library';
 import fetchAuthor from '../api/by-author';
-import { Author, Book } from '../types';
+import { Author, Book, LibraryBook } from '../types';
 import { save } from '../api/cache';
 
 async function update() {
@@ -94,6 +94,23 @@ async function update() {
 
   const workers = [...Array(20).keys()];
   await Promise.all(workers.map(runJob));
+
+  const libraryBooksMap = libraryBooks.reduce(
+    (res: { [key: string]: LibraryBook }, book) => {
+      res[book.id] = book;
+      return res;
+    },
+    {}
+  );
+
+  for (let book of books) {
+    const libraryBook = libraryBooksMap[book.id];
+    if (libraryBook) {
+      book.inLibrary = true;
+      book.downloaded = libraryBook.downloaded;
+    }
+  }
+
   save(books);
   set('books', books, 'id');
   set('route', 'books');
