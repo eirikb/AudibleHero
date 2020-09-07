@@ -14,7 +14,8 @@ interface Book {
   language: string;
   imageId: string;
   seriesName: string;
-  authors: string[];
+  // domdom doesn't support arrays - yet. Crazy, I know
+  authors: { [key: string]: string };
 }
 
 interface LibraryBook {

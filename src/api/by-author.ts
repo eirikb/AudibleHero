@@ -70,9 +70,12 @@ export default (author: string, page: number) =>
                 node: null,
               };
 
-            const authors = Array.from(
-              row.querySelectorAll('.authorLabel a')
-            ).map(e => e.textContent);
+            const authors = Array.from(row.querySelectorAll('.authorLabel a'))
+              .map(e => e.textContent)
+              .reduce((res: any, author, index) => {
+                res[index] = author;
+                return res;
+              }, {});
             const lengthText = byRegex(/^Length:/).text;
             let match = lengthText.match(/(\d+) hr/);
             const hours = match ? parseInt(match[1]) : 0;
