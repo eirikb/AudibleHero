@@ -7,12 +7,21 @@ export default (books: Book[], config: FilterConfig) => {
     : null;
 
   books = books
-    .filter(book =>
-      Object.entries(config.filter || {}).every(
-        ([prop, val]) =>
-          typeof val === 'undefined' || (book as any)[prop] === val
-      )
-    )
+    .filter(book => {
+      if (textFilter) {
+        if (textFilter.exec(JSON.stringify(book))) {
+          return true;
+        }
+        for (const [key, value] of Object.entries(config.filter)) {
+          if (value !== null) {
+            if ((book as any)[key] !== value) return false;
+          }
+        }
+      } else {
+        return true;
+      }
+      return false;
+    })
     .sort((a, b) => {
       const fieldA: string | number = (a as any)[orderBy] || '';
       const fieldB: string | number = (b as any)[orderBy] || '';
@@ -27,12 +36,6 @@ export default (books: Book[], config: FilterConfig) => {
 
       return 0;
     });
-
-  if (textFilter) {
-    books = books.filter(book =>
-      Object.values(book).some(val => textFilter.exec(val))
-    );
-  }
 
   return config.desc ? books.reverse() : books;
 };

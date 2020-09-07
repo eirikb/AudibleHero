@@ -26,13 +26,18 @@ interface LibraryBook {
 
 type Progress = (pos: number, tot: number) => void;
 
-type BookMap = { [id: string]: Book };
-
 interface FilterConfig {
   orderBy: string;
   textFilter: string;
-  filter: { [key: string]: any };
   desc: boolean;
+  filter: {
+    inLibrary?: boolean;
+    released?: boolean;
+    seriesInLibrary?: boolean;
+    language?: string;
+    seriesBookIndexInLibrary?: boolean;
+    ignore?: boolean;
+  };
 }
 
 interface Author {

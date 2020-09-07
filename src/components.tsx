@@ -2,6 +2,7 @@ import { React, on } from './domdom';
 import { MDCRipple } from '@material/ripple';
 import { OptChildren } from '@eirikb/domdom';
 import { MDCLinearProgress } from '@material/linear-progress';
+import { Domode } from '@eirikb/domdom/dist/types';
 
 export const Button: (
   _: { onClick: () => void },
@@ -35,31 +36,6 @@ export const Cell: (
   </div>
 );
 
-export const Card: (_: {
-  media: string;
-  title: string;
-  subtitle: string;
-  actions: string;
-}) => void = ({ media, title, subtitle, actions }) => (
-  <div class="mdc-card">
-    {media ? (
-      <section class="mdc-card__media">
-        <img
-          class="mdc-card__media-item mdc-card__media-item--2x"
-          src={media}
-        />
-      </section>
-    ) : (
-      ''
-    )}
-    <section class="mdc-card__primary">
-      <h1 class="mdc-card__title mdc-card__title--large">{title}</h1>
-      <h2 class="mdc-card__subtitle">{subtitle}</h2>
-    </section>
-    <section class="mdc-card__actions">{actions}</section>
-  </div>
-);
-
 export const Progress: (_: { path: string; determinate: boolean }) => void = ({
   path,
   determinate,
@@ -85,3 +61,50 @@ export const Progress: (_: { path: string; determinate: boolean }) => void = ({
   );
   return element;
 };
+
+export const ButtonLink: (_: {
+  url: string;
+  title: string;
+  target: string;
+}) => void = ({ url, title, target }) => (
+  <a
+    class="mdc-button mdc-button--compact mdc-card__action"
+    target={target}
+    href={url}
+  >
+    {title}
+  </a>
+);
+
+export const Card: (
+  _: {
+    title: string;
+    subTitle: string;
+    actions: Domode[];
+    imageUrl?: string;
+  },
+  __: { children: OptChildren }
+) => void = ({ title, subTitle, actions, imageUrl }, { children }) => (
+  <div class="mdc-card">
+    <div class="mdc-card__primary-action" tabindex="0">
+      <div
+        class="mdc-card__media mdc-card__media--square"
+        style={`background-image: url("${imageUrl}")`}
+      />
+      <div class="demo-card__primary">
+        <h2 class="demo-card__title mdc-typography mdc-typography--headline6">
+          {title}
+        </h2>
+        <h3 class="demo-card__subtitle mdc-typography mdc-typography--subtitle2">
+          {subTitle}
+        </h3>
+      </div>
+      <div class="demo-card__secondary mdc-typography mdc-typography--body2">
+        {children}
+      </div>
+    </div>
+    <div class="mdc-card__actions">
+      <div class="mdc-card__action-buttons">{actions}</div>
+    </div>
+  </div>
+);

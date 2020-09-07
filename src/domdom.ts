@@ -15,3 +15,4 @@ export const on = dd.on;
 export const get = dd.get;
 export const set = dd.set;
 export const trigger = dd.trigger;
+export const unset = dd.unset;
