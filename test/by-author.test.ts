@@ -18,7 +18,7 @@ test('oneBook', async t => {
     title: 'Rhythm of War',
     length: 2400,
     releaseDate: '2020-11-17',
-    seriesBookIndex: '4',
+    seriesBookIndex: 4,
     seriesId: 'B006K1RP8I',
     rating: 0,
     language: 'en',
