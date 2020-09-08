@@ -8,17 +8,15 @@ interface Book {
   title: string;
   length: number;
   releaseDate: string;
-  released: boolean;
-  seriesBookIndex?: string;
-  seriesBookMaxIndex?: string;
-  seriesInLibraryCount?: string;
-  seriesId: string;
+  seriesBookIndex?: number;
+  seriesBookMaxIndex?: number;
+  seriesInLibraryCount?: number;
+  seriesId?: string;
   rating: number;
   language: string;
   imageId: string;
   seriesName: string;
   inLibrary: boolean;
-  downloaded: boolean;
   // domdom doesn't support arrays - yet. Crazy, I know
   authors: { [key: string]: string };
 }
@@ -26,7 +24,6 @@ interface Book {
 interface LibraryBook {
   id: string;
   authors: string[];
-  downloaded: boolean;
 }
 
 type Progress = (pos: number, tot: number) => void;

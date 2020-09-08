@@ -84,7 +84,7 @@ export async function parseByAuthorPage(html: string) {
         match = (releaseDateText || '').match(/(\d+)[-\/](\d+)[-\/](\d+)/);
         const releaseDate = match ? toDate(match.slice(1)) : null;
 
-        let seriesBookIndex = '';
+        let seriesBookIndex: number | null = null;
         let seriesId = null;
         const seriesNode = byRegex(/^Series:/).node;
         let seriesName = '';
@@ -95,8 +95,9 @@ export async function parseByAuthorPage(html: string) {
               .split(/\//)
               .slice(-1)[0]
               .split('?')[0];
-            seriesBookIndex = (seriesNode.textContent?.match(/book (\d+)/i) ||
-              [])[1];
+            seriesBookIndex = parseFloat(
+              (seriesNode.textContent?.match(/book (\d+)/i) || [])[1]
+            );
             seriesName = seriesLink.textContent || '';
           }
         }

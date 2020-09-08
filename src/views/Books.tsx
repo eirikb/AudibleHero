@@ -124,7 +124,7 @@ export default () => (
                 {book.seriesBookMaxIndex}
               </span>
               <span title="How many books in this series you have in your library">
-                {book.seriesInLibraryCount || 0}
+                ({book.seriesInLibraryCount || 0})
               </span>
               <br />
             </span>
