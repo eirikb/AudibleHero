@@ -1,7 +1,8 @@
-import { React, on } from './domdom';
+import { React, on, set } from './domdom';
 import { MDCRipple } from '@material/ripple';
-import { OptChildren } from '@eirikb/domdom';
+import { MDCSelect } from '@material/select';
 import { MDCLinearProgress } from '@material/linear-progress';
+import { OptChildren } from '@eirikb/domdom';
 import { Domode } from '@eirikb/domdom/dist/types';
 
 export const Button: (
@@ -101,3 +102,37 @@ export const Card: (
     </div>
   </div>
 );
+
+export const Select: <T>(_: {
+  model: string;
+  label: string;
+  options: { label: string; value: T }[];
+}) => void = ({ model, label, options }) => {
+  const element = (
+    <div class="mdc-select mdc-select--filled demo-width-class">
+      <div class="mdc-select__anchor">
+        <span class="mdc-select__ripple"></span>
+        <span class="mdc-select__selected-text"></span>
+        <span class="mdc-floating-label">{label}</span>
+        <span class="mdc-line-ripple"></span>
+      </div>
+
+      <div class="mdc-select__menu mdc-menu mdc-menu-surface mdc-menu-surface--fullwidth">
+        <ul class="mdc-list">
+          {options.map(({ label, value }) => (
+            <li class="mdc-list-item" data-value={JSON.stringify(value)}>
+              <span class="mdc-list-item__ripple"></span>
+              <span class="mdc-list-item__text">{label}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+  const select = new MDCSelect(element);
+  select.listen('MDCSelect:change', () => {
+    const value = JSON.parse(select.value);
+    set(model, value);
+  });
+  return element;
+};
