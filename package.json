@@ -7,7 +7,8 @@
     "ext": "shx rm -rf dist audiblehero.zip && shx mkdir -p dist && shx cp -r ext/* dist/",
     "zip": "cd dist; zip ../audiblehero.zip *",
     "prod": "npm-run-all ext build zip",
-    "start": "npm-run-all ext dev"
+    "start": "npm-run-all ext dev",
+    "test": "ava"
   },
   "dependencies": {
     "@eirikb/domdom": "^5.7.0",
