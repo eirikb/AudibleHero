@@ -8,14 +8,14 @@ export default (books: Book[], config: FilterConfig) => {
 
   books = books
     .filter(book => {
+      for (const [key, value] of Object.entries(config.filter)) {
+        if (value !== null) {
+          if ((book as any)[key] !== value) return false;
+        }
+      }
       if (textFilter) {
         if (textFilter.exec(JSON.stringify(book))) {
           return true;
-        }
-        for (const [key, value] of Object.entries(config.filter)) {
-          if (value !== null) {
-            if ((book as any)[key] !== value) return false;
-          }
         }
       } else {
         return true;
