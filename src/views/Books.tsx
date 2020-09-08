@@ -60,6 +60,11 @@ function length(length: number) {
   return `${hours}h ${minutes}m`;
 }
 
+function released(book: Book) {
+  const date = book.releaseDate.split('-').map(p => parseInt(p));
+  return new Date() > new Date(date[0], date[1] - 1, date[2]);
+}
+
 export default () => (
   <Grid>
     <Cell span={12}>
@@ -138,7 +143,7 @@ export default () => (
           Authors: {Object.values(book.authors).join(',')}
           <br />
           Release: {book.releaseDate}
-          {book.released ? (
+          {released(book) ? (
             <span>
               {' '}
               (not yet released)
