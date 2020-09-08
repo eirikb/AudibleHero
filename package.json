@@ -11,7 +11,7 @@
     "test": "ava"
   },
   "dependencies": {
-    "@eirikb/domdom": "^5.7.0",
+    "@eirikb/domdom": "^5.8.0",
     "@material/button": "^7.0.0",
     "@material/card": "7.0.0",
     "@material/layout-grid": "^7.0.0",
