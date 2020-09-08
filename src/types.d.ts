@@ -11,6 +11,8 @@ interface Book {
   seriesBookIndex?: number;
   seriesBookMaxIndex?: number;
   seriesInLibraryCount?: number;
+  seriesInLibrary?: boolean;
+  seriesBookIndexInLibrary?: boolean;
   seriesId?: string;
   rating: number;
   language: string;

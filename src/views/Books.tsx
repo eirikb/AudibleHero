@@ -1,5 +1,5 @@
 import { React, on, get, set, unset } from '../domdom';
-import { Button, Grid, Cell, Card, ButtonLink } from '../components';
+import { Button, Grid, Cell, Card, ButtonLink, Select } from '../components';
 import { Book, FilterConfig } from '../types';
 import { load } from '../api/cache';
 import filterBooks from '../api/filter-books';
@@ -10,11 +10,9 @@ const defaultFilter: FilterConfig = {
   textFilter: '',
   filter: {
     inLibrary: false,
-    released: true,
     seriesInLibrary: true,
     language: 'en',
     seriesBookIndexInLibrary: false,
-    ignore: false,
   },
 };
 
@@ -22,16 +20,15 @@ resetFilter();
 set('books', load());
 setVisibleBooks();
 
-on('!+* filter.**', filter => {
-  console.log('FILTER CHANGED! :O', filter);
-});
+on('+* filter.**', () => {
+  setVisibleBooks();
+}).listen();
 
 // domdom doesn't support .slice yet. Crazy, I know
-function setVisibleBooks(text = '') {
+function setVisibleBooks() {
   if (!get('books')) return;
 
   const filter = get<FilterConfig>('filter');
-  filter.textFilter = text;
   const books = filterBooks(
     Object.values(get<{ [key: string]: Book }>('books')),
     filter
@@ -41,7 +38,7 @@ function setVisibleBooks(text = '') {
 
 function setFilter(event: Event) {
   const { value } = event.target as HTMLInputElement;
-  setVisibleBooks(value);
+  set('filter.textFilter', value);
 }
 
 function clearFilter() {
@@ -83,6 +80,21 @@ export default () => (
 
         <Cell span={2}>
           <Button onClick={libraryFilter}>Library filter</Button>
+        </Cell>
+
+        <Cell span={2}>
+          <Select<boolean | null>
+            label="Library"
+            model="filter.filter.inLibrary"
+            options={[
+              { label: '', value: null },
+              {
+                label: 'In library',
+                value: true,
+              },
+              { label: 'Not in library', value: false },
+            ]}
+          />
         </Cell>
 
         <Cell span={2}>

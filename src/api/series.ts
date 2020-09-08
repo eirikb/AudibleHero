@@ -16,6 +16,7 @@ export function joinLibraryBooksAndAuthorsBooks(
     [key: string]: {
       maxIndex: number;
       libraryCount: number;
+      inLibrary: boolean;
     };
   } = {};
 
@@ -24,12 +25,13 @@ export function joinLibraryBooksAndAuthorsBooks(
     if (book.seriesId) {
       let serie = series[book.seriesId];
       if (!serie) {
-        serie = { libraryCount: 0, maxIndex: 0 };
+        serie = { libraryCount: 0, maxIndex: 0, inLibrary: false };
         series[book.seriesId] = serie;
       }
       serie.maxIndex = Math.max(book.seriesBookIndex || 0, serie.maxIndex);
       if (book.inLibrary) {
         serie.libraryCount++;
+        serie.inLibrary = true;
       }
     }
   }
@@ -38,6 +40,8 @@ export function joinLibraryBooksAndAuthorsBooks(
       const serie = series[book.seriesId]!!;
       book.seriesInLibraryCount = serie.libraryCount;
       book.seriesBookMaxIndex = serie.maxIndex;
+      book.seriesInLibrary = serie.inLibrary;
+      book.seriesBookIndexInLibrary = book.inLibrary && serie.inLibrary;
     }
   }
 }
