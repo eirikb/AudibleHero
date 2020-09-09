@@ -131,8 +131,17 @@ export const Select: <T>(_: {
   );
   const select = new MDCSelect(element);
   select.listen('MDCSelect:change', () => {
-    const value = JSON.parse(select.value);
-    set(model, value);
+    try {
+      const value = JSON.parse(select.value);
+      set(model, value);
+    } catch (e) {}
   });
+  on(`!+* ${model}`, value => {
+    select.value = JSON.stringify(value);
+  }).attach(element);
+  on(`- ${model}`, () => {
+    select.value = '';
+  }).attach(element);
+
   return element;
 };

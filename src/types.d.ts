@@ -31,17 +31,17 @@ interface LibraryBook {
 type Progress = (pos: number, tot: number) => void;
 
 interface FilterConfig {
+  inLibrary?: boolean;
+  seriesInLibrary?: boolean;
+  language?: string;
+  seriesBookIndexInLibrary?: boolean;
+}
+
+interface ViewConfig {
   orderBy: string;
   textFilter: string;
   desc: boolean;
-  filter: {
-    inLibrary?: boolean;
-    released?: boolean;
-    seriesInLibrary?: boolean;
-    language?: string;
-    seriesBookIndexInLibrary?: boolean;
-    ignore?: boolean;
-  };
+  filter: FilterConfig;
 }
 
 interface Author {

@@ -1,26 +1,36 @@
-import { React, on, get, set, unset } from '../domdom';
+import { React, on, get, set } from '../domdom';
 import { Button, Grid, Cell, Card, ButtonLink, Select } from '../components';
-import { Book, FilterConfig } from '../types';
+import { Book, FilterConfig, ViewConfig } from '../types';
 import { load } from '../api/cache';
 import filterBooks from '../api/filter-books';
 
 const defaultFilter: FilterConfig = {
+  inLibrary: false,
+  seriesInLibrary: true,
+  language: 'en',
+  seriesBookIndexInLibrary: false,
+};
+
+const defaultConfig: ViewConfig = {
   orderBy: 'releaseDate',
   desc: true,
   textFilter: '',
-  filter: {
-    inLibrary: false,
-    seriesInLibrary: true,
-    language: 'en',
-    seriesBookIndexInLibrary: false,
-  },
+  filter: defaultFilter,
 };
+
+set('viewconfig', defaultConfig);
 
 resetFilter();
 set('books', load());
 setVisibleBooks();
 
-on('+* filter.**', () => {
+on('- viewconfig', () => {
+  setVisibleBooks();
+}).listen();
+on('+* viewconfig.*', () => {
+  setVisibleBooks();
+}).listen();
+on('+* viewconfig.filter.*', () => {
   setVisibleBooks();
 }).listen();
 
@@ -28,7 +38,7 @@ on('+* filter.**', () => {
 function setVisibleBooks() {
   if (!get('books')) return;
 
-  const filter = get<FilterConfig>('filter');
+  const filter = get<ViewConfig>('viewconfig');
   const books = filterBooks(
     Object.values(get<{ [key: string]: Book }>('books')),
     filter
@@ -38,18 +48,22 @@ function setVisibleBooks() {
 
 function setFilter(event: Event) {
   const { value } = event.target as HTMLInputElement;
-  set('filter.textFilter', value);
+  set('viewconfig.textFilter', value);
 }
 
 function clearFilter() {
-  unset('filter');
+  set('viewconfig.filter', {});
 }
 
 function resetFilter() {
-  set('filter', defaultFilter);
+  set('viewconfig.filter', defaultFilter);
 }
 
-function libraryFilter() {}
+function libraryFilter() {
+  set('viewconfig.filter', {
+    inLibrary: true,
+  });
+}
 
 function length(length: number) {
   const hours = Math.floor(length / 60);
@@ -85,7 +99,7 @@ export default () => (
         <Cell span={2}>
           <Select<boolean | null>
             label="Library"
-            model="filter.filter.inLibrary"
+            model="viewconfig.filter.inLibrary"
             options={[
               { label: '', value: null },
               {
@@ -93,6 +107,53 @@ export default () => (
                 value: true,
               },
               { label: 'Not in library', value: false },
+            ]}
+          />
+        </Cell>
+
+        <Cell span={2}>
+          <Select<boolean | null>
+            label="Series in library"
+            model="viewconfig.filter.seriesInLibrary"
+            options={[
+              { label: '', value: null },
+              {
+                label: 'Series in library',
+                value: true,
+              },
+              { label: 'Series not in library', value: false },
+            ]}
+          />
+        </Cell>
+
+        <Cell span={2}>
+          <Select<string | null>
+            label="Language"
+            model="viewconfig.filter.language"
+            options={[
+              { label: '', value: null },
+              {
+                label: 'en',
+                value: 'en',
+              },
+            ]}
+          />
+        </Cell>
+
+        <Cell span={2}>
+          <Select<boolean | null>
+            label="Series book in library"
+            model="viewconfig.filter.seriesBookIndexInLibrary"
+            options={[
+              { label: '', value: null },
+              {
+                label: 'Series book in library',
+                value: true,
+              },
+              {
+                label: 'Series book not in library',
+                value: false,
+              },
             ]}
           />
         </Cell>

@@ -1,6 +1,6 @@
-import { Book, FilterConfig } from '../types';
+import { Book, ViewConfig } from '../types';
 
-export default (books: Book[], config: FilterConfig) => {
+export default (books: Book[], config: ViewConfig) => {
   const orderBy = config.orderBy;
   const textFilter = config.textFilter
     ? new RegExp(config.textFilter, 'i')
