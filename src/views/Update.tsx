@@ -104,43 +104,57 @@ async function update() {
 }
 
 export default () => (
-  <div>
-    <Button onClick={() => set('route', 'books')}>Books</Button>
-    <Button onClick={update}>Update</Button>
+  <Grid>
+    <Cell span={12}>
+      <Grid>
+        <Cell span={12}>
+          <Button onClick={() => set('route', 'books')} outlined={true}>
+            Books
+          </Button>
+          <Button onClick={() => set('route', 'update')} raised={true}>
+            Update
+          </Button>
+        </Cell>
+      </Grid>
+    </Cell>
 
-    {on('update.step', step => {
-      switch (step) {
-        case 'library':
-          return (
-            <div>
-              Library progress:
-              <Progress path="update.library" determinate={true} />
-            </div>
-          );
+    <Cell span={12}>
+      <Button onClick={update}>Start</Button>
 
-        case 'authors':
-          return (
-            <div>
+      {on('update.step', step => {
+        switch (step) {
+          case 'library':
+            return (
               <div>
-                Total progress: {on('update.total.done')} /{' '}
-                {on('update.total.total')} - last number will likely increase
-                when authors are loaded
-                <Progress path="update.total.progress" determinate={true} />
+                Library progress:
+                <Progress path="update.library" determinate={true} />
               </div>
-              <Grid>
-                {on<Author>('update.authors').map((author, { subPath }) => (
-                  <Cell span={2}>
-                    {author.name}
-                    <Progress
-                      path={subPath('progress.percentage')}
-                      determinate={true}
-                    />
-                  </Cell>
-                ))}
-              </Grid>
-            </div>
-          );
-      }
-    })}
-  </div>
+            );
+
+          case 'authors':
+            return (
+              <div>
+                <div>
+                  Total progress: {on('update.total.done')} /{' '}
+                  {on('update.total.total')} - last number will likely increase
+                  when authors are loaded
+                  <Progress path="update.total.progress" determinate={true} />
+                </div>
+                <Grid>
+                  {on<Author>('update.authors').map((author, { subPath }) => (
+                    <Cell span={2}>
+                      {author.name}
+                      <Progress
+                        path={subPath('progress.percentage')}
+                        determinate={true}
+                      />
+                    </Cell>
+                  ))}
+                </Grid>
+              </div>
+            );
+        }
+      })}
+    </Cell>
+  </Grid>
 );

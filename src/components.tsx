@@ -7,13 +7,18 @@ import { OptChildren } from '@eirikb/domdom';
 import { Domode } from '@eirikb/domdom/dist/types';
 
 export const Button: (
-  _: { onClick: () => void },
+  _: { onClick: () => void; outlined?: boolean; raised?: boolean },
   __: { children: OptChildren }
-) => void = ({ onClick }, { children }) => {
+) => void = ({ onClick, outlined, raised }, { children }) => {
   const button = (
-    <button class="mdc-button" onClick={onClick}>
+    <buttonj
+      class={`mdc-button ${outlined ? 'mdc-button--outlined' : ''} ${
+        raised ? 'mdc-button--raised' : ''
+      }`}
+      onClick={onClick}
+    >
       <span class="mdc-button__label">{children}</span>
-    </button>
+    </buttonj>
   );
 
   new MDCRipple(button);

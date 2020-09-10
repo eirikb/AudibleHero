@@ -89,7 +89,12 @@ export default () => (
     <Cell span={12}>
       <Grid>
         <Cell span={12}>
-          <Button onClick={() => set('route', 'update')}>Update</Button>
+          <Button onClick={() => set('route', 'books')} raised={true}>
+              Books
+          </Button>
+          <Button onClick={() => set('route', 'update')} outlined={true}>
+            Update
+          </Button>
         </Cell>
 
         <Cell span={12}>
