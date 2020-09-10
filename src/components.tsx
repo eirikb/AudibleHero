@@ -2,6 +2,7 @@ import { React, on, set } from './domdom';
 import { MDCRipple } from '@material/ripple';
 import { MDCSelect } from '@material/select';
 import { MDCLinearProgress } from '@material/linear-progress';
+import { MDCSwitch } from '@material/switch';
 import { OptChildren } from '@eirikb/domdom';
 import { Domode } from '@eirikb/domdom/dist/types';
 
@@ -144,4 +145,37 @@ export const Select: <T>(_: {
   }).attach(element);
 
   return element;
+};
+
+export const Switch: (_: { label: string; model: string }) => void = ({
+  label,
+  model,
+}) => {
+  const element = (
+    <div class="mdc-switch">
+      <div class="mdc-switch__track"></div>
+      <div class="mdc-switch__thumb-underlay">
+        <div class="mdc-switch__thumb"></div>
+        <input
+          type="checkbox"
+          id="basic-switch"
+          class="mdc-switch__native-control"
+          role="switch"
+          aria-checked="false"
+        />
+      </div>
+    </div>
+  );
+
+  const switchControl = new MDCSwitch(element);
+  switchControl.listen('change', () => set(model, switchControl.checked));
+  on(`!+* ${model}`, value => (switchControl.checked = value)).attach(element);
+  on(`- ${model}`, () => (switchControl.checked = false)).attach(element);
+
+  return (
+    <div>
+      {element}
+      <label for="basic-switch">{label}</label>
+    </div>
+  );
 };

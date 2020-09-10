@@ -18,6 +18,7 @@
     "@material/linear-progress": "^7.0.0",
     "@material/progress-indicator": "^7.0.0",
     "@material/select": "^7.0.0",
+    "@material/switch": "^7.0.0",
     "@material/textfield": "^7.0.0",
     "lz-string": "1.4.4"
   },

@@ -1,5 +1,13 @@
 import { React, on, get, set } from '../domdom';
-import { Button, Grid, Cell, Card, ButtonLink, Select } from '../components';
+import {
+  Button,
+  Grid,
+  Cell,
+  Card,
+  ButtonLink,
+  Select,
+  Switch,
+} from '../components';
 import { Book, FilterConfig, ViewConfig } from '../types';
 import { load } from '../api/cache';
 import filterBooks from '../api/filter-books';
@@ -101,10 +109,7 @@ export default () => (
             </Cell>
 
             <Cell span={2}>
-              <label>
-                <b>Yes:{on('viewconfig.desc')}</b>
-                <input type="checkbox" dd-model="viewconfig.desc" />
-              </label>
+              <Switch label="Descending" model="viewconfig.desc" />
             </Cell>
           </Grid>
         </Cell>
