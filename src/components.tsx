@@ -184,3 +184,10 @@ export const Switch: (_: { label: string; model: string }) => void = ({
     </div>
   );
 };
+
+export const Elevation: (
+  _: { z?: number },
+  __: { children: OptChildren }
+) => void = ({ z = 1 }, { children }) => (
+  <div class={`mdc-elevation--z${z}`}>{children}</div>
+);

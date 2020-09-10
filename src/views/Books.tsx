@@ -7,6 +7,7 @@ import {
   ButtonLink,
   Select,
   Switch,
+  Elevation,
 } from '../components';
 import { Book, FilterConfig, ViewConfig } from '../types';
 import { load } from '../api/cache';
@@ -90,17 +91,111 @@ export default () => (
       <Grid>
         <Cell span={12}>
           <Button onClick={() => set('route', 'books')} raised={true}>
-              Books
+            Books
           </Button>
           <Button onClick={() => set('route', 'update')} outlined={true}>
             Update
           </Button>
         </Cell>
+      </Grid>
+    </Cell>
 
-        <Cell span={12}>
-          <Grid>
-            <Cell span={2}>
-              <Select<string>
+    <Cell span={12}>
+      <Elevation>
+        <Grid>
+          <Cell span={2}>
+            <Button onClick={clearFilter}>Clear filter</Button>
+          </Cell>
+
+          <Cell span={2}>
+            <Button onClick={resetFilter}>Default filter</Button>
+          </Cell>
+
+          <Cell span={2}>
+            <Button onClick={libraryFilter}>Library filter</Button>
+          </Cell>
+
+          <Cell span={2}>
+            <Select<boolean | null>
+              label="Library"
+              model="viewconfig.filter.inLibrary"
+              options={[
+                { label: '', value: null },
+                {
+                  label: 'In library',
+                  value: true,
+                },
+                { label: 'Not in library', value: false },
+              ]}
+            />
+          </Cell>
+
+          <Cell span={2}>
+            <Select<boolean | null>
+              label="Series in library"
+              model="viewconfig.filter.seriesInLibrary"
+              options={[
+                { label: '', value: null },
+                {
+                  label: 'Series in library',
+                  value: true,
+                },
+                { label: 'Series not in library', value: false },
+              ]}
+            />
+          </Cell>
+
+          <Cell span={2}>
+            <Select<string | null>
+              label="Language"
+              model="viewconfig.filter.language"
+              options={[
+                { label: '', value: null },
+                {
+                  label: 'en',
+                  value: 'en',
+                },
+              ]}
+            />
+          </Cell>
+
+          <Cell span={2}>
+            <Select<boolean | null>
+              label="Series book in library"
+              model="viewconfig.filter.seriesBookIndexInLibrary"
+              options={[
+                { label: '', value: null },
+                {
+                  label: 'Series book in library',
+                  value: true,
+                },
+                {
+                  label: 'Series book not in library',
+                  value: false,
+                },
+              ]}
+            />
+          </Cell>
+
+          <Cell span={2}>
+            <div class="mdc-textfield">
+              <input
+                onInput={setFilter}
+                type="text"
+                class="mdc-textfield__input"
+                placeholder="Search"
+              />
+            </div>
+          </Cell>
+        </Grid>
+      </Elevation>
+    </Cell>
+
+    <Cell span={12}>
+      <Elevation>
+        <Grid>
+          <Cell span={2}>
+            <Select<string>
                 label="Order by"
                 model="viewconfig.orderBy"
                 options={[
@@ -110,101 +205,16 @@ export default () => (
                     value: 'length',
                   },
                 ]}
-              />
-            </Cell>
-
-            <Cell span={2}>
-              <Switch label="Descending" model="viewconfig.desc" />
-            </Cell>
-          </Grid>
-        </Cell>
-
-        <Cell span={2}>
-          <Button onClick={clearFilter}>Clear filter</Button>
-        </Cell>
-
-        <Cell span={2}>
-          <Button onClick={resetFilter}>Default filter</Button>
-        </Cell>
-
-        <Cell span={2}>
-          <Button onClick={libraryFilter}>Library filter</Button>
-        </Cell>
-
-        <Cell span={2}>
-          <Select<boolean | null>
-            label="Library"
-            model="viewconfig.filter.inLibrary"
-            options={[
-              { label: '', value: null },
-              {
-                label: 'In library',
-                value: true,
-              },
-              { label: 'Not in library', value: false },
-            ]}
-          />
-        </Cell>
-
-        <Cell span={2}>
-          <Select<boolean | null>
-            label="Series in library"
-            model="viewconfig.filter.seriesInLibrary"
-            options={[
-              { label: '', value: null },
-              {
-                label: 'Series in library',
-                value: true,
-              },
-              { label: 'Series not in library', value: false },
-            ]}
-          />
-        </Cell>
-
-        <Cell span={2}>
-          <Select<string | null>
-            label="Language"
-            model="viewconfig.filter.language"
-            options={[
-              { label: '', value: null },
-              {
-                label: 'en',
-                value: 'en',
-              },
-            ]}
-          />
-        </Cell>
-
-        <Cell span={2}>
-          <Select<boolean | null>
-            label="Series book in library"
-            model="viewconfig.filter.seriesBookIndexInLibrary"
-            options={[
-              { label: '', value: null },
-              {
-                label: 'Series book in library',
-                value: true,
-              },
-              {
-                label: 'Series book not in library',
-                value: false,
-              },
-            ]}
-          />
-        </Cell>
-
-        <Cell span={2}>
-          <div class="mdc-textfield">
-            <input
-              onInput={setFilter}
-              type="text"
-              class="mdc-textfield__input"
-              placeholder="Search"
             />
-          </div>
-        </Cell>
-      </Grid>
+          </Cell>
+
+          <Cell span={2}>
+            <Switch label="Descending" model="viewconfig.desc" />
+          </Cell>
+        </Grid>
+      </Elevation>
     </Cell>
+
 
     {on<Book>('books2').map(book => (
       <Cell span={2}>

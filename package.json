@@ -14,6 +14,7 @@
     "@eirikb/domdom": "^5.8.0",
     "@material/button": "^7.0.0",
     "@material/card": "7.0.0",
+    "@material/elevation": "^7.0.0",
     "@material/layout-grid": "^7.0.0",
     "@material/linear-progress": "^7.0.0",
     "@material/progress-indicator": "^7.0.0",
