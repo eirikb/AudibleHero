@@ -49,7 +49,7 @@ export async function parseByAuthorPage(html: string) {
         if (!heading) return null;
         const id = (heading.href.match(/(\w+)\?/) || [])[1];
 
-        const title = heading.textContent?.trim();
+        const title = heading.textContent?.trim() || '';
 
         const byRegex = (regex: RegExp) =>
           Array.from(row.querySelectorAll('li'))
@@ -78,14 +78,14 @@ export async function parseByAuthorPage(html: string) {
           (
             row.querySelector<HTMLImageElement>('a.bc-link img')?.src || ''
           ).split('/')
-        )?.split('.')[0];
+        )?.split('.')[0] || '';
 
         const releaseDateText = byRegex(/Release date:/).text;
         match = (releaseDateText || '').match(/(\d+)[-\/](\d+)[-\/](\d+)/);
-        const releaseDate = match ? toDate(match.slice(1)) : null;
+        const releaseDate = match ? toDate(match.slice(1)) : '';
 
-        let seriesBookIndex: number | null = null;
-        let seriesId = null;
+        let seriesBookIndex;
+        let seriesId;
         const seriesNode = byRegex(/^Series:/).node;
         let seriesName = '';
         if (seriesNode) {
@@ -118,7 +118,7 @@ export async function parseByAuthorPage(html: string) {
 
         const language = await detectLanguage(description);
 
-        return {
+        const res: Book = {
           id,
           title,
           length,
@@ -131,7 +131,8 @@ export async function parseByAuthorPage(html: string) {
           seriesName,
           authors,
           inLibrary: false,
-        } as Book;
+        };
+        return res;
       })
     )
   ).filter((book): book is Book => book !== null);

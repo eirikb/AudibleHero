@@ -43,7 +43,7 @@ function setVisibleBooks() {
     Object.values(get<{ [key: string]: Book }>('books')),
     filter
   ).slice(0, 100);
-  set('books2', books, 'id');
+  set('books2', books);
 }
 
 function setFilter(event: Event) {
@@ -80,8 +80,33 @@ export default () => (
   <Grid>
     <Cell span={12}>
       <Grid>
-        <Cell span={2}>
+        <Cell span={12}>
           <Button onClick={() => set('route', 'update')}>Update</Button>
+        </Cell>
+
+        <Cell span={12}>
+          <Grid>
+            <Cell span={2}>
+              <Select<string>
+                label="Order by"
+                model="viewconfig.orderBy"
+                options={[
+                  { label: 'Release date', value: 'releaseDate' },
+                  {
+                    label: 'Length',
+                    value: 'length',
+                  },
+                ]}
+              />
+            </Cell>
+
+            <Cell span={2}>
+              <label>
+                <b>Yes:{on('viewconfig.desc')}</b>
+                <input type="checkbox" dd-model="viewconfig.desc" />
+              </label>
+            </Cell>
+          </Grid>
         </Cell>
 
         <Cell span={2}>
@@ -227,7 +252,7 @@ export default () => (
           <br />
           Rating: {book.rating}
           <br />
-          Length: {length(book.length)}
+          Length: {length(book.length)} ( {book.length})
         </Card>
       </Cell>
     ))}
