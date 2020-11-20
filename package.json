@@ -6,7 +6,8 @@
     "build": "parcel build src/main.tsx --no-source-maps",
     "ext": "shx rm -rf dist audiblehero.zip && shx mkdir -p dist && shx cp -r ext/* dist/",
     "zip": "cd dist; zip ../audiblehero.zip *",
-    "prod": "npm-run-all ext build zip",
+    "app": "shx mv dist/main.js dist/app.js",
+    "prod": "npm-run-all ext build app zip",
     "start": "npm-run-all ext dev",
     "test": "ava"
   },
