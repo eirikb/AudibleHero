@@ -1,4 +1,4 @@
-import { React, on, set } from "./domdom";
+import { on, React, set } from "./domdom";
 import { MDCRipple } from "@material/ripple";
 import { MDCSelect } from "@material/select";
 import { MDCLinearProgress } from "@material/linear-progress";
@@ -26,7 +26,7 @@ export const Button: (
 };
 
 export const Grid: (_: any, opts: { children: OptChildren }) => void = (
-  {},
+  _,
   { children }
 ) => (
   <div class="mdc-layout-grid">
@@ -140,7 +140,9 @@ export const Select: <T>(_: {
     try {
       const value = JSON.parse(select.value);
       set(model, value);
-    } catch (e) {}
+    } catch (e) {
+      // Ignored
+    }
   });
   on(`!+* ${model}`, (value) => {
     select.value = JSON.stringify(value);

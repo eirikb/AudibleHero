@@ -1,7 +1,10 @@
 import { compress, decompress } from "lz-string";
 import { Book } from "../types";
 
-const version = require("../../package.json").version;
+import package from "../../package.json";
+const version = pacakge.version;
+
+// const version = require("../../package.json").version;
 
 interface Cache {
   version: string;
@@ -14,7 +17,9 @@ export const load = (): Book[] | undefined => {
       decompress(localStorage.audibleherocache) || ""
     ) as Cache;
     if (cache.version === version) return cache.books;
-  } catch (e) {}
+  } catch (e) {
+    // Ignored
+  }
   return;
 };
 

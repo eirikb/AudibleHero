@@ -37,7 +37,7 @@ export function joinLibraryBooksAndAuthorsBooks(
   }
   for (const book of books) {
     if (book.seriesId) {
-      const serie = series[book.seriesId]!!;
+      const serie = series[book.seriesId]!;
       book.seriesInLibraryCount = serie.libraryCount;
       book.seriesBookMaxIndex = serie.maxIndex;
       book.seriesInLibrary = serie.inLibrary;

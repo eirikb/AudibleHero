@@ -12,7 +12,9 @@ jobs:
 
       - run: npm i
 
-      - run: npm run lint
+      - run: npm run prettier
+
+      - run: npm run eslint
 
       - run: npm run test
 

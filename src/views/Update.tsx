@@ -1,4 +1,4 @@
-import { React, get, set, on } from "../domdom";
+import { get, on, React, set } from "../domdom";
 import { Button, Cell, Grid, Progress } from "../components";
 import fetchLibrary from "../api/from-library";
 import fetchAuthor from "../api/by-author";
@@ -54,7 +54,9 @@ async function update() {
 
   function bumpAuthorProgress(id: number) {
     const key = `update.authors.${id}.progress`;
-    let { done, total } = get(key);
+    const g = get(key);
+    let done = g.done;
+    const total = g.total;
     done++;
     set(`${key}.done`, done);
     set(`${key}.percentage`, done / total);

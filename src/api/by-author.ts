@@ -82,7 +82,7 @@ export async function parseByAuthorPage(html: string) {
           )?.split(".")[0] || "";
 
         const releaseDateText = byRegex(/Release date:/).text;
-        match = (releaseDateText || "").match(/(\d+)[-\/](\d+)[-\/](\d+)/);
+        match = (releaseDateText || "").match(/(\d+)[-/](\d+)[-/](\d+)/);
         const releaseDate = match ? toDate(match.slice(1)) : "";
 
         let seriesBookIndex;
