@@ -9,7 +9,7 @@
     "app": "shx mv dist/main.js dist/app.js",
     "prod": "npm-run-all ext build app zip",
     "start": "npm-run-all ext dev",
-    "link": "prettier -c src",
+    "lin": "prettier -c src",
     "test": "ava"
   },
   "dependencies": {
