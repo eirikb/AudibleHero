@@ -1,0 +1,19 @@
+on: push
+
+name: Verify
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v1
+
+      - run: npm i
+
+      - run: npm run lint
+
+      - run: npm run test
+
+      - run: npm run build
