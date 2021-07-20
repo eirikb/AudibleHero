@@ -1,4 +1,4 @@
-import { Book, LibraryBook } from 'types';
+import { Book, LibraryBook } from "types";
 
 export function joinLibraryBooksAndAuthorsBooks(
   library: LibraryBook[],
@@ -20,7 +20,7 @@ export function joinLibraryBooksAndAuthorsBooks(
     };
   } = {};
 
-  for (let book of books) {
+  for (const book of books) {
     book.inLibrary = !!libraryBooksMap[book.id];
     if (book.seriesId) {
       let serie = series[book.seriesId];
@@ -35,9 +35,9 @@ export function joinLibraryBooksAndAuthorsBooks(
       }
     }
   }
-  for (let book of books) {
+  for (const book of books) {
     if (book.seriesId) {
-      const serie = series[book.seriesId]!!;
+      const serie = series[book.seriesId]!;
       book.seriesInLibraryCount = serie.libraryCount;
       book.seriesBookMaxIndex = serie.maxIndex;
       book.seriesInLibrary = serie.inLibrary;

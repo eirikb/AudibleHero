@@ -1,4 +1,4 @@
-import { React, on, get, set } from '../domdom';
+import { React, on, get, set } from "../domdom";
 import {
   Button,
   Grid,
@@ -8,68 +8,68 @@ import {
   Select,
   Switch,
   Elevation,
-} from '../components';
-import { Book, FilterConfig, ViewConfig } from '../types';
-import { load } from '../api/cache';
-import filterBooks from '../api/filter-books';
+} from "../components";
+import { Book, FilterConfig, ViewConfig } from "../types";
+import { load } from "../api/cache";
+import filterBooks from "../api/filter-books";
 
 const defaultFilter: FilterConfig = {
   inLibrary: false,
   seriesInLibrary: true,
-  language: 'en',
+  language: "en",
   seriesBookIndexInLibrary: false,
 };
 
 const defaultConfig: ViewConfig = {
-  orderBy: 'releaseDate',
+  orderBy: "releaseDate",
   desc: true,
-  textFilter: '',
+  textFilter: "",
   filter: defaultFilter,
 };
 
-set('viewconfig', defaultConfig);
+set("viewconfig", defaultConfig);
 
 resetFilter();
-set('books', load());
+set("books", load());
 setVisibleBooks();
 
-on('- viewconfig', () => {
+on("- viewconfig", () => {
   setVisibleBooks();
 }).listen();
-on('+* viewconfig.*', () => {
+on("+* viewconfig.*", () => {
   setVisibleBooks();
 }).listen();
-on('+* viewconfig.filter.*', () => {
+on("+* viewconfig.filter.*", () => {
   setVisibleBooks();
 }).listen();
 
 // domdom doesn't support .slice yet. Crazy, I know
 function setVisibleBooks() {
-  if (!get('books')) return;
+  if (!get("books")) return;
 
-  const filter = get<ViewConfig>('viewconfig');
+  const filter = get<ViewConfig>("viewconfig");
   const books = filterBooks(
-    Object.values(get<{ [key: string]: Book }>('books')),
+    Object.values(get<{ [key: string]: Book }>("books")),
     filter
   ).slice(0, 100);
-  set('books2', books);
+  set("books2", books);
 }
 
 function setFilter(event: Event) {
   const { value } = event.target as HTMLInputElement;
-  set('viewconfig.textFilter', value);
+  set("viewconfig.textFilter", value);
 }
 
 function clearFilter() {
-  set('viewconfig.filter', {});
+  set("viewconfig.filter", {});
 }
 
 function resetFilter() {
-  set('viewconfig.filter', defaultFilter);
+  set("viewconfig.filter", defaultFilter);
 }
 
 function libraryFilter() {
-  set('viewconfig.filter', {
+  set("viewconfig.filter", {
     inLibrary: true,
   });
 }
@@ -81,7 +81,7 @@ function length(length: number) {
 }
 
 function released(book: Book) {
-  const date = book.releaseDate.split('-').map(p => parseInt(p));
+  const date = book.releaseDate.split("-").map((p) => parseInt(p));
   return new Date() > new Date(date[0], date[1] - 1, date[2]);
 }
 
@@ -90,10 +90,10 @@ export default () => (
     <Cell span={12}>
       <Grid>
         <Cell span={12}>
-          <Button onClick={() => set('route', 'books')} raised={true}>
+          <Button onClick={() => set("route", "books")} raised={true}>
             Books
           </Button>
-          <Button onClick={() => set('route', 'update')} outlined={true}>
+          <Button onClick={() => set("route", "update")} outlined={true}>
             Update
           </Button>
         </Cell>
@@ -120,12 +120,12 @@ export default () => (
               label="Library"
               model="viewconfig.filter.inLibrary"
               options={[
-                { label: '', value: null },
+                { label: "", value: null },
                 {
-                  label: 'In library',
+                  label: "In library",
                   value: true,
                 },
-                { label: 'Not in library', value: false },
+                { label: "Not in library", value: false },
               ]}
             />
           </Cell>
@@ -135,12 +135,12 @@ export default () => (
               label="Series in library"
               model="viewconfig.filter.seriesInLibrary"
               options={[
-                { label: '', value: null },
+                { label: "", value: null },
                 {
-                  label: 'Series in library',
+                  label: "Series in library",
                   value: true,
                 },
-                { label: 'Series not in library', value: false },
+                { label: "Series not in library", value: false },
               ]}
             />
           </Cell>
@@ -150,10 +150,10 @@ export default () => (
               label="Language"
               model="viewconfig.filter.language"
               options={[
-                { label: '', value: null },
+                { label: "", value: null },
                 {
-                  label: 'en',
-                  value: 'en',
+                  label: "en",
+                  value: "en",
                 },
               ]}
             />
@@ -164,13 +164,13 @@ export default () => (
               label="Series book in library"
               model="viewconfig.filter.seriesBookIndexInLibrary"
               options={[
-                { label: '', value: null },
+                { label: "", value: null },
                 {
-                  label: 'Series book in library',
+                  label: "Series book in library",
                   value: true,
                 },
                 {
-                  label: 'Series book not in library',
+                  label: "Series book not in library",
                   value: false,
                 },
               ]}
@@ -196,15 +196,15 @@ export default () => (
         <Grid>
           <Cell span={2}>
             <Select<string>
-                label="Order by"
-                model="viewconfig.orderBy"
-                options={[
-                  { label: 'Release date', value: 'releaseDate' },
-                  {
-                    label: 'Length',
-                    value: 'length',
-                  },
-                ]}
+              label="Order by"
+              model="viewconfig.orderBy"
+              options={[
+                { label: "Release date", value: "releaseDate" },
+                {
+                  label: "Length",
+                  value: "length",
+                },
+              ]}
             />
           </Cell>
 
@@ -215,8 +215,7 @@ export default () => (
       </Elevation>
     </Cell>
 
-
-    {on<Book>('books2').map(book => (
+    {on<Book>("books2").map((book) => (
       <Cell span={2}>
         <Card
           title={book.title}
@@ -236,7 +235,7 @@ export default () => (
             <span>
               <span title="Series books index (could be decimal-based)">
                 {book.seriesBookIndex}
-              </span>{' '}
+              </span>{" "}
               /
               <span title="Series max book index (highest number, not amount)">
                 {book.seriesBookMaxIndex}
@@ -258,12 +257,12 @@ export default () => (
               Book is in your library <br />
             </span>
           ) : null}
-          Authors: {Object.values(book.authors).join(',')}
+          Authors: {Object.values(book.authors).join(",")}
           <br />
           Release: {book.releaseDate}
           {released(book) ? (
             <span>
-              {' '}
+              {" "}
               (not yet released)
               <br />
             </span>

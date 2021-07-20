@@ -1,13 +1,13 @@
-import { Book, ViewConfig } from '../types';
+import { Book, ViewConfig } from "../types";
 
 export default (books: Book[], config: ViewConfig) => {
   const orderBy = config.orderBy;
   const textFilter = config.textFilter
-    ? new RegExp(config.textFilter, 'i')
+    ? new RegExp(config.textFilter, "i")
     : null;
 
   books = books
-    .filter(book => {
+    .filter((book) => {
       for (const [key, value] of Object.entries(config.filter)) {
         if (value !== null) {
           if ((book as any)[key] !== value) return false;
@@ -23,14 +23,14 @@ export default (books: Book[], config: ViewConfig) => {
       return false;
     })
     .sort((a, b) => {
-      const fieldA: string | number = (a as any)[orderBy] || '';
-      const fieldB: string | number = (b as any)[orderBy] || '';
+      const fieldA: string | number = (a as any)[orderBy] || "";
+      const fieldB: string | number = (b as any)[orderBy] || "";
 
-      if (typeof fieldA === 'string' && typeof fieldB === 'string') {
+      if (typeof fieldA === "string" && typeof fieldB === "string") {
         return fieldA.localeCompare(fieldB);
       }
 
-      if (typeof fieldA === 'number' && typeof fieldB === 'number') {
+      if (typeof fieldA === "number" && typeof fieldB === "number") {
         return fieldA - fieldB;
       }
 
