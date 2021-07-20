@@ -1,7 +1,7 @@
-import { compress, decompress } from 'lz-string';
-import { Book } from '../types';
+import { compress, decompress } from "lz-string";
+import { Book } from "../types";
 
-const version = require('../../package.json').version;
+const version = require("../../package.json").version;
 
 interface Cache {
   version: string;
@@ -11,7 +11,7 @@ interface Cache {
 export const load = (): Book[] | undefined => {
   try {
     const cache = JSON.parse(
-      decompress(localStorage.audibleherocache) || ''
+      decompress(localStorage.audibleherocache) || ""
     ) as Cache;
     if (cache.version === version) return cache.books;
   } catch (e) {}

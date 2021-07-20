@@ -1,10 +1,10 @@
-import { React, on, set } from './domdom';
-import { MDCRipple } from '@material/ripple';
-import { MDCSelect } from '@material/select';
-import { MDCLinearProgress } from '@material/linear-progress';
-import { MDCSwitch } from '@material/switch';
-import { OptChildren } from '@eirikb/domdom';
-import { Domode } from '@eirikb/domdom/dist/types';
+import { React, on, set } from "./domdom";
+import { MDCRipple } from "@material/ripple";
+import { MDCSelect } from "@material/select";
+import { MDCLinearProgress } from "@material/linear-progress";
+import { MDCSwitch } from "@material/switch";
+import { OptChildren } from "@eirikb/domdom";
+import { Domode } from "@eirikb/domdom/dist/types";
 
 export const Button: (
   _: { onClick: () => void; outlined?: boolean; raised?: boolean },
@@ -12,8 +12,8 @@ export const Button: (
 ) => void = ({ onClick, outlined, raised }, { children }) => {
   const button = (
     <buttonj
-      class={`mdc-button ${outlined ? 'mdc-button--outlined' : ''} ${
-        raised ? 'mdc-button--raised' : ''
+      class={`mdc-button ${outlined ? "mdc-button--outlined" : ""} ${
+        raised ? "mdc-button--raised" : ""
       }`}
       onClick={onClick}
     >
@@ -63,7 +63,7 @@ export const Progress: (_: { path: string; determinate: boolean }) => void = ({
   );
   const linearProgress = new MDCLinearProgress(element);
   linearProgress.determinate = determinate;
-  on(`!+* ${path}`, progress => (linearProgress.progress = progress)).attach(
+  on(`!+* ${path}`, (progress) => (linearProgress.progress = progress)).attach(
     element
   );
   return element;
@@ -136,17 +136,17 @@ export const Select: <T>(_: {
     </div>
   );
   const select = new MDCSelect(element);
-  select.listen('MDCSelect:change', () => {
+  select.listen("MDCSelect:change", () => {
     try {
       const value = JSON.parse(select.value);
       set(model, value);
     } catch (e) {}
   });
-  on(`!+* ${model}`, value => {
+  on(`!+* ${model}`, (value) => {
     select.value = JSON.stringify(value);
   }).attach(element);
   on(`- ${model}`, () => {
-    select.value = '';
+    select.value = "";
   }).attach(element);
 
   return element;
@@ -173,8 +173,10 @@ export const Switch: (_: { label: string; model: string }) => void = ({
   );
 
   const switchControl = new MDCSwitch(element);
-  switchControl.listen('change', () => set(model, switchControl.checked));
-  on(`!+* ${model}`, value => (switchControl.checked = value)).attach(element);
+  switchControl.listen("change", () => set(model, switchControl.checked));
+  on(`!+* ${model}`, (value) => (switchControl.checked = value)).attach(
+    element
+  );
   on(`- ${model}`, () => (switchControl.checked = false)).attach(element);
 
   return (

@@ -1,17 +1,17 @@
-import { React, on } from '../domdom';
-import Books from './Books';
-import Update from './Update';
+import { on, React } from "../domdom";
+import Books from "./Books";
+import Update from "./Update";
 
 export default (
   <div>
-    {on('route', route => {
+    {on("route", (route) => {
       switch (route) {
-        case 'books':
+        case "books":
           return <Books />;
-        case 'update':
+        case "update":
           return <Update />;
         default:
-          return '?';
+          return "?";
       }
     })}
   </div>

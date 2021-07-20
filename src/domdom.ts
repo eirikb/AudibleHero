@@ -1,4 +1,4 @@
-import domdom from '@eirikb/domdom';
+import domdom from "@eirikb/domdom";
 
 declare global {
   namespace JSX {
