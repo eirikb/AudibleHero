@@ -53,7 +53,7 @@ jobs:
           prerelease: false
 
       - name: Publish
-      - uses: Klemensas/chrome-extension-upload-action
+        uses: Klemensas/chrome-extension-upload-action
         with:
           refresh-token: ${{ secrets.REFRESH_TOKEN }}
           client-id: ${{ secrets.CLIENT_ID }}
