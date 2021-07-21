@@ -23,7 +23,7 @@ jobs:
 
       - run: npm run test
 
-      - run: npm run build
+      - run: npm run prod
 
       - run: node -p 'm="./ext/manifest.json";x=require(m);x.version++;require("fs").writeFileSync(m,JSON.stringify(x,null,"  "))'
 
