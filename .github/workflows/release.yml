@@ -52,13 +52,11 @@ jobs:
           draft: false
           prerelease: false
 
-      - name: Publish
-        uses: Klemensas/chrome-extension-upload-action
+      - uses: trmcnvn/chrome-addon@v2
         with:
-          refresh-token: ${{ secrets.REFRESH_TOKEN }}
+          extension: hemgkbfmploojfhljdcpbloffgkfamlb
+          zip: audiblehero.zip
+          build/my-addon.zip
           client-id: ${{ secrets.CLIENT_ID }}
           client-secret: ${{ secrets.CLIENT_SECRET }}
-          file-name: './audiblehero.zip'
-          app-id: 'hemgkbfmploojfhljdcpbloffgkfamlb'
-          publish: true
-
+          refresh-token: ${{ secrets.REFRESH_TOKEN }}
