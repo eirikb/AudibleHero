@@ -25,7 +25,7 @@ jobs:
 
       - run: npm run prod
 
-      - run: node -p 'm="./ext/manifest.json";x=require(m);x.version++;require("fs").writeFileSync(m,JSON.stringify(x,null,"  "))'
+      - run: node -p 'm="./ext/manifest.json";x=require(m);x.version=`${x.version+1}`;require("fs").writeFileSync(m,JSON.stringify(x,null,"  "))'
 
       - name: Set env
         run: |
