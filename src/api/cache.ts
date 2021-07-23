@@ -1,7 +1,9 @@
 import { compress, decompress } from "lz-string";
 import { Book } from "../types";
 
-const version = require("../../package.json").version;
+import pck from "../../package.json";
+
+const version = pck.version;
 
 interface Cache {
   version: string;
