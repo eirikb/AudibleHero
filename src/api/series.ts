@@ -4,13 +4,7 @@ export function joinLibraryBooksAndAuthorsBooks(
   library: LibraryBook[],
   books: Book[]
 ): void {
-  const libraryBooksMap = library.reduce(
-    (res: { [key: string]: LibraryBook }, book) => {
-      res[book.id] = book;
-      return res;
-    },
-    {}
-  );
+  const libraryIdSet = new Set(library.map((l) => l.id));
 
   const series: {
     [key: string]: {
@@ -21,7 +15,7 @@ export function joinLibraryBooksAndAuthorsBooks(
   } = {};
 
   for (const book of books) {
-    book.inLibrary = !!libraryBooksMap[book.id];
+    book.inLibrary = libraryIdSet.has(book.id);
     if (book.seriesId) {
       let serie = series[book.seriesId];
       if (!serie) {
