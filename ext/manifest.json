@@ -40,8 +40,6 @@
     ]
   },
   "permissions": [
-    "storage",
-    "unlimitedStorage",
     "webRequest",
     "webRequestBlocking",
     "*://*.audible.com/*",
